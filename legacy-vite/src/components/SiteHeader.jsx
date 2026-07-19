@@ -1,3 +1,5 @@
+import AMQLogoMark from './AMQLogoMark.jsx'
+
 const navigation = [
   { label: 'Work', href: '#work' },
   { label: 'About', href: '#about' },
@@ -10,7 +12,7 @@ export default function SiteHeader() {
     <header className="site-header">
       <div className="site-header__inner container">
         <a className="identity" href="#top" aria-label="Back to top">
-          <span className="identity__mark" aria-hidden="true">A</span>
+          <AMQLogoMark />
           <span className="identity__text">AMQ / SYSTEMS</span>
         </a>
 
@@ -33,4 +35,3 @@ export default function SiteHeader() {
     </header>
   )
 }
-
