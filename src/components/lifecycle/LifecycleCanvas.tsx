@@ -167,7 +167,7 @@ export function LifecycleCanvas({
       </div>
 
       {showDetail && (
-        <div className="mt-8 lg:mt-12">
+        <div className="mt-8 lg:mt-6">
           <LifecycleDetail detailId={detailId} stage={activeStage} />
         </div>
       )}

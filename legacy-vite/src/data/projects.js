@@ -1,11 +1,10 @@
 export const projects = [
   {
     id: 'careos',
-    index: '01',
     category: 'BUSINESS SYSTEMS · SYSTEM DESIGN',
     title: 'CareOS',
     description:
-      'A business operating system designed to connect clients, households, employees, services, bookings, visits, payments and operational workflows.',
+      'A production business operating system for a real service organisation — unifying bookings, scheduling, employee operations, billing and payroll across a public website, admin dashboard and employee app.',
     areas: [
       'Business Analysis',
       'Process Design',
@@ -14,22 +13,24 @@ export const projects = [
       'System Architecture',
       'Implementation',
     ],
+    workHref: '/work#careos',
     featured: true,
   },
   {
     id: 'gut-begleitet',
-    index: '02',
     category: 'DIGITAL SOLUTION · WEB',
     title: 'Gut Begleitet',
     description:
-      'A public-facing website and booking experience for an everyday-assistance organisation, designed as part of a broader digital operations ecosystem.',
+      'A digital service platform for an Austrian community-care association — turning informal service requests into a structured booking workflow, live in production today.',
     areas: [
       'Responsive Web Design',
       'Booking Flow',
       'Digital Service Experience',
       'Deployment',
     ],
+    workHref: '/work#gutbegleitet',
+    announcement:
+      'a membership app for booking events and services, and reserving the Gut Friend home companion — currently in concept and development.',
     featured: false,
   },
 ]
-

@@ -6,7 +6,7 @@ import type { BusinessDomain } from '@/domain/business-domains/domain.types'
 
 export function DomainPanel({ domain }: { domain: BusinessDomain }) {
   return (
-    <div className="min-h-[27rem]">
+    <div className="min-h-[27rem] lg:h-[clamp(14rem,27vh,18rem)] lg:min-h-0">
       <AnimatePresence mode="wait" initial={false}>
         <motion.article
           id="domain-explanation"
@@ -17,22 +17,22 @@ export function DomainPanel({ domain }: { domain: BusinessDomain }) {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="overflow-hidden rounded-panel border border-line bg-surface shadow-card"
+          className="h-full overflow-y-auto rounded-panel border border-line bg-surface shadow-card"
         >
-          <div className="p-6 sm:p-8 lg:p-10">
+          <div className="p-6 sm:p-8 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:gap-8 lg:p-6">
             <div className="max-w-3xl">
               <p className="font-mono text-xs font-medium tracking-[0.14em] text-accent uppercase">Purpose</p>
-              <h3 className="mt-4 text-3xl leading-[1.15] font-medium tracking-[-0.04em] text-ink">{domain.name}</h3>
-              <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">{domain.purpose}</p>
-              <div className="mt-7 border-l-2 border-accent pl-5">
+              <h3 className="mt-3 text-3xl leading-[1.15] font-medium tracking-[-0.04em] text-ink">{domain.name}</h3>
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">{domain.purpose}</p>
+              <div className="mt-5 border-l-2 border-accent pl-4">
                 <p className="font-mono text-xs font-medium tracking-[0.14em] text-muted uppercase">Business value</p>
-                <p className="mt-3 max-w-2xl text-lg leading-relaxed font-medium text-ink">{domain.businessValue}</p>
+                <p className="mt-2 max-w-2xl text-base leading-relaxed font-medium text-ink">{domain.businessValue}</p>
               </div>
             </div>
 
-            <div className="mt-10 border-t border-line pt-8">
+            <div className="mt-10 border-t border-line pt-8 lg:mt-0 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
               <p className="font-mono text-xs font-medium tracking-[0.14em] text-muted uppercase">Responsibilities</p>
-              <div className="mt-5 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {domain.responsibilityGroups.map((group) => (
                   <div key={group.title}>
                     <h4 className="text-sm font-medium text-ink">{group.title}</h4>

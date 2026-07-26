@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import type { ReactNode } from 'react'
+import '../../legacy-vite/src/styles/global.css'
+import '../../legacy-vite/src/pages/careos/careos.css'
 import './globals.css'
+import './routes.css'
 
 const geistSans = Geist({
   subsets: ['latin'],
@@ -14,9 +17,12 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'CareOS — Enterprise Platform for Service Organisations',
+  title: {
+    default: 'AMQ Systems — Business Systems Analyst',
+    template: '%s — AMQ Systems',
+  },
   description:
-    'CareOS connects customer management, operations, workforce, finance and reporting through one operational platform.',
+    'Business systems analysis, process design, data modelling and practical digital solutions.',
 }
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

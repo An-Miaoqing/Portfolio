@@ -357,7 +357,12 @@
   z-index: 0;
   display: grid;
   grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
-  height: 690px;
+  min-height: 690px;
+}
+
+.careos-intro-slide__visual--vision {
+  place-items: stretch;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .careos-intro-slide__copy {
@@ -470,6 +475,13 @@
   min-width: 0;
   overflow-x: auto;
 }
+
+.careos-intro-deck__tabs--gutbegleitet {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  overflow-x: visible;
+}
+
+.careos-intro-deck__tabs--gutbegleitet button { min-width: 0; }
 
 .careos-intro-deck__tabs button {
   display: flex;
@@ -1110,6 +1122,10 @@
   .careos-intro-deck__tabs {
     grid-template-columns: repeat(8, minmax(120px, 1fr));
   }
+
+  .careos-intro-deck__tabs--gutbegleitet {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 640px) {
@@ -1138,7 +1154,7 @@
   .careos-intro-deck__status { gap: 0.55rem; }
   .careos-intro-deck__status button { width: 30px; padding: 0; justify-content: center; font-size: 0; }
   .careos-intro-deck__status button i { font-size: 1rem; }
-  .careos-intro-slide { grid-template-rows: 600px 480px; height: 1080px; }
+  .careos-intro-slide { grid-template-rows: min-content min-content; min-height: 1080px; }
   .careos-intro-slide__copy { padding: 1.8rem 1.25rem 2rem; }
   .careos-intro-slide__copy h3 { font-size: var(--careos-type-title-mobile); }
   .careos-intro-slide__message { font-size: var(--careos-type-body); }
@@ -1148,6 +1164,7 @@
   .careos-intro-deck__arrows button:first-child { border-right: 1px solid var(--careos-line); }
   .careos-intro-deck__tabs { min-height: 46px; }
   .careos-intro-deck__tabs button { min-width: 98px; padding: 0.45rem 0.55rem; }
+  .careos-intro-deck__tabs--gutbegleitet button { min-width: 0; padding: 0.45rem 0.35rem; }
 
   .careos-slide-lifecycle { grid-template-columns: 1fr; gap: 0.6rem; }
   .careos-slide-lifecycle__core { min-height: 48px; }

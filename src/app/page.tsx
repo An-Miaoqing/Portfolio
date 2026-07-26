@@ -1,16 +1,18 @@
-import { SiteShell } from '@/components/layout/SiteShell'
-import { BusinessDomains } from '@/components/sections/BusinessDomains/BusinessDomains'
-import { Hero } from '@/components/sections/Hero/Hero'
-import { OperationalLifecycle } from '@/components/sections/OperationalLifecycle/OperationalLifecycle'
-import { PlatformVision } from '@/components/sections/PlatformVision/PlatformVision'
+import { SiteNavigation } from '@/components/layout/SiteNavigation'
+import { PortfolioFooter } from '@/components/layout/PortfolioFooter'
+import Hero from '../../legacy-vite/src/sections/Hero'
+import SelectedWork from '../../legacy-vite/src/sections/SelectedWork'
 
-export default function HomePage() {
+export default function PortfolioHomePage() {
   return (
-    <SiteShell>
-      <Hero />
-      <PlatformVision />
-      <OperationalLifecycle />
-      <BusinessDomains />
-    </SiteShell>
+    <div className="portfolio-site portfolio-home">
+      <a className="portfolio-site__skip" href="#portfolio-main">Skip to content</a>
+      <SiteNavigation />
+      <main id="portfolio-main">
+        <Hero />
+        <SelectedWork />
+      </main>
+      <PortfolioFooter variant="starry" />
+    </div>
   )
 }

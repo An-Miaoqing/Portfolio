@@ -7,6 +7,8 @@ export type WorkflowContext = {
   domain: string | null
   application: string | null
   architectureLayer: string | null
+  architectureEntity: string | null
+  dataFlow: string | null
 }
 
 export type WorkflowEngineState = {
@@ -53,6 +55,23 @@ export type WorkflowEngine = {
     stageIds?: readonly LifecycleStageId[],
     referencedStageIds?: readonly LifecycleStageId[],
   ) => void
+  highlightApplication: (
+    applicationId: string,
+    stageIds: readonly LifecycleStageId[],
+    referencedStageIds?: readonly LifecycleStageId[],
+  ) => void
+  highlightArchitecture: (
+    layerId: string,
+    stageIds: readonly LifecycleStageId[],
+    referencedStageIds?: readonly LifecycleStageId[],
+  ) => void
+  animateArchitecture: (
+    layerId: string,
+    stageIds: readonly LifecycleStageId[],
+    referencedStageIds?: readonly LifecycleStageId[],
+  ) => void
+  focusEntity: (entityId: string | null) => void
+  focusDataFlow: (dataFlowId: string | null) => void
   setArchitectureLayer: (
     layerId: string | null,
     stageIds?: readonly LifecycleStageId[],
@@ -71,6 +90,8 @@ const emptyContext: WorkflowContext = {
   domain: null,
   application: null,
   architectureLayer: null,
+  architectureEntity: null,
+  dataFlow: null,
 }
 
 export function useWorkflowEngine(
@@ -177,11 +198,34 @@ export function useWorkflowEngine(
       setScope('application', applicationId, stageIds, referenceIds),
     [setScope],
   )
+  const highlightApplication = useCallback<WorkflowEngine['highlightApplication']>(
+    (applicationId, stageIds, referenceIds) =>
+      setScope('application', applicationId, stageIds, referenceIds),
+    [setScope],
+  )
   const setArchitectureLayer = useCallback<WorkflowEngine['setArchitectureLayer']>(
     (layerId, stageIds, referenceIds) =>
       setScope('architectureLayer', layerId, stageIds, referenceIds),
     [setScope],
   )
+  const highlightArchitecture = useCallback<WorkflowEngine['highlightArchitecture']>(
+    (layerId, stageIds, referenceIds) =>
+      setScope('architectureLayer', layerId, stageIds, referenceIds),
+    [setScope],
+  )
+  const animateArchitecture = useCallback<WorkflowEngine['animateArchitecture']>(
+    (layerId, stageIds, referenceIds) =>
+      setScope('architectureLayer', layerId, stageIds, referenceIds),
+    [setScope],
+  )
+  const focusEntity = useCallback((entityId: string | null) => {
+    setContext((current) => ({ ...current, architectureEntity: entityId }))
+    setJourneyVersion((version) => version + 1)
+  }, [])
+  const focusDataFlow = useCallback((dataFlowId: string | null) => {
+    setContext((current) => ({ ...current, dataFlow: dataFlowId }))
+    setJourneyVersion((version) => version + 1)
+  }, [])
 
   return useMemo(
     () => ({
@@ -205,6 +249,11 @@ export function useWorkflowEngine(
       clearDomainFocus,
       setDomain,
       setApplication,
+      highlightApplication,
+      highlightArchitecture,
+      animateArchitecture,
+      focusEntity,
+      focusDataFlow,
       setArchitectureLayer,
     }),
     [
@@ -224,6 +273,11 @@ export function useWorkflowEngine(
       model,
       referencedStageIds,
       setApplication,
+      highlightApplication,
+      highlightArchitecture,
+      animateArchitecture,
+      focusEntity,
+      focusDataFlow,
       setArchitectureLayer,
       setDomain,
       setDomainFocus,

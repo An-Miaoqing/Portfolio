@@ -17,7 +17,7 @@ export function ScrollIndicator({
   return (
     <a
       href={href}
-      className={`focus-ring mb-8 inline-flex w-fit items-center gap-3 rounded-control py-2 font-mono text-xs tracking-[0.12em] text-muted uppercase ${className}`}
+      className={`focus-ring inline-flex w-fit items-center gap-3 rounded-control py-2 font-mono text-xs tracking-[0.12em] text-muted uppercase ${className}`}
     >
       <span>{label}</span>
       <motion.span

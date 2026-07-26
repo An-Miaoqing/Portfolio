@@ -37,7 +37,7 @@ export function PlatformDiagram() {
       className="relative"
       aria-label="Five business domains connected through the CareOS operational core"
     >
-      <div className="relative hidden h-[45rem] md:block">
+      <div className="relative hidden h-[45rem] md:block lg:h-[clamp(26rem,52vh,34rem)]">
         <svg
           viewBox="0 0 1100 720"
           preserveAspectRatio="none"

@@ -32,38 +32,31 @@ export function BusinessDomains() {
   }
 
   return (
-    <>
-      <SectionWrapper id="business-domains" className="border-b border-line bg-surface py-[var(--space-section)]">
-        <motion.div variants={revealItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} className="mb-14 lg:mb-20">
-          <Headline eyebrow="04 / Business Domains">Five business domains.<br />One shared operational model.</Headline>
-          <p className="mt-7 max-w-[var(--container-copy)] text-body-lg text-pretty text-muted">
+      <SectionWrapper id="business-domains" className="chapter-screen border-b border-line bg-surface py-[var(--space-section)]">
+        <motion.div variants={revealItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} className="mb-12 grid gap-8 lg:mb-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-end">
+          <div>
+            <Headline eyebrow="04 / Business Domains">Five business domains.<br />One shared operational model.</Headline>
+          </div>
+          <p className="max-w-[var(--container-copy)] text-body-lg text-pretty text-muted lg:pb-1">
             Every responsibility inside CareOS is organised into a business domain. Each domain owns specific parts of the operational lifecycle while sharing one connected platform.
           </p>
         </motion.div>
 
-        <div className="grid items-start gap-8 xl:grid-cols-[17rem_minmax(0,1fr)]">
+        <div className="grid items-start gap-8 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-6">
           <DomainNavigator activeDomainId={activeDomainId} domains={careOSDomains} onSelect={selectDomain} />
-          <div className="min-w-0 rounded-panel border border-line bg-canvas p-4 sm:p-6 lg:p-8">
-            <p className="mb-6 font-mono text-xs font-medium tracking-[0.14em] text-muted uppercase">Workflow ownership / {activeDomain.name}</p>
+          <div className="min-w-0 rounded-panel border border-line bg-canvas p-4 sm:p-6 lg:p-5">
+            <p className="mb-4 font-mono text-xs font-medium tracking-[0.14em] text-muted uppercase">Workflow ownership / {activeDomain.name}</p>
             <LifecycleGroupedCanvas engine={engine} groups={careOSDomainWorkflowGroups} />
           </div>
         </div>
 
-        <div className="mt-8 lg:mt-12">
+        <div className="mt-8 lg:mt-6">
           <DomainPanel domain={activeDomain} />
         </div>
 
-        <motion.div variants={revealItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.8 }} className="mt-12 lg:mt-16">
+        <motion.div variants={revealItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.8 }} className="mt-10 lg:mt-4">
           <ScrollIndicator href="#applications" label="Applications" />
         </motion.div>
       </SectionWrapper>
-
-      <SectionWrapper id="applications" className="bg-canvas py-24 sm:py-32">
-        <motion.div variants={revealItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }} className="mx-auto max-w-2xl text-center">
-          <p className="font-mono text-sm font-medium tracking-[0.16em] text-accent uppercase">05 / Applications</p>
-          <p className="mt-5 text-2xl leading-[1.3] font-medium tracking-[-0.03em] text-ink sm:text-3xl">Coming in Sprint 4</p>
-        </motion.div>
-      </SectionWrapper>
-    </>
   )
 }

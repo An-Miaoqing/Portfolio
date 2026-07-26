@@ -63,7 +63,7 @@ export const LifecycleNode = memo(function LifecycleNode({
       : emphasis === 'reference'
         ? 0.38
         : 1
-  const className = `focus-ring group relative z-10 flex w-full flex-col justify-between rounded-card border p-4 text-left shadow-control transition-colors duration-(--duration-medium) ${interactive ? 'cursor-pointer' : 'cursor-default'} ${compact ? 'min-h-28 xl:min-h-32 xl:p-3 2xl:p-4' : 'min-h-32 lg:min-h-40 lg:p-3 xl:p-4'} ${
+  const className = `focus-ring group relative z-10 flex w-full flex-col justify-between rounded-card border p-4 text-left shadow-control transition-colors duration-(--duration-medium) ${interactive ? 'cursor-pointer' : 'cursor-default'} ${compact ? 'min-h-28 xl:min-h-32 xl:p-3 2xl:p-4' : 'min-h-32 lg:min-h-32 lg:p-3 xl:p-4'} ${
     active || highlighted
       ? 'border-accent bg-accent-soft'
       : completed

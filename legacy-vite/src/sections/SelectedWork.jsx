@@ -17,18 +17,30 @@ function CareOSVisual() {
 }
 
 function GutBegleitetVisual() {
+  const flow = [
+    { label: 'Visitor', detail: 'Discovers services online' },
+    { label: 'Booking Form', detail: 'Selects service & appointment' },
+    { label: 'REST API', detail: 'Validates the request' },
+    { label: 'Requested', detail: 'Ready for internal review' },
+  ]
+
   return (
     <div className="project-visual project-visual--flow" aria-hidden="true">
       <p>DIGITAL SERVICE FLOW</p>
-      <div className="service-flow">
-        <span>Discover</span><i>→</i><span>Understand</span><i>→</i><span>Request</span>
-      </div>
-      <div className="browser-frame">
-        <span /><span /><span />
-        <div className="browser-frame__content">
-          <i /><i /><i />
-        </div>
-      </div>
+      <ol className="service-flow-diagram">
+        {flow.map((step, index) => (
+          <li key={step.label}>
+            <div className="service-flow-diagram__node">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <strong>{step.label}</strong>
+                <small>{step.detail}</small>
+              </div>
+            </div>
+            {index < flow.length - 1 ? <i /> : null}
+          </li>
+        ))}
+      </ol>
     </div>
   )
 }
@@ -37,7 +49,6 @@ function ProjectCard({ project }) {
   return (
     <article className={`project-card ${project.featured ? 'project-card--featured' : ''}`}>
       <div className="project-card__meta">
-        <span>{project.index}</span>
         <p>{project.category}</p>
       </div>
       <div className="project-card__body">
@@ -47,7 +58,14 @@ function ProjectCard({ project }) {
           <ul className="tag-list" aria-label={`${project.title} areas`}>
             {project.areas.map((area) => <li key={area}>{area}</li>)}
           </ul>
-          <span className="project-status">Case study in development</span>
+          {project.announcement ? (
+            <p className="project-announcement">
+              <strong>Coming next —</strong> {project.announcement}
+            </p>
+          ) : null}
+          <a className="button button--secondary" href={project.workHref}>
+            View work <span aria-hidden="true">→</span>
+          </a>
         </div>
         {project.id === 'careos' ? <CareOSVisual /> : <GutBegleitetVisual />}
       </div>
@@ -59,11 +77,6 @@ export default function SelectedWork() {
   return (
     <section className="work section" id="work">
       <div className="container">
-        <div className="section-heading">
-          <p className="eyebrow">01 / WORK</p>
-          <h2>Selected Work</h2>
-          <p>Systems and digital solutions shaped around real operations.</p>
-        </div>
         <div className="project-list">
           {projects.map((project) => <ProjectCard key={project.id} project={project} />)}
         </div>

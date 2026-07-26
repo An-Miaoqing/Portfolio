@@ -45,7 +45,7 @@ export function LifecycleGroupedCanvas({ engine, groups }: LifecycleGroupedCanva
 
   return (
     <div aria-label="Operational lifecycle grouped by business ownership">
-      <div className="hidden items-center xl:flex" role="group" aria-label="Business ownership workflow">
+      <div className="hidden items-center lg:flex" role="group" aria-label="Business ownership workflow">
         {groups.map((group, index) => (
           <div key={group.id} className="contents">
             <div className="w-[17%] min-w-0 shrink">{renderGroup(group, index)}</div>
@@ -63,7 +63,7 @@ export function LifecycleGroupedCanvas({ engine, groups }: LifecycleGroupedCanva
         ))}
       </div>
 
-      <div className="xl:hidden" role="group" aria-label="Business ownership workflow">
+      <div className="lg:hidden" role="group" aria-label="Business ownership workflow">
         {groups.map((group, index) => (
           <div key={group.id}>
             {renderGroup(group, index)}

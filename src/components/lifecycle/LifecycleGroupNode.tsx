@@ -35,7 +35,7 @@ export const LifecycleGroupNode = memo(function LifecycleGroupNode({
       }}
       transition={motionTransitions.medium}
       aria-label={`${group.owner} owns ${stages.map((stage) => stage.title).join(', ')}`}
-      className={`relative z-10 flex min-h-40 w-full flex-col rounded-card border p-4 shadow-control transition-colors duration-(--duration-medium) ${
+      className={`relative z-10 flex min-h-36 w-full flex-col rounded-card border p-3 shadow-control transition-colors duration-(--duration-medium) ${
         primary
           ? 'border-accent bg-accent-soft'
           : referenced
@@ -52,7 +52,7 @@ export const LifecycleGroupNode = memo(function LifecycleGroupNode({
         </span>
       </div>
 
-      <ol className="mt-6 grid gap-3">
+      <ol className="mt-4 grid gap-2">
         {stages.map((stage, index) => (
           <li key={stage.id} className="relative flex items-start gap-2 text-sm leading-snug font-medium text-ink">
             <span aria-hidden="true" className={`mt-1.5 size-1.5 shrink-0 rounded-full ${primary ? 'bg-accent' : 'bg-line-strong'}`} />
