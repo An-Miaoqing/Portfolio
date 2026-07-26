@@ -9,7 +9,7 @@ const navigation = [
   { label: 'Contact', href: { pathname: '/contact' } },
 ] as const
 
-function AMQLogoMark() {
+export function AMQLogoMark() {
   return (
     <span className="unified-nav__mark" aria-hidden="true">
       <svg viewBox="0 0 60 32" focusable="false">

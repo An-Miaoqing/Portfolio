@@ -45,7 +45,44 @@ function GutBegleitetVisual() {
   )
 }
 
+const projectVisuals = {
+  careos: CareOSVisual,
+  'gut-begleitet': GutBegleitetVisual,
+  engineering: EnterpriseBackendVisual,
+}
+
+function EnterpriseBackendVisual() {
+  const layers = [
+    { label: 'Applications', detail: 'Website, Management, Employee' },
+    { label: 'Platform APIs', detail: 'One shared interface' },
+    { label: 'Business Services', detail: 'Centralised business logic' },
+    { label: 'Shared Database', detail: 'Single source of truth' },
+  ]
+
+  return (
+    <div className="project-visual project-visual--flow" aria-hidden="true">
+      <p>ENTERPRISE BACKEND ARCHITECTURE</p>
+      <ol className="service-flow-diagram">
+        {layers.map((layer, index) => (
+          <li key={layer.label}>
+            <div className="service-flow-diagram__node">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <strong>{layer.label}</strong>
+                <small>{layer.detail}</small>
+              </div>
+            </div>
+            {index < layers.length - 1 ? <i /> : null}
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
+}
+
 function ProjectCard({ project }) {
+  const Visual = projectVisuals[project.id] ?? GutBegleitetVisual
+
   return (
     <article className={`project-card ${project.featured ? 'project-card--featured' : ''}`}>
       <div className="project-card__meta">
@@ -63,11 +100,11 @@ function ProjectCard({ project }) {
               <strong>Coming next —</strong> {project.announcement}
             </p>
           ) : null}
-          <a className="button button--secondary" href={project.workHref}>
-            View work <span aria-hidden="true">→</span>
+          <a className="button button--secondary" href={project.ctaHref ?? project.workHref}>
+            {project.ctaLabel ?? 'View work'} <span aria-hidden="true">→</span>
           </a>
         </div>
-        {project.id === 'careos' ? <CareOSVisual /> : <GutBegleitetVisual />}
+        <Visual />
       </div>
     </article>
   )

@@ -1,4 +1,22 @@
+import Link from 'next/link'
+import { AMQLogoMark } from './SiteNavigation'
+
 const contactItems = ['Email', 'LinkedIn', 'GitHub'] as const
+
+const activities = 'Business analysis · Process design · Data modelling · Digital platforms'
+
+const pageLinks = [
+  { label: 'Home', href: { pathname: '/' } },
+  { label: 'Work', href: { pathname: '/work' } },
+  { label: 'About', href: { pathname: '/about' } },
+  { label: 'Contact', href: { pathname: '/contact' } },
+] as const
+
+const caseStudyLinks = [
+  { label: 'CareOS Case Study', href: { pathname: '/case-study' } },
+  { label: 'Gut Begleitet Case Study', href: { pathname: '/case-study/gutbegleitet' } },
+  { label: 'Engineering', href: { pathname: '/engineering' } },
+] as const
 
 type PortfolioFooterProps = {
   variant?: 'default' | 'starry'
@@ -10,11 +28,49 @@ export function PortfolioFooter({ variant = 'default' }: PortfolioFooterProps) {
       <footer className="starry-footer" id="contact">
         <div className="starry-footer__stars" aria-hidden="true" />
         <div className="starry-footer__content">
-          <h2>Systems designed to make complex work clearer.</h2>
-          <p className="starry-footer__statement">Business understanding. Structured thinking. Practical digital solutions.</p>
-          <p className="starry-footer__copy">
-            I&apos;m interested in meaningful problems where operations, data and technology come together.
-          </p>
+          <div className="starry-footer__grid">
+            <div className="starry-footer__brand">
+              <Link className="unified-nav__identity" href="/" aria-label="AMQ Systems homepage">
+                <AMQLogoMark />
+                <span>AMQ / SYSTEMS</span>
+              </Link>
+              <p className="starry-footer__slogan">Systems designed to make complex work clearer.</p>
+              <p className="starry-footer__activities">{activities}</p>
+            </div>
+
+            <nav aria-label="Quick access" className="starry-footer__nav">
+              <p className="starry-footer__eyebrow">Quick Access</p>
+              <div className="starry-footer__nav-columns">
+                <ul>
+                  {pageLinks.map((item) => (
+                    <li key={item.label}>
+                      <Link href={item.href}>{item.label}</Link>
+                    </li>
+                  ))}
+                </ul>
+                <ul>
+                  {caseStudyLinks.map((item) => (
+                    <li key={item.label}>
+                      <Link href={item.href}>{item.label}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </nav>
+
+            <div className="starry-footer__contact">
+              <p className="starry-footer__eyebrow">Contact</p>
+              <ul>
+                {contactItems.map((item) => (
+                  <li key={item}>
+                    <span className="starry-footer__placeholder" title={`${item} link to be added`}>
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
         <div className="starry-footer__meta">
           <span>© 2026 AMQ / SYSTEMS</span>

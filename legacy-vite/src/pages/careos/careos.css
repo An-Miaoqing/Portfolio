@@ -476,12 +476,14 @@
   overflow-x: auto;
 }
 
-.careos-intro-deck__tabs--gutbegleitet {
+.careos-intro-deck__tabs--gutbegleitet,
+.careos-intro-deck__tabs--engineering {
   grid-template-columns: repeat(7, minmax(0, 1fr));
   overflow-x: visible;
 }
 
-.careos-intro-deck__tabs--gutbegleitet button { min-width: 0; }
+.careos-intro-deck__tabs--gutbegleitet button,
+.careos-intro-deck__tabs--engineering button { min-width: 0; }
 
 .careos-intro-deck__tabs button {
   display: flex;
@@ -1123,7 +1125,8 @@
     grid-template-columns: repeat(8, minmax(120px, 1fr));
   }
 
-  .careos-intro-deck__tabs--gutbegleitet {
+  .careos-intro-deck__tabs--gutbegleitet,
+  .careos-intro-deck__tabs--engineering {
     grid-template-columns: repeat(7, minmax(0, 1fr));
   }
 }
@@ -1164,7 +1167,8 @@
   .careos-intro-deck__arrows button:first-child { border-right: 1px solid var(--careos-line); }
   .careos-intro-deck__tabs { min-height: 46px; }
   .careos-intro-deck__tabs button { min-width: 98px; padding: 0.45rem 0.55rem; }
-  .careos-intro-deck__tabs--gutbegleitet button { min-width: 0; padding: 0.45rem 0.35rem; }
+  .careos-intro-deck__tabs--gutbegleitet button,
+  .careos-intro-deck__tabs--engineering button { min-width: 0; padding: 0.45rem 0.35rem; }
 
   .careos-slide-lifecycle { grid-template-columns: 1fr; gap: 0.6rem; }
   .careos-slide-lifecycle__core { min-height: 48px; }

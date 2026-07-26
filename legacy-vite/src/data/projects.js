@@ -33,4 +33,22 @@ export const projects = [
       'a membership app for booking events and services, and reserving the Gut Friend home companion — currently in concept and development.',
     featured: false,
   },
+  {
+    id: 'engineering',
+    category: 'BUSINESS SYSTEMS · PLATFORM ENGINEERING',
+    title: 'Enterprise Backend Architecture',
+    description:
+      'How CareOS’s backend is organised — one platform shared by every application, structured around business domains, entities and services rather than technical layers.',
+    areas: [
+      'Domain Modelling',
+      'Data Relationships',
+      'Business Services',
+      'Platform APIs',
+      'Architecture Principles',
+    ],
+    workHref: '/engineering',
+    ctaLabel: 'View Engineering',
+    ctaHref: '/engineering',
+    featured: false,
+  },
 ]

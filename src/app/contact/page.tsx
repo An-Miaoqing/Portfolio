@@ -43,9 +43,12 @@ export default function ContactPage() {
         <header className="contact-page__hero">
           <div className="contact-page__container">
             <p className="contact-page__eyebrow">Contact</p>
-            <h1>Let&apos;s connect</h1>
+            <h1>Systems designed to make complex work clearer.</h1>
+            <p className="contact-page__statement">
+              Business understanding. Structured thinking. Practical digital solutions.
+            </p>
             <p>
-              I&apos;m interested in conversations about meaningful problems where business understanding, systems thinking, data, and technology come together.
+              I&apos;m interested in meaningful problems where operations, data and technology come together.
             </p>
           </div>
         </header>
