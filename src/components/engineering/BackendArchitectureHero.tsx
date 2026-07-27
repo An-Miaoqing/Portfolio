@@ -219,21 +219,32 @@ export function BackendArchitectureHero() {
   return (
     <SectionWrapper
       as="section"
-      className="border-b border-line bg-canvas py-[var(--space-section)]"
+      className="relative overflow-hidden border-b border-line bg-canvas py-[var(--space-section)]"
       id="backend-is-the-platform"
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-[5%] right-[-10rem] size-[40rem] rounded-full blur-[80px]"
+        style={{
+          background:
+            'conic-gradient(from 210deg, rgba(67, 111, 225, 0.2), rgba(137, 92, 230, 0.22), rgba(235, 111, 179, 0.15), rgba(67, 111, 225, 0.05))',
+        }}
+      />
+
       <motion.div
         animate="visible"
+        className="relative"
         initial="hidden"
         variants={revealItem}
         viewport={{ once: true, amount: 0.3 }}
         whileInView="visible"
       >
         <Headline as="h1" eyebrow="ENGINEERING" size="display">
-          Enterprise Backend Architecture
+          <span className="text-indigo-accent">Enterprise</span>{' '}
+          <span className="gradient-text">Backend Architecture</span>
         </Headline>
 
-        <p className="mt-6 max-w-3xl text-body-lg text-pretty text-muted">
+        <p className="mt-6 max-w-3xl text-body-lg text-pretty text-muted" style={{ lineHeight: 1.8 }}>
           Designing the operational core of a business platform—from domain modelling and
           database architecture to APIs, workflows, and business rules.
         </p>

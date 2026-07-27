@@ -4,6 +4,7 @@ import { SiteNavigation } from '@/components/layout/SiteNavigation'
 import { CareOSSlideshow } from '@/components/work/CareOSSlideshow'
 import { EngineeringSlideshow } from '@/components/work/EngineeringSlideshow'
 import { GutBegleitetSlideshow } from '@/components/work/GutBegleitetSlideshow'
+import { WorkHero } from '@/components/work/WorkHero'
 
 export const metadata: Metadata = {
   title: 'Selected Work',
@@ -43,6 +44,8 @@ export default function WorkPage() {
       <SiteNavigation />
 
       <main id="work-main">
+        <WorkHero />
+
         <article id="careos" aria-labelledby="careos-work-title">
           <div className="container work-index__intro">
             <p className="work-index__breadcrumb">01 / BUSINESS SYSTEMS · SYSTEM DESIGN</p>

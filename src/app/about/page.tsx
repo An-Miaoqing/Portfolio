@@ -54,6 +54,9 @@ export default function AboutPage() {
               <span>as</span>
               <span>Systems</span>
             </h1>
+            <p className="about-page__header-support">
+              Business Systems Analysis · Process Design · Data Modelling · Digital Solutions
+            </p>
           </div>
         </header>
 

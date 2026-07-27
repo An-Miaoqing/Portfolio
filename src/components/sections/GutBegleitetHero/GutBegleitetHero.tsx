@@ -30,8 +30,17 @@ export function GutBegleitetHero() {
       id="top"
       className="relative min-h-[calc(100svh-var(--site-nav-height))] overflow-hidden border-b border-line bg-canvas"
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-[5%] right-[-10rem] size-[40rem] rounded-full blur-[80px]"
+        style={{
+          background:
+            'conic-gradient(from 210deg, rgba(67, 111, 225, 0.2), rgba(137, 92, 230, 0.22), rgba(235, 111, 179, 0.15), rgba(67, 111, 225, 0.05))',
+        }}
+      />
+
       <motion.div
-        className="grid min-h-[calc(100svh-var(--site-nav-height))] items-center gap-12 py-14 sm:py-18 lg:grid-cols-[minmax(0,0.9fr)_minmax(32rem,1.2fr)] lg:gap-16 lg:py-20"
+        className="relative grid min-h-[calc(100svh-var(--site-nav-height))] items-center gap-12 py-14 sm:py-18 lg:grid-cols-[minmax(0,0.9fr)_minmax(32rem,1.2fr)] lg:gap-16 lg:py-20"
         variants={revealGroup}
         initial="hidden"
         animate="visible"

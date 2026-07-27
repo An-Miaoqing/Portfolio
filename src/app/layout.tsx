@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import type { ReactNode } from 'react'
-import '../../legacy-vite/src/styles/global.css'
-import '../../legacy-vite/src/pages/careos/careos.css'
 import './globals.css'
 import './routes.css'
 

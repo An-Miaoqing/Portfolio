@@ -11,6 +11,5 @@ export default defineConfig([
     'build/**',
     'dist/**',
     'next-env.d.ts',
-    'legacy-vite/**',
   ]),
 ])

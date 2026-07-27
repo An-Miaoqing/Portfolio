@@ -39,7 +39,7 @@ export function EngineeringProgressNav() {
   return (
     <nav
       aria-label="Engineering page sections"
-      className="fixed top-1/2 right-5 z-40 hidden -translate-y-1/2 flex-col items-end gap-2.5 lg:flex xl:right-8"
+      className="fixed top-[38%] right-5 z-40 hidden -translate-y-1/2 flex-col items-end gap-2.5 lg:flex xl:right-8"
     >
       {NAV_ITEMS.map((item) => {
         const isActive = item.id === activeId

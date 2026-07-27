@@ -31,9 +31,11 @@ Used for the primary message of the page.
 | Weight | `500` |
 | Style | Sentence or title case; no forced uppercase |
 | Letter spacing | `-0.065em` |
-| Line-height | `0.98` |
+| Line-height | `1.08` |
 | Maximum width | `64rem` / 1024px |
 | Text wrapping | Balanced |
+
+> **Line-height note:** this was `0.98` originally. Below 1, the line box is shorter than the font's natural single-line height, which clips descenders (g/j/p/q/y) whenever the hero's section also uses `overflow: hidden` — found across an audit of every page hero (Home, Contact, About, Case Study, Gut Begleitet, Products all clip; Engineering and Work don't clip but read as visually cramped). Fixed once, centrally, via the `--text-display--line-height` token below — every hero reads it either directly (Tailwind's `text-display` utility) or via `var(--text-display--line-height)` (the routes.css pages), so there is exactly one place to change this. Don't reintroduce a per-page override for this; if a specific hero needs more room, prefer adjusting that page's `overflow` handling or spacing instead.
 
 ### 3. Supporting text
 
@@ -58,7 +60,7 @@ Used for the concise explanation immediately following the hero heading.
 ```css
 :root {
   --text-display: clamp(3rem, 6vw, 5.5rem);
-  --text-display--line-height: 0.98;
+  --text-display--line-height: 1.08;
   --text-display--letter-spacing: -0.065em;
 
   --text-body-lg: clamp(1.05rem, 1.45vw, 1.3rem);

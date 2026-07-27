@@ -3,7 +3,7 @@ import Link from 'next/link'
 const navigation = [
   { label: 'Home', href: { pathname: '/' } },
   { label: 'Work', href: { pathname: '/work' } },
-  { label: 'Case Study', href: { pathname: '/case-study' } },
+  { label: 'Products', href: { pathname: '/products' } },
   { label: 'Engineering', href: { pathname: '/engineering' } },
   { label: 'About', href: { pathname: '/about' } },
   { label: 'Contact', href: { pathname: '/contact' } },

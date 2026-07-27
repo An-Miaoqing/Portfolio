@@ -8,6 +8,7 @@ const activities = 'Business analysis · Process design · Data modelling · Dig
 const pageLinks = [
   { label: 'Home', href: { pathname: '/' } },
   { label: 'Work', href: { pathname: '/work' } },
+  { label: 'Products', href: { pathname: '/products' } },
   { label: 'About', href: { pathname: '/about' } },
   { label: 'Contact', href: { pathname: '/contact' } },
 ] as const

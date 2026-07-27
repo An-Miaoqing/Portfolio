@@ -15,8 +15,17 @@ export function Hero() {
       id="top"
       className="relative min-h-[calc(100svh-var(--site-nav-height))] overflow-hidden border-b border-line bg-canvas"
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-[5%] right-[-10rem] size-[40rem] rounded-full blur-[80px]"
+        style={{
+          background:
+            'conic-gradient(from 210deg, rgba(67, 111, 225, 0.2), rgba(137, 92, 230, 0.22), rgba(235, 111, 179, 0.15), rgba(67, 111, 225, 0.05))',
+        }}
+      />
+
       <motion.div
-        className="flex min-h-[calc(100svh-var(--site-nav-height))] flex-col"
+        className="relative flex min-h-[calc(100svh-var(--site-nav-height))] flex-col"
         variants={revealGroup}
         initial="hidden"
         animate="visible"

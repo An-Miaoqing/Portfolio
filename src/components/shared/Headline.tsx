@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 type HeadlineProps = {
   as?: 'h1' | 'h2'
   children: ReactNode
-  eyebrow: string
+  eyebrow?: string
   size?: 'display' | 'section'
 }
 
@@ -20,9 +20,11 @@ export function Headline({
 }: HeadlineProps) {
   return (
     <div>
-      <p className="mb-6 font-mono text-xs font-medium tracking-[0.16em] text-accent uppercase sm:text-sm">
-        {eyebrow}
-      </p>
+      {eyebrow && (
+        <p className="mb-6 font-mono text-xs font-medium tracking-[0.16em] text-accent uppercase sm:text-sm">
+          {eyebrow}
+        </p>
+      )}
       <Heading className={`max-w-5xl font-medium text-balance ${headlineSizes[size]}`}>
         {children}
       </Heading>
