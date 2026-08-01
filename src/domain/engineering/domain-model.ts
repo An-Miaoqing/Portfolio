@@ -1,16 +1,35 @@
-export type BusinessDomainId = 'customer' | 'finance' | 'operations' | 'reporting' | 'workforce'
+export type BusinessDomainId =
+  | 'customer'
+  | 'finance'
+  | 'identity'
+  | 'operations'
+  | 'platform-services'
+  | 'workforce'
 
 export type BusinessDomainModelEntry = {
-  dependsOn: readonly BusinessDomainId[]
   exampleQuestions: readonly string[]
   id: BusinessDomainId
   name: string
-  owns: readonly string[]
   purpose: string
   responsibilities: readonly string[]
 }
 
 export const businessDomainModel: readonly BusinessDomainModelEntry[] = [
+  {
+    id: 'identity',
+    name: 'Identity',
+    purpose: 'Manage user accounts, roles, and secure access to the platform.',
+    responsibilities: [
+      'Authenticating users',
+      'Managing roles and the access they grant',
+      'Securing sensitive operations',
+    ],
+    exampleQuestions: [
+      'Which role does this user hold?',
+      'Is this user allowed to approve payroll?',
+      'Which employee profile is this user linked to?',
+    ],
+  },
   {
     id: 'customer',
     name: 'Customer',
@@ -21,8 +40,6 @@ export const businessDomainModel: readonly BusinessDomainModelEntry[] = [
       'Tracking service history and preferences',
       'Coordinating preferred employee relationships',
     ],
-    owns: ['Clients', 'Households', 'Companies', 'Booking history'],
-    dependsOn: [],
     exampleQuestions: [
       'Which household does this client belong to?',
       "What is this client's service history?",
@@ -39,8 +56,6 @@ export const businessDomainModel: readonly BusinessDomainModelEntry[] = [
       'Managing visit execution',
       'Tracking operational status',
     ],
-    owns: ['Bookings', 'Assignments', 'Visits', 'Schedules'],
-    dependsOn: ['customer', 'workforce', 'finance'],
     exampleQuestions: [
       'Who will perform the visit?',
       'Has the booking been completed?',
@@ -50,17 +65,15 @@ export const businessDomainModel: readonly BusinessDomainModelEntry[] = [
   {
     id: 'workforce',
     name: 'Workforce',
-    purpose: 'Manage employees, availability, roles, and operational work.',
+    purpose: 'Manage employees, availability, and operational work.',
     responsibilities: [
-      'Managing employee profiles and qualifications',
+      'Managing employee profiles and skills',
       'Tracking availability and scheduling constraints',
       'Matching employees to service requirements',
       'Monitoring operational performance',
     ],
-    owns: ['Employees', 'Availability', 'Qualifications', 'Performance'],
-    dependsOn: ['operations'],
     exampleQuestions: [
-      'Is this employee qualified for the service?',
+      'Is this employee approved to deliver this service?',
       'What is their availability this week?',
       'Who can be assigned to this visit?',
     ],
@@ -75,8 +88,6 @@ export const businessDomainModel: readonly BusinessDomainModelEntry[] = [
       'Reconciling cash and payroll',
       'Maintaining financial accuracy',
     ],
-    owns: ['Invoices', 'Payments', 'Payroll', 'Revenue'],
-    dependsOn: ['operations', 'workforce'],
     exampleQuestions: [
       'Has this visit been billed?',
       'What is the outstanding balance for this client?',
@@ -84,21 +95,19 @@ export const businessDomainModel: readonly BusinessDomainModelEntry[] = [
     ],
   },
   {
-    id: 'reporting',
-    name: 'Reporting',
-    purpose: 'Transform operational data into business insight.',
+    id: 'platform-services',
+    name: 'Platform Services',
+    purpose: 'Provide the shared, cross-cutting capabilities every other domain relies on.',
     responsibilities: [
-      'Aggregating operational data',
-      'Surfacing business performance trends',
-      'Supporting decision-making across domains',
-      'Highlighting data quality issues',
+      'Storing and securing documents',
+      'Delivering notifications',
+      'Recording audit history',
+      'Issuing reference numbers',
     ],
-    owns: [],
-    dependsOn: ['customer', 'operations', 'workforce', 'finance'],
     exampleQuestions: [
-      'How many bookings were requested this month?',
-      'What is the revenue trend by service?',
-      'Which employees completed the most visits?',
+      'Who approved this change?',
+      'Was the client notified about their visit?',
+      'Where is the signed intake document for this client?',
     ],
   },
 ] as const satisfies readonly BusinessDomainModelEntry[]
@@ -113,5 +122,4 @@ export const domainRelationshipFlow: readonly DomainRelationshipStep[] = [
   { domainId: 'operations', action: 'plans work' },
   { domainId: 'workforce', action: 'delivers service' },
   { domainId: 'finance', action: 'settles work' },
-  { domainId: 'reporting', action: 'analyses performance' },
 ]

@@ -43,12 +43,10 @@ export function EntityRelationshipDiagram() {
 
         <div className="mt-8 max-w-[720px] space-y-5 text-base leading-relaxed text-pretty text-ink sm:text-lg">
           <p>
-            Individual entities are useful, but the real strength of a business platform comes from the
-            relationships between them.
-          </p>
-          <p>
-            These relationships ensure that information flows consistently across the organisation, allowing
-            every workflow, report, and business rule to reference the same source of truth.
+            A database is not a collection of isolated tables. Its value comes from the
+            relationships between business entities. Understanding these relationships ensures
+            that every workflow, report, and business rule is built upon a consistent
+            representation of the organisation.
           </p>
         </div>
       </motion.div>

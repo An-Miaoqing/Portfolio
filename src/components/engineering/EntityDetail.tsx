@@ -8,22 +8,22 @@ type RelatedEntity = {
 }
 
 type EntityDetailProps = {
+  businessRules: readonly string[]
   domainName: string
   id: string
   lifecycle?: readonly string[]
   name: string
   onSelectRelated: (id: string) => void
-  purpose: string
   relatedEntities: readonly RelatedEntity[]
 }
 
 export function EntityDetail({
+  businessRules,
   domainName,
   id,
   lifecycle,
   name,
   onSelectRelated,
-  purpose,
   relatedEntities,
 }: EntityDetailProps) {
   return (
@@ -43,11 +43,8 @@ export function EntityDetail({
             <h3 className="text-xl leading-tight font-medium tracking-[-0.03em] text-ink sm:text-2xl">
               {name}
             </h3>
-            <p className="mt-3 text-sm leading-relaxed text-pretty text-muted sm:text-base">
-              {purpose}
-            </p>
 
-            <div className="mt-6 border-t border-line pt-5">
+            <div className="mt-6">
               <p className="font-mono text-[0.65rem] font-medium tracking-[0.12em] text-muted uppercase">
                 Belongs to
               </p>
@@ -56,7 +53,7 @@ export function EntityDetail({
 
             <div className="mt-5 border-t border-line pt-5">
               <p className="font-mono text-[0.65rem] font-medium tracking-[0.12em] text-muted uppercase">
-                Related entities
+                Primary relationships
               </p>
               <ul className="mt-2 flex flex-wrap gap-1.5">
                 {relatedEntities.map((related) => (
@@ -68,6 +65,22 @@ export function EntityDetail({
                     >
                       {related.name}
                     </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-5 border-t border-line pt-5">
+              <p className="font-mono text-[0.65rem] font-medium tracking-[0.12em] text-muted uppercase">
+                Business rules
+              </p>
+              <ul className="mt-2 space-y-1.5">
+                {businessRules.map((rule) => (
+                  <li className="flex gap-2 text-sm leading-relaxed text-pretty text-ink" key={rule}>
+                    <span aria-hidden="true" className="text-line-strong">
+                      •
+                    </span>
+                    <span>{rule}</span>
                   </li>
                 ))}
               </ul>

@@ -8,7 +8,6 @@ type ServiceCardProps = {
   isConnected: boolean
   name: string
   onSelect: () => void
-  purpose: string
   style?: React.CSSProperties
 }
 
@@ -18,13 +17,12 @@ export function ServiceCard({
   isConnected,
   name,
   onSelect,
-  purpose,
   style,
 }: ServiceCardProps) {
   return (
     <motion.button
       aria-pressed={isActive}
-      className={`focus-ring flex flex-col items-start gap-1.5 rounded-card border bg-surface p-3.5 text-left transition-colors duration-500 ${
+      className={`focus-ring flex items-center justify-center rounded-card border bg-surface px-3 py-2.5 text-center transition-colors duration-500 ${
         isActive ? 'border-accent' : isConnected ? 'border-accent/50' : 'border-line hover:border-line-strong'
       } ${className}`}
       onClick={onSelect}
@@ -40,7 +38,6 @@ export function ServiceCard({
       whileTap={{ y: 0 }}
     >
       <span className={`text-sm font-medium ${isActive ? 'text-accent' : 'text-ink'}`}>{name}</span>
-      <span className="text-xs leading-snug text-pretty text-muted">{purpose}</span>
     </motion.button>
   )
 }

@@ -14,7 +14,7 @@ export function ArchitectureExplanation({
   title,
 }: ArchitectureExplanationProps) {
   return (
-    <div className="rounded-panel border border-line bg-surface p-6 shadow-control sm:p-8 lg:sticky lg:top-28">
+    <div className="rounded-panel border border-line bg-surface p-6 shadow-control sm:p-8">
       <p className="font-mono text-xs font-medium tracking-[0.14em] text-accent uppercase">
         {eyebrow}
       </p>

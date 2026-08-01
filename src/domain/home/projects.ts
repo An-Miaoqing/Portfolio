@@ -7,7 +7,6 @@ export type HomeProjectEntry = {
   ctaHref?: string
   ctaLabel?: string
   description: string
-  featured: boolean
   id: HomeProjectId
   title: string
   workHref: string
@@ -29,19 +28,6 @@ export const homeProjects: readonly HomeProjectEntry[] = [
       'Implementation',
     ],
     workHref: '/work#careos',
-    featured: true,
-  },
-  {
-    id: 'gut-begleitet',
-    category: 'DIGITAL SOLUTION · WEB',
-    title: 'Gut Begleitet',
-    description:
-      'A digital service platform for an Austrian community-care association — turning informal service requests into a structured booking workflow, live in production today.',
-    areas: ['Responsive Web Design', 'Booking Flow', 'Digital Service Experience', 'Deployment'],
-    workHref: '/work#gutbegleitet',
-    announcement:
-      'a membership app for booking events and services, and reserving the Gut Friend home companion — currently in concept and development.',
-    featured: false,
   },
   {
     id: 'engineering',
@@ -59,6 +45,16 @@ export const homeProjects: readonly HomeProjectEntry[] = [
     workHref: '/engineering',
     ctaLabel: 'View Engineering',
     ctaHref: '/engineering',
-    featured: false,
+  },
+  {
+    id: 'gut-begleitet',
+    category: 'DIGITAL SOLUTION · WEB',
+    title: 'Gut Begleitet',
+    description:
+      'A digital service platform for an Austrian community-care association — turning informal service requests into a structured booking workflow, live in production today.',
+    areas: ['Responsive Web Design', 'Booking Flow', 'Digital Service Experience', 'Deployment'],
+    workHref: '/work#gutbegleitet',
+    announcement:
+      'a membership app for booking events and services, and reserving the Gut Friend home companion — currently in concept and development.',
   },
 ] as const satisfies readonly HomeProjectEntry[]

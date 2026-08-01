@@ -6,7 +6,6 @@ import { ExperienceCenter } from '@/components/products/ExperienceCenter'
 import { PlatformOverview } from '@/components/products/PlatformOverview'
 import { ProductShowcase } from '@/components/products/ProductShowcase'
 import { ProductsCTA } from '@/components/products/ProductsCTA'
-import { ProductsHero } from '@/components/products/ProductsHero'
 import { SharedPlatform } from '@/components/products/SharedPlatform'
 
 export const metadata: Metadata = {
@@ -20,7 +19,6 @@ export default function ProductsPage() {
     <div className="case-study-site">
       <SiteNavigation />
       <SiteShell>
-        <ProductsHero />
         <ExperienceCenter />
         <PlatformOverview />
         <ProductShowcase />

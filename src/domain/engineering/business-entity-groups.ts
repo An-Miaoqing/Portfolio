@@ -1,56 +1,46 @@
 import type { BusinessDomainId } from './domain-model'
 
-export type BusinessEntityId =
+export type DomainEntityId =
   | 'access-roles'
   | 'assignments'
   | 'audit-logs'
   | 'availability'
-  | 'availability-exceptions'
-  | 'billable-items'
   | 'booking-items'
   | 'booking-status-history'
   | 'bookings'
-  | 'cash-handover-items'
-  | 'cash-handover-sequences'
   | 'cash-handovers'
   | 'clients'
   | 'companies'
   | 'documents'
   | 'employee-services'
-  | 'employee-skills'
   | 'employees'
   | 'households'
   | 'invoice-lines'
-  | 'invoice-sequences'
   | 'invoices'
   | 'notifications'
   | 'payments'
   | 'payroll-entries'
   | 'payroll-periods'
-  | 'payroll-work-items'
-  | 'preferred-employees'
-  | 'receipt-sequences'
   | 'receipts'
+  | 'sequences'
   | 'services'
   | 'skills'
   | 'time-entries'
-  | 'user-roles'
   | 'users'
-  | 'visit-closeouts'
   | 'visits'
 
-export type BusinessEntityEntry = {
+export type DomainEntityEntry = {
   businessRules: readonly string[]
   domainId: BusinessDomainId
-  id: BusinessEntityId
+  id: DomainEntityId
   lifecycle?: readonly string[]
   name: string
   purpose: string
-  relatedEntities: readonly BusinessEntityId[]
+  relatedEntities: readonly DomainEntityId[]
   relationshipSummary: string
 }
 
-export const businessEntityModel: readonly BusinessEntityEntry[] = [
+export const domainEntityModel: readonly DomainEntityEntry[] = [
   // Identity
   {
     id: 'users',
@@ -58,9 +48,9 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
     domainId: 'identity',
     purpose:
       'The authenticated identity behind every person who signs in to the platform, whether staff, manager, or administrator.',
-    relatedEntities: ['access-roles', 'user-roles', 'employees'],
+    relatedEntities: ['access-roles', 'employees'],
     relationshipSummary:
-      'A user account is granted one or more roles through a user-role record and, for staff, is also linked to their employee profile.',
+      'A user account is granted one or more roles and, for staff, is also linked to their employee profile.',
     businessRules: [
       'Every user must hold at least one assigned role before they can access the platform.',
       'A user account can be linked to at most one employee profile.',
@@ -74,25 +64,12 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
     name: 'Roles',
     domainId: 'identity',
     purpose: 'A named grouping — Employee or Admin — that determines what a user is allowed to do on the platform.',
-    relatedEntities: ['users', 'user-roles'],
-    relationshipSummary: 'A role is held by one or more users through user-role records, determining their access level.',
+    relatedEntities: ['users'],
+    relationshipSummary: 'A role is held by one or more users, determining their access level.',
     businessRules: [
       'A user can hold more than one role at the same time.',
       'Removing a role from a user takes effect immediately, without requiring re-login.',
       'System-defined roles — Employee and Admin — are fixed by the platform and cannot be created or deleted by administrators.',
-    ],
-  },
-  {
-    id: 'user-roles',
-    name: 'User Roles',
-    domainId: 'identity',
-    purpose: 'The join record connecting one user to one role.',
-    relatedEntities: ['users', 'access-roles'],
-    relationshipSummary:
-      'A user-role entry links exactly one user to exactly one role, allowing a user to hold more than one role at a time.',
-    businessRules: [
-      'The pairing of user and role is unique — the same role cannot be assigned twice to one user.',
-      'Removing a user-role record revokes that specific role from the user immediately.',
     ],
   },
 
@@ -128,24 +105,11 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
     name: 'Clients',
     domainId: 'customer',
     purpose: 'The individual person receiving care.',
-    relatedEntities: ['households', 'bookings', 'preferred-employees'],
+    relatedEntities: ['households', 'bookings'],
     relationshipSummary: 'A client belongs to one household and is the person every booking is made for.',
     businessRules: [
       'A client must belong to exactly one household.',
       'Archiving a client preserves their booking and visit history for reporting.',
-    ],
-  },
-  {
-    id: 'preferred-employees',
-    name: 'Preferred Employees',
-    domainId: 'customer',
-    purpose: "A client's recorded preference for a specific employee to deliver their service.",
-    relatedEntities: ['clients', 'employees'],
-    relationshipSummary:
-      'A preferred-employee record links one client to one employee, informing future assignment decisions.',
-    businessRules: [
-      'A preferred-employee record does not override availability or eligibility checks during assignment.',
-      'Removing a preferred-employee record does not affect assignments already made.',
     ],
   },
 
@@ -183,7 +147,7 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
     name: 'Visits',
     domainId: 'operations',
     purpose: 'A scheduled occurrence of service delivery.',
-    relatedEntities: ['bookings', 'assignments', 'employees', 'visit-closeouts', 'billable-items'],
+    relatedEntities: ['bookings', 'assignments', 'employees'],
     relationshipSummary: 'A visit belongs to one booking and is delivered through the employee assignment made against it.',
     businessRules: [
       'A visit cannot be marked completed until it has an assigned employee.',
@@ -234,19 +198,6 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
       "The current status of a booking must always match its most recent history entry.",
     ],
   },
-  {
-    id: 'visit-closeouts',
-    name: 'Visit Closeouts',
-    domainId: 'operations',
-    purpose: 'The canonical closing record for a completed visit, capturing its outcome and who closed it out.',
-    relatedEntities: ['visits', 'assignments'],
-    relationshipSummary:
-      'A visit closeout belongs to one visit and one execution assignment, recording the outcome once the visit is done.',
-    businessRules: [
-      'A visit can have exactly one closeout, tied to exactly one execution assignment.',
-      "A closeout's outcome determines how the visit is billed.",
-    ],
-  },
 
   // Workforce
   {
@@ -254,15 +205,7 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
     name: 'Employees',
     domainId: 'workforce',
     purpose: 'A person employed to deliver services.',
-    relatedEntities: [
-      'assignments',
-      'availability',
-      'time-entries',
-      'skills',
-      'employee-services',
-      'employee-skills',
-      'preferred-employees',
-    ],
+    relatedEntities: ['assignments', 'availability', 'time-entries', 'skills', 'employee-services'],
     relationshipSummary:
       'An employee is assigned to visits, tracks their own availability and skills, and accrues payroll through time entries.',
     businessRules: [
@@ -276,25 +219,12 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
     name: 'Employee Availability',
     domainId: 'workforce',
     purpose: 'The time windows an employee can be assigned work.',
-    relatedEntities: ['employees', 'availability-exceptions'],
+    relatedEntities: ['employees'],
     relationshipSummary: 'Availability belongs to one employee and constrains which visits they can be assigned to.',
     businessRules: [
       'Availability windows for the same employee cannot overlap.',
       'An employee cannot be scheduled outside their declared availability without an explicit exception.',
       'Availability changes do not retroactively affect visits already assigned.',
-    ],
-  },
-  {
-    id: 'availability-exceptions',
-    name: 'Availability Exceptions',
-    domainId: 'workforce',
-    purpose:
-      "A one-off override to an employee's normal recurring availability, such as unplanned leave or an added shift.",
-    relatedEntities: ['employees', 'availability'],
-    relationshipSummary: "An availability exception overrides an employee's standard availability for a specific date.",
-    businessRules: [
-      'An exception can either block or add a window of availability for a single date.',
-      'Exceptions take precedence over the recurring availability pattern for that date.',
     ],
   },
   {
@@ -315,24 +245,12 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
     name: 'Skills',
     domainId: 'workforce',
     purpose: 'A specific capability an employee has, used to match them to the right work.',
-    relatedEntities: ['employees', 'employee-services', 'employee-skills'],
+    relatedEntities: ['employees', 'employee-services'],
     relationshipSummary:
       'A skill is held by one or more employees and referenced when matching them to the services they are suited for.',
     businessRules: [
       'A skill can be held by many employees and does not expire.',
       'Skills refine assignment matching for the services an employee is approved to deliver.',
-    ],
-  },
-  {
-    id: 'employee-skills',
-    name: 'Employee Skills',
-    domainId: 'workforce',
-    purpose: 'The join record connecting one employee to one skill they hold.',
-    relatedEntities: ['employees', 'skills'],
-    relationshipSummary: 'An employee-skill entry links exactly one employee to exactly one skill.',
-    businessRules: [
-      'An employee can hold many skills, each represented by its own employee-skill record.',
-      'Removing an employee-skill record does not affect completed work already delivered under that skill.',
     ],
   },
   {
@@ -356,7 +274,7 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
     name: 'Invoices',
     domainId: 'finance',
     purpose: 'A bill issued to a client or company for completed services.',
-    relatedEntities: ['bookings', 'invoice-lines', 'payments', 'invoice-sequences'],
+    relatedEntities: ['bookings', 'invoice-lines', 'payments'],
     relationshipSummary:
       'An invoice belongs to one client, is built from booking activity, and is settled through one or more payments.',
     businessRules: [
@@ -380,36 +298,11 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
     ],
   },
   {
-    id: 'invoice-sequences',
-    name: 'Invoice Sequences',
-    domainId: 'finance',
-    purpose: 'A controlled, gapless numbering source used to generate invoice reference numbers.',
-    relatedEntities: ['invoices'],
-    relationshipSummary: 'An invoice sequence issues the next invoice number for a company within a given year.',
-    businessRules: [
-      'Each company has its own independent invoice sequence per year.',
-      'Invoice numbers are issued in order and never reused, even if the invoice is later voided.',
-    ],
-  },
-  {
-    id: 'billable-items',
-    name: 'Billable Items',
-    domainId: 'finance',
-    purpose: "The financial charge snapshot generated from a visit's actual delivered work.",
-    relatedEntities: ['visits', 'clients', 'services'],
-    relationshipSummary:
-      'A billable item is generated from one visit and references the client and service billed, before feeding into an invoice or cash settlement.',
-    businessRules: [
-      'A visit produces at most one billable item.',
-      "A billable item preserves the price and duration at the time of service, even if the service's price later changes.",
-    ],
-  },
-  {
     id: 'payments',
     name: 'Payments',
     domainId: 'finance',
     purpose: 'Money received against an invoice.',
-    relatedEntities: ['invoices', 'receipts', 'cash-handover-items'],
+    relatedEntities: ['invoices', 'receipts'],
     relationshipSummary:
       'A payment settles one invoice, closing the loop a booking started, and is confirmed by the receipt issued for it.',
     businessRules: [
@@ -438,7 +331,7 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
     name: 'Payroll Employee Entries',
     domainId: 'finance',
     purpose: 'The compensation calculated for one employee within a single payroll period.',
-    relatedEntities: ['employees', 'time-entries', 'payroll-periods', 'payroll-work-items'],
+    relatedEntities: ['employees', 'time-entries', 'payroll-periods'],
     relationshipSummary:
       'A payroll entry belongs to one employee within one payroll period and is calculated from their time entries for that period.',
     businessRules: [
@@ -449,25 +342,11 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
     lifecycle: ['Calculated', 'Approved', 'Paid'],
   },
   {
-    id: 'payroll-work-items',
-    name: 'Payroll Work Items',
-    domainId: 'finance',
-    purpose:
-      'The immutable record of one finalised unit of work — tied to a specific assignment and visit — that a payroll entry was calculated from.',
-    relatedEntities: ['payroll-entries', 'assignments', 'visits'],
-    relationshipSummary:
-      'A payroll work item belongs to one payroll entry and traces back to the exact assignment and visit it pays for.',
-    businessRules: [
-      'Each assignment and visit can produce at most one payroll work item, preventing duplicate payment for the same work.',
-      'Payroll work items are immutable once created.',
-    ],
-  },
-  {
     id: 'receipts',
     name: 'Receipts',
     domainId: 'finance',
     purpose: 'A record confirming that a specific payment was received, used for client and audit records.',
-    relatedEntities: ['payments', 'receipt-sequences'],
+    relatedEntities: ['payments'],
     relationshipSummary: 'A receipt is issued for one payment, confirming it was received and by what method.',
     businessRules: [
       'A receipt cannot be issued without a corresponding recorded payment.',
@@ -475,56 +354,19 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
     ],
   },
   {
-    id: 'receipt-sequences',
-    name: 'Receipt Sequences',
-    domainId: 'finance',
-    purpose: 'A controlled, gapless numbering source used to generate receipt reference numbers.',
-    relatedEntities: ['receipts'],
-    relationshipSummary: 'A receipt sequence issues the next receipt number for a company within a given year.',
-    businessRules: [
-      'Each company has its own independent receipt sequence per year.',
-      'Receipt numbers are issued in order and never reused.',
-    ],
-  },
-  {
     id: 'cash-handovers',
     name: 'Cash Handovers',
     domainId: 'finance',
     purpose: "The transfer of physical cash collected in the field to the organisation's finance function.",
-    relatedEntities: ['employees', 'cash-handover-items', 'cash-handover-sequences'],
+    relatedEntities: ['receipts', 'employees'],
     relationshipSummary:
-      'A cash handover is submitted by the employee who collected payment and is reconciled against the payments it covers.',
+      'A cash handover is submitted by the employee who collected payment and is reconciled against the receipts it covers.',
     businessRules: [
-      'A cash handover must reconcile exactly against the payments it references.',
+      'A cash handover must reconcile exactly against the receipts it references.',
       'Cash cannot be recorded as settled until its handover is confirmed by finance.',
       'Discrepancies in a cash handover must be resolved before the related payments are reconciled.',
     ],
     lifecycle: ['Submitted', 'Reconciled', 'Confirmed'],
-  },
-  {
-    id: 'cash-handover-items',
-    name: 'Cash Handover Items',
-    domainId: 'finance',
-    purpose: 'The join record linking one cash payment to the cash handover it was included in.',
-    relatedEntities: ['cash-handovers', 'payments'],
-    relationshipSummary:
-      'A cash handover item links exactly one payment to exactly one cash handover, preventing that payment from being claimed by more than one handover.',
-    businessRules: [
-      'A payment can appear in at most one cash handover item.',
-      'Removing a cash handover item returns the payment to unallocated cash.',
-    ],
-  },
-  {
-    id: 'cash-handover-sequences',
-    name: 'Cash Handover Sequences',
-    domainId: 'finance',
-    purpose: 'A controlled, gapless numbering source used to generate cash handover reference numbers.',
-    relatedEntities: ['cash-handovers'],
-    relationshipSummary: 'A cash handover sequence issues the next handover number for a company within a given year.',
-    businessRules: [
-      'Each company has its own independent cash handover sequence per year.',
-      'Handover numbers are issued in order and never reused.',
-    ],
   },
 
   // Platform Services
@@ -572,18 +414,18 @@ export const businessEntityModel: readonly BusinessEntityEntry[] = [
       'Audit logs must record who performed an action, not just what changed.',
     ],
   },
-] as const satisfies readonly BusinessEntityEntry[]
-
-export type EntityRelationshipStep = {
-  entityId: BusinessEntityId
-}
-
-export const entityRelationshipChain: readonly EntityRelationshipStep[] = [
-  { entityId: 'companies' },
-  { entityId: 'households' },
-  { entityId: 'clients' },
-  { entityId: 'bookings' },
-  { entityId: 'visits' },
-  { entityId: 'invoices' },
-  { entityId: 'payments' },
-]
+  {
+    id: 'sequences',
+    name: 'Sequences',
+    domainId: 'platform-services',
+    purpose: 'A controlled, gapless numbering source used to generate reference numbers such as invoice, receipt, or cash handover numbers.',
+    relatedEntities: ['invoices', 'receipts', 'cash-handovers'],
+    relationshipSummary:
+      'A sequence issues the next reference number to invoices, receipts, and cash handovers — one dedicated sequence per company per year for each — guaranteeing each number is issued once and in order.',
+    businessRules: [
+      'A sequence must never issue the same number twice.',
+      'Sequence numbers are issued in order and are never reused, even if a record is later deleted.',
+      'Each reference type, such as invoice numbers, has its own independent sequence.',
+    ],
+  },
+] as const satisfies readonly DomainEntityEntry[]

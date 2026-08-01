@@ -48,23 +48,20 @@ export default function AboutPage() {
       <main id="about-main">
         <header className="about-page__header">
           <div className="about-page__reading-column">
-            <h1>
-              <span>I See</span>
-              <span>Organisations</span>
-              <span>as</span>
-              <span>Systems</span>
-            </h1>
-            <p className="about-page__header-support">
-              Business Systems Analysis · Process Design · Data Modelling · Digital Solutions
-            </p>
+            <h1>I See Organisations as Systems</h1>
+
+            <div className="about-page__profile">
+              <p className="about-page__profile-name">Anyang Guo</p>
+              <p className="about-page__profile-role">Business Systems Analyst</p>
+              <p className="about-page__profile-location">Vienna, Austria</p>
+            </div>
           </div>
         </header>
 
         <article className="about-page__story">
           <div className="about-page__reading-column">
-            <p>I See Organisations as Systems.</p>
             <p>
-              Every business is built on relationships between people, information, processes, and decisions. My work is to understand those relationships, model them clearly, and transform them into practical digital solutions.
+              Every organisation is a system of people, information, processes, and decisions. My work is to understand those relationships, model them clearly, and transform them into practical digital solutions.
             </p>
             <p>
               As a Business Systems Analyst, I work across business analysis, process design, data modelling, workflow architecture, and implementation. Whether designing a business operating system, analysing data, or developing a digital platform, my goal is always the same: to reduce complexity through thoughtful system design.

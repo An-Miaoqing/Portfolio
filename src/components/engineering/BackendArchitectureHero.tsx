@@ -1,19 +1,15 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { revealItem } from '@/components/motion/presets'
 import { Headline } from '@/components/shared/Headline'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { ApplicationNode } from './ApplicationNode'
 import { ArchitectureExplanation } from './ArchitectureExplanation'
-import { BackendNode } from './BackendNode'
 import { Connector, ConnectorFan } from './Connector'
-import { DatabaseNode } from './DatabaseNode'
 
 type ApplicationId = 'client' | 'employee' | 'management' | 'website'
-type Target = ApplicationId | 'finale'
-type PulseStage = 'backend' | 'card' | 'database' | 'fade' | 'hold' | 'toBackend' | 'toDatabase'
 
 type Application = {
   description: string
@@ -53,37 +49,50 @@ const applications: readonly Application[] = [
   },
 ]
 
-const FINALE = {
-  title: 'One Shared System',
-  description:
-    'Every interface — website, management, employee, and client — depends on the same operational core through the enterprise backend.',
+const CROSS_CUTTING_CONCERNS = ['Authentication', 'Authorization', 'Validation', 'Tenant Isolation']
+
+type LayerId = 'api' | 'application' | 'database' | 'persistence'
+
+type Layer = {
+  detail: string
+  explanation: string
+  id: LayerId
+  label: string
 }
 
-const AUTOPLAY_STEP_MS = 2400
-const FINALE_TOTAL_MS = 3800
-
-const REGULAR_SEQUENCE: readonly { at: number; stage: PulseStage }[] = [
-  { stage: 'card', at: 0 },
-  { stage: 'toBackend', at: 150 },
-  { stage: 'backend', at: 600 },
-  { stage: 'toDatabase', at: 1200 },
-  { stage: 'database', at: 1600 },
-  { stage: 'fade', at: 1950 },
+const RIBBONED_LAYERS: readonly Layer[] = [
+  {
+    id: 'api',
+    label: 'API Layer',
+    detail: 'REST API • Routes • Controllers',
+    explanation:
+      'The HTTP boundary — 82 endpoints across 16 route groups. Every request is authenticated, authorized, and validated with Zod before it reaches any business logic, and controllers stay thin: they parse, validate, and delegate, never containing business rules themselves.',
+  },
+  {
+    id: 'application',
+    label: 'Application Layer',
+    detail: 'Business services • Transactions • Business rules',
+    explanation:
+      'Where business rules actually live. 24 service files make up roughly three-quarters of the entire codebase — every operation that changes state, from creating a booking to finalising payroll, is coordinated here, often inside a transaction.',
+  },
+  {
+    id: 'persistence',
+    label: 'Persistence Layer',
+    detail: 'Prisma ORM • Query execution',
+    explanation:
+      'A single Prisma client, extended so that every query is automatically scoped to the current tenant through an AsyncLocalStorage context. Multi-tenancy is enforced structurally here, not left to each service to remember.',
+  },
 ]
 
-// The "all connected" finale: every connector activates, the backend reaches
-// its brightest state with one slow heartbeat, a wave of light continues down
-// to the database, the database responds, and the whole diagram holds in a
-// softly illuminated "connected" state for about a second before fading.
-const FINALE_SEQUENCE: readonly { at: number; stage: PulseStage }[] = [
-  { stage: 'card', at: 0 },
-  { stage: 'toBackend', at: 150 },
-  { stage: 'backend', at: 650 },
-  { stage: 'toDatabase', at: 1450 },
-  { stage: 'database', at: 1900 },
-  { stage: 'hold', at: 2300 },
-  { stage: 'fade', at: 3300 },
-]
+const DATABASE_LAYER: Layer = {
+  id: 'database',
+  label: 'PostgreSQL',
+  detail: 'Relational model • Indexes',
+  explanation:
+    '37 models, 17 enums, and 144 indexes tuned for a tenant-first access pattern. There are no triggers, no stored procedures, and no views — every rule that touches the data lives above this layer, in code.',
+}
+
+const ALL_LAYERS: readonly Layer[] = [...RIBBONED_LAYERS, DATABASE_LAYER]
 
 function AppIcon({ id }: { id: ApplicationId }) {
   const common = {
@@ -137,84 +146,14 @@ function AppIcon({ id }: { id: ApplicationId }) {
 }
 
 export function BackendArchitectureHero() {
-  const [selected, setSelected] = useState<ApplicationId | null>(null)
-  const [clickToken, setClickToken] = useState(0)
-  const [autoStep, setAutoStep] = useState(0)
-  const [stage, setStage] = useState<PulseStage>('card')
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const [selected, setSelected] = useState<ApplicationId>('website')
+  const [selectedLayerId, setSelectedLayerId] = useState<LayerId>('api')
 
-  useEffect(() => {
-    const query = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setPrefersReducedMotion(query.matches)
-    const handleChange = () => setPrefersReducedMotion(query.matches)
-    query.addEventListener('change', handleChange)
-    return () => query.removeEventListener('change', handleChange)
-  }, [])
-
-  useEffect(() => {
-    if (selected || prefersReducedMotion) return undefined
-
-    // The finale runs its own longer sequence (wave to database + a hold), so
-    // it gets more time in the loop than a single-application step.
-    const isCurrentlyFinale = autoStep === applications.length
-    const delay = isCurrentlyFinale ? FINALE_TOTAL_MS : AUTOPLAY_STEP_MS
-
-    const timer = window.setTimeout(() => {
-      setAutoStep((current) => (current + 1) % (applications.length + 1))
-    }, delay)
-
-    return () => window.clearTimeout(timer)
-  }, [autoStep, selected, prefersReducedMotion])
-
-  const target: Target = selected ?? (autoStep < applications.length ? applications[autoStep].id : 'finale')
-  const isFinale = target === 'finale'
-
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      setStage(selected ? 'database' : 'card')
-      return undefined
-    }
-
-    const sequence = isFinale ? FINALE_SEQUENCE : REGULAR_SEQUENCE
-    const steps = selected ? sequence.filter((step) => step.stage !== 'fade') : sequence
-    const timers = steps.map((step) => window.setTimeout(() => setStage(step.stage), step.at))
-
-    return () => {
-      timers.forEach((timer) => window.clearTimeout(timer))
-    }
-    // target already encodes selected + autoStep; clickToken forces replay on re-selecting the same card.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [target, clickToken, selected, prefersReducedMotion, isFinale])
-
-  const targetIndex = isFinale ? -1 : applications.findIndex((app) => app.id === target)
-  const isResting = stage === 'fade'
-
-  const cardActive = applications.map((_, index) =>
-    isFinale ? !isResting : index === targetIndex && !isResting,
-  )
-
-  const fanPulsing = applications.map((_, index) => {
-    const matches = isFinale || index === targetIndex
-    return matches && stage === 'toBackend'
-  })
-
-  const isConnectedWindow =
-    stage === 'toBackend' || stage === 'backend' || stage === 'toDatabase' || stage === 'database' || stage === 'hold'
-
-  const fanActive = applications.map((_, index) => {
-    const matches = isFinale || index === targetIndex
-    return matches && isConnectedWindow
-  })
-
-  const backendPulsing = stage === 'backend'
-  const backendGlowing = isConnectedWindow
-  const isPeak = isFinale && isConnectedWindow
-  const dbConnectorPulsing = stage === 'toDatabase'
-  const dbConnectorActive = stage === 'toDatabase' || stage === 'database' || stage === 'hold'
-  const databasePulsing = stage === 'database'
-  const databaseGlowing = stage === 'database' || stage === 'hold'
-
-  const activeApp = isFinale ? null : applications[targetIndex]
+  const selectedIndex = applications.findIndex((app) => app.id === selected)
+  const fanActive = applications.map((_, index) => index === selectedIndex)
+  const fanIdlePulse = applications.map(() => false)
+  const activeApp = applications[selectedIndex]
+  const activeLayer = ALL_LAYERS.find((layer) => layer.id === selectedLayerId)!
 
   return (
     <SectionWrapper
@@ -240,8 +179,7 @@ export function BackendArchitectureHero() {
         whileInView="visible"
       >
         <Headline as="h1" eyebrow="ENGINEERING" size="display">
-          <span className="text-indigo-accent">Enterprise</span>{' '}
-          <span className="gradient-text">Backend Architecture</span>
+          Enterprise <span className="gradient-text">Backend Architecture</span>
         </Headline>
 
         <p className="mt-6 max-w-3xl text-body-lg text-pretty text-muted" style={{ lineHeight: 1.8 }}>
@@ -283,31 +221,83 @@ export function BackendArchitectureHero() {
             {applications.map((app, index) => (
               <ApplicationNode
                 icon={<AppIcon id={app.icon} />}
-                isActive={cardActive[index]}
+                isActive={index === selectedIndex}
                 key={app.id}
                 label={app.label}
-                onSelect={() => {
-                  setSelected(app.id)
-                  setClickToken((current) => current + 1)
-                }}
+                onSelect={() => setSelected(app.id)}
               />
             ))}
           </div>
 
-          <ConnectorFan activeFlags={fanActive} pulsingFlags={fanPulsing} />
+          <ConnectorFan activeFlags={fanActive} pulsingFlags={fanIdlePulse} />
 
-          <BackendNode isGlowing={backendGlowing} isPeak={isPeak} isPulsing={backendPulsing} />
+          <div className="flex gap-3">
+            <div className="flex w-24 shrink-0 flex-col rounded-card border border-dashed border-accent/40 bg-accent-soft/30 p-2">
+              <p className="text-center font-mono text-[0.5rem] leading-tight font-semibold tracking-[0.04em] text-accent/80 uppercase">
+                Cross-Cutting Concerns
+              </p>
+              <div className="mt-2 flex flex-1 flex-col justify-between gap-2">
+                {CROSS_CUTTING_CONCERNS.map((concern) => (
+                  <div className="rounded-full bg-white/70 px-2 py-1.5 text-center" key={concern}>
+                    <span className="font-mono text-[0.55rem] leading-tight font-medium tracking-[0.02em] text-accent uppercase">
+                      {concern}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-          <Connector active={dbConnectorActive} height={36} isPulsing={dbConnectorPulsing} />
+            <div className="flex flex-1 flex-col gap-2.5">
+              {RIBBONED_LAYERS.map((layer, index) => (
+                <div key={layer.id}>
+                  <button
+                    aria-pressed={layer.id === selectedLayerId}
+                    className={`focus-ring w-full rounded-card border bg-surface px-4 py-3 text-left shadow-control transition-colors duration-300 ${
+                      layer.id === selectedLayerId ? 'border-accent' : 'border-line hover:border-line-strong'
+                    }`}
+                    onClick={() => setSelectedLayerId(layer.id)}
+                    type="button"
+                  >
+                    <p className="text-sm font-semibold text-ink">{layer.label}</p>
+                    <p className="mt-0.5 font-mono text-xs text-muted">{layer.detail}</p>
+                  </button>
+                  {index < RIBBONED_LAYERS.length - 1 ? (
+                    <div aria-hidden="true" className="flex justify-center text-line-strong">
+                      ↓
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </div>
 
-          <DatabaseNode isGlowing={databaseGlowing} isPulsing={databasePulsing} />
+          <Connector active height={26} isPulsing={false} />
+
+          <button
+            aria-pressed={DATABASE_LAYER.id === selectedLayerId}
+            className={`focus-ring w-full rounded-card border bg-surface px-4 py-3 text-left shadow-control transition-colors duration-300 ${
+              DATABASE_LAYER.id === selectedLayerId ? 'border-accent' : 'border-line hover:border-line-strong'
+            }`}
+            onClick={() => setSelectedLayerId(DATABASE_LAYER.id)}
+            type="button"
+          >
+            <p className="text-sm font-semibold text-ink">{DATABASE_LAYER.label}</p>
+            <p className="mt-0.5 font-mono text-xs text-muted">{DATABASE_LAYER.detail}</p>
+          </button>
         </div>
 
-        <ArchitectureExplanation
-          description={activeApp ? activeApp.description : FINALE.description}
-          eyebrow={isFinale ? 'All interfaces' : 'Selected interface'}
-          title={activeApp ? activeApp.label : FINALE.title}
-        />
+        <div className="flex flex-col gap-6 lg:sticky lg:top-28">
+          <ArchitectureExplanation
+            description={activeApp.description}
+            eyebrow="Selected interface"
+            title={activeApp.label}
+          />
+          <ArchitectureExplanation
+            description={activeLayer.explanation}
+            eyebrow="Selected layer"
+            title={activeLayer.label}
+          />
+        </div>
       </motion.div>
     </SectionWrapper>
   )

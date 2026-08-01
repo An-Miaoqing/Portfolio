@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { id: 'business-domain-model', label: 'Domains' },
   { id: 'business-entities', label: 'Entities' },
   { id: 'entity-relationships', label: 'Relationships' },
+  { id: 'database-architecture', label: 'Database' },
   { id: 'business-services', label: 'Services' },
   { id: 'platform-apis', label: 'Platform Interface' },
   { id: 'architecture-principles', label: 'Principles' },

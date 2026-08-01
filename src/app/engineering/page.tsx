@@ -4,7 +4,7 @@ import { BackendArchitectureHero } from '@/components/engineering/BackendArchite
 import { BusinessDomainModel } from '@/components/engineering/BusinessDomainModel'
 import { BusinessEntities } from '@/components/engineering/BusinessEntities'
 import { BusinessServices } from '@/components/engineering/BusinessServices'
-import { EngineeringClosing } from '@/components/engineering/EngineeringClosing'
+import { DatabaseArchitecture } from '@/components/engineering/DatabaseArchitecture'
 import { EngineeringProgressNav } from '@/components/engineering/EngineeringProgressNav'
 import { EntityRelationshipDiagram } from '@/components/engineering/EntityRelationshipDiagram'
 import { PlatformApis } from '@/components/engineering/PlatformApis'
@@ -26,27 +26,18 @@ export default function EngineeringPage() {
       <EngineeringProgressNav />
       <SiteShell>
         <BackendArchitectureHero />
-        <SectionBridge
-          fromLabel="Backend"
-          sentence="A single backend platform needs structure — business domains give it one."
-          toLabel="Business Domains"
-        />
         <BusinessDomainModel />
-        <SectionBridge
-          fromLabel="Business Domains"
-          sentence="Each business domain is realised through a collection of business entities."
-          toLabel="Business Entities"
-        />
         <BusinessEntities />
-        <SectionBridge
-          fromLabel="Business Entities"
-          sentence="Entities only reveal their full meaning once you see how they relate to one another."
-          toLabel="Entity Relationships"
-        />
         <EntityRelationshipDiagram />
         <SectionBridge
           fromLabel="Entity Relationships"
-          sentence="Those relationships are enforced and coordinated by business services."
+          sentence="Those relationships are physically expressed in a real, production database."
+          toLabel="Database Architecture"
+        />
+        <DatabaseArchitecture />
+        <SectionBridge
+          fromLabel="Database Architecture"
+          sentence="The database enforces structure. Business services enforce behaviour."
           toLabel="Business Services"
         />
         <BusinessServices />
@@ -62,7 +53,6 @@ export default function EngineeringPage() {
           toLabel="Architecture Principles"
         />
         <ArchitecturePrinciples />
-        <EngineeringClosing />
       </SiteShell>
       <PortfolioFooter variant="starry" />
     </div>

@@ -1,7 +1,28 @@
 import Link from 'next/link'
+import { ContactIcon } from '@/components/shared/ContactIcon'
 import { AMQLogoMark } from './SiteNavigation'
 
 const contactItems = ['Email', 'LinkedIn', 'GitHub'] as const
+
+const footerContactLinks = [
+  {
+    icon: 'email' as const,
+    label: 'an.miaoqing@gmail.com',
+    href: 'mailto:an.miaoqing@gmail.com',
+  },
+  {
+    icon: 'linkedin' as const,
+    label: 'linkedin.com/in/an-miaoqing',
+    href: 'https://www.linkedin.com/in/an-miaoqing',
+    external: true,
+  },
+  {
+    icon: 'github' as const,
+    label: 'github.com/An-Miaoqing',
+    href: 'https://github.com/An-Miaoqing',
+    external: true,
+  },
+] as const
 
 const activities = 'Business analysis · Process design · Data modelling · Digital platforms'
 
@@ -9,8 +30,6 @@ const pageLinks = [
   { label: 'Home', href: { pathname: '/' } },
   { label: 'Work', href: { pathname: '/work' } },
   { label: 'Products', href: { pathname: '/products' } },
-  { label: 'About', href: { pathname: '/about' } },
-  { label: 'Contact', href: { pathname: '/contact' } },
 ] as const
 
 const caseStudyLinks = [
@@ -32,7 +51,7 @@ export function PortfolioFooter({ variant = 'default' }: PortfolioFooterProps) {
           <div className="starry-footer__grid">
             <div className="starry-footer__brand">
               <Link className="unified-nav__identity" href="/" aria-label="AMQ Systems homepage">
-                <AMQLogoMark />
+                <AMQLogoMark variant="light" />
                 <span>AMQ / SYSTEMS</span>
               </Link>
               <p className="starry-footer__slogan">Systems designed to make complex work clearer.</p>
@@ -62,11 +81,17 @@ export function PortfolioFooter({ variant = 'default' }: PortfolioFooterProps) {
             <div className="starry-footer__contact">
               <p className="starry-footer__eyebrow">Contact</p>
               <ul>
-                {contactItems.map((item) => (
-                  <li key={item}>
-                    <span className="starry-footer__placeholder" title={`${item} link to be added`}>
-                      {item}
-                    </span>
+                {footerContactLinks.map((item) => (
+                  <li key={item.label}>
+                    <a
+                      className="starry-footer__contact-link"
+                      href={item.href}
+                      rel={'external' in item && item.external ? 'noreferrer' : undefined}
+                      target={'external' in item && item.external ? '_blank' : undefined}
+                    >
+                      <ContactIcon name={item.icon} />
+                      <span>{item.label}</span>
+                    </a>
                   </li>
                 ))}
               </ul>

@@ -36,7 +36,7 @@ export function Hero() {
 
             <Headline as="h1" eyebrow="Enterprise platform" size="display">
               <span className="block">Enterprise Platform</span>
-              <span className="block text-muted">for Service Organisations.</span>
+              <span className="block text-muted">for Service Organisations</span>
             </Headline>
 
             <p className="mt-8 max-w-[var(--container-copy)] text-body-lg text-pretty text-muted sm:mt-10">

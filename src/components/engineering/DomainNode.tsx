@@ -24,6 +24,15 @@ function DomainIcon({ id }: { id: BusinessDomainId }) {
     viewBox: '0 0 24 24',
   }
 
+  if (id === 'identity') {
+    return (
+      <svg {...common}>
+        <circle cx="8.5" cy="8.5" r="4.5" />
+        <path d="M11.7 11.7 21 21M16.5 16.5l3-3M19 19l2-2" />
+      </svg>
+    )
+  }
+
   if (id === 'customer') {
     return (
       <svg {...common}>
@@ -59,6 +68,15 @@ function DomainIcon({ id }: { id: BusinessDomainId }) {
       <svg {...common}>
         <circle cx="12" cy="12" r="8.5" />
         <path d="M12 7.5v9M9.3 15.2c.3 1 1.3 1.7 2.7 1.7 1.7 0 2.8-.9 2.8-2.1 0-3.1-5.5-1.5-5.5-4.4 0-1.2 1.1-2.1 2.7-2.1 1.4 0 2.4.7 2.7 1.7" />
+      </svg>
+    )
+  }
+
+  if (id === 'platform-services') {
+    return (
+      <svg {...common}>
+        <circle cx="12" cy="12" r="2.6" />
+        <path d="M12 3.5v2.8M12 17.7v2.8M20.5 12h-2.8M6.3 12H3.5M17.66 6.34l-1.98 1.98M8.32 15.68l-1.98 1.98M17.66 17.66l-1.98-1.98M8.32 8.32 6.34 6.34" />
       </svg>
     )
   }

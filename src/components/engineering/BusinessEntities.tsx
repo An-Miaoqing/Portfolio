@@ -5,8 +5,6 @@ import { revealItem } from '@/components/motion/presets'
 import { Headline } from '@/components/shared/Headline'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { DomainEntityExplorer } from './DomainEntityExplorer'
-import { EditorialInsight } from './EditorialInsight'
-import { RelationshipPreview } from './RelationshipPreview'
 
 export function BusinessEntities() {
   return (
@@ -51,36 +49,6 @@ export function BusinessEntities() {
         whileInView="visible"
       >
         <DomainEntityExplorer />
-      </motion.div>
-
-      <motion.div
-        animate="visible"
-        className="mt-16 sm:mt-20"
-        initial="hidden"
-        variants={revealItem}
-        viewport={{ once: true, amount: 0.3 }}
-        whileInView="visible"
-      >
-        <p className="text-center font-mono text-xs font-medium tracking-[0.14em] text-accent uppercase">
-          How the entities connect
-        </p>
-        <div className="mt-8">
-          <RelationshipPreview />
-        </div>
-      </motion.div>
-
-      <motion.div
-        animate="visible"
-        className="mt-16 sm:mt-20"
-        initial="hidden"
-        variants={revealItem}
-        viewport={{ once: true, amount: 0.3 }}
-        whileInView="visible"
-      >
-        <EditorialInsight
-          body="A database is not a collection of isolated tables. Its value comes from the relationships between business entities. Understanding these relationships ensures that every workflow, report, and business rule is built upon a consistent representation of the organisation."
-          headline="Relationships matter more than tables."
-        />
       </motion.div>
     </SectionWrapper>
   )

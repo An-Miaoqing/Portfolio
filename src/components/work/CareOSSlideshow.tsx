@@ -8,8 +8,6 @@ type SlideVisualType =
   | 'applications'
   | 'architecture'
   | 'database'
-  | 'engineering'
-  | 'lifecycle'
   | 'problem'
   | 'workflow'
 
@@ -17,18 +15,26 @@ type Slide = {
   id: string
   label: string
   eyebrow: string
-  title: string
+  title?: string
   message: string
   points: readonly string[]
-  visual: SlideVisualType
+  visual?: SlideVisualType
 }
+
+const PICTURE_LAYOUT_SLIDE_IDS = new Set([
+  'applications',
+  'business-analysis',
+  'business-problem',
+  'business-workflow',
+  'database-design',
+])
 
 const slides: readonly Slide[] = [
   {
     id: 'vision',
     label: 'Vision',
     eyebrow: 'BUSINESS OPERATING SYSTEM',
-    title: 'Business Operating System for Service Organisations.',
+    title: 'Business Operating System for Service Organisations',
     message:
       'One operational model connects customer demand, operations, workforce activity and finance.',
     points: [
@@ -36,14 +42,13 @@ const slides: readonly Slide[] = [
       'Operational teams coordinate one shared service lifecycle.',
       'Service delivery remains connected to commercial settlement.',
     ],
-    visual: 'lifecycle',
   },
   {
     id: 'business-problem',
     label: 'Problem',
-    eyebrow: 'THE BUSINESS PROBLEM',
-    title: 'From fragmented tools to one source of operational truth.',
-    message: 'Disconnected channels fragment context, ownership and operational visibility.',
+    eyebrow: 'Care Organization Today',
+    title: 'Too Many Tools. Disconnected. Inefficient.',
+    message: 'Information everywhere. Visibility nowhere.',
     points: [
       'Customer information arrives without one shared context.',
       'Planning and service delivery become difficult to trace.',
@@ -83,9 +88,9 @@ const slides: readonly Slide[] = [
     id: 'system-architecture',
     label: 'Architecture',
     eyebrow: 'SYSTEM ARCHITECTURE',
-    title: 'One backend governs every operating interface.',
+    title: 'One backend powers every application',
     message:
-      'Customers, operations and field employees use different interfaces governed by the same business rules.',
+      'Customers, administrators, and field employees use different applications while sharing the same backend and business rules.',
     points: [
       'The REST API provides one controlled system boundary.',
       'Business capabilities share rules, authorisation and transactions.',
@@ -120,287 +125,170 @@ const slides: readonly Slide[] = [
     ],
     visual: 'applications',
   },
-  {
-    id: 'engineering',
-    label: 'Engineering',
-    eyebrow: 'ENGINEERING PRINCIPLES',
-    title: 'Engineering decisions follow the business model.',
-    message:
-      'Technology supports the domain, architectural boundaries and need for maintainable production delivery.',
-    points: [
-      'Business thinking determines the system boundaries.',
-      'Contracts and validation protect shared behaviour.',
-      'Deployment choices preserve clear application ownership.',
-    ],
-    visual: 'engineering',
-  },
 ]
 
-function LifecycleVisual() {
-  const lifecycle: readonly [string, string][] = [
-    ['Customer Need', 'Demand'],
-    ['Service Request', 'Intent'],
-    ['Planning', 'Operational Design'],
-    ['Scheduling', 'Resource Allocation'],
-    ['Service Delivery', 'Work Execution'],
-    ['Billing', 'Commercial Record'],
-    ['Payment', 'Financial Settlement'],
+type ProblemImpactIconName = 'accountability' | 'errors' | 'frustration' | 'silos' | 'time' | 'visibility'
+
+function ProblemImpactIcon({ name }: { name: ProblemImpactIconName }) {
+  const common = {
+    className: 'careos-slide-problem-impact__icon',
+    viewBox: '0 0 24 24',
+    'aria-hidden': true,
+    focusable: false,
+  }
+
+  if (name === 'silos') {
+    return (
+      <svg {...common}>
+        <circle cx="6" cy="6" r="3" />
+        <circle cx="18" cy="6" r="3" />
+        <circle cx="12" cy="18" r="3" />
+        <path d="M8.6 7.4 15.4 4.6M15.4 7.4 8.6 4.6M12 15v-9" strokeOpacity="0.4" />
+      </svg>
+    )
+  }
+
+  if (name === 'time') {
+    return (
+      <svg {...common}>
+        <circle cx="12" cy="12" r="8.5" />
+        <path d="M12 7.5V12l3.2 2" />
+      </svg>
+    )
+  }
+
+  if (name === 'errors') {
+    return (
+      <svg {...common}>
+        <path d="M12 3.5 21.5 20h-19L12 3.5Z" />
+        <path d="M12 10v4.2" />
+        <circle cx="12" cy="17" r="0.9" fill="currentColor" stroke="none" />
+      </svg>
+    )
+  }
+
+  if (name === 'accountability') {
+    return (
+      <svg {...common}>
+        <circle cx="8.5" cy="8" r="3" />
+        <path d="M2.8 19c.6-3.2 3-5 5.7-5s5.1 1.8 5.7 5" />
+        <circle cx="17" cy="8.5" r="2.4" />
+        <path d="M14.8 19c.4-2.6 2.1-4 4.2-4 2.2 0 3.9 1.6 4.2 4.2" />
+      </svg>
+    )
+  }
+
+  if (name === 'visibility') {
+    return (
+      <svg {...common}>
+        <path d="M3 20h18M6 20V12M11 20V7M16 20v-9M21 20V4" strokeOpacity="0.35" />
+        <path d="m3 9 5-4 4 3 5-4 4 3" />
+      </svg>
+    )
+  }
+
+  return (
+    <svg {...common}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M8.5 15.5c1-1.2 2.2-1.8 3.5-1.8s2.5.6 3.5 1.8" />
+      <path d="M9 9.5h.01M15 9.5h.01" />
+    </svg>
+  )
+}
+
+function ProblemImpacts() {
+  const impacts: readonly { icon: ProblemImpactIconName; label: string }[] = [
+    { icon: 'silos', label: 'Information silos' },
+    { icon: 'time', label: 'Wasted time & duplicate work' },
+    { icon: 'errors', label: 'Errors & missed updates' },
+    { icon: 'accountability', label: 'Confusion & low accountability' },
+    { icon: 'visibility', label: 'No real-time visibility, no clear overview' },
+    { icon: 'frustration', label: 'Overwhelmed staff, frustrated clients' },
   ]
 
   return (
-    <div
-      className="careos-slide-lifecycle"
-      aria-label="Business lifecycle connected through the CareOS core"
-      role="img"
-    >
-      <div className="careos-slide-lifecycle__core">CareOS Core</div>
-      <ol>
-        {lifecycle.map(([stage, description], index) => (
-          <li key={stage}>
-            <span>0{index + 1}</span>
-            <div>
-              <strong>{stage}</strong>
-              <small>{description}</small>
-            </div>
-            {index < lifecycle.length - 1 ? <i aria-hidden="true">↓</i> : null}
-          </li>
-        ))}
-      </ol>
-    </div>
+    <ul className="careos-slide-problem-impact">
+      {impacts.map((impact) => (
+        <li key={impact.label}>
+          <ProblemImpactIcon name={impact.icon} />
+          <span>{impact.label}</span>
+        </li>
+      ))}
+    </ul>
   )
 }
 
 function ProblemVisual() {
-  const fragments = ['Phone Calls', 'WhatsApp', 'Email', 'Excel', 'Paper Forms', 'Accounting']
-
   return (
-    <div
-      className="careos-slide-problem"
-      aria-label="Fragmented operational inputs becoming one governed CareOS workflow"
-      role="img"
-    >
-      <div className="careos-slide-problem__fragments">
-        {fragments.map((fragment) => (
-          <span key={fragment}>{fragment}</span>
-        ))}
-      </div>
-      <div className="careos-slide-problem__flow" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-        <span>CONVERGE</span>
-        <i />
-        <i />
-        <i />
-      </div>
-      <strong>
-        Connected Operational Platform
-        <small>One source of operational truth</small>
-      </strong>
+    <div className="careos-slide-problem-visual">
+      <img
+        alt="Care organisation today: too many disconnected tools across phone calls, WhatsApp, email, spreadsheets, paper forms and more, causing information silos and low visibility"
+        className="careos-slide-problem-image"
+        src="/work/problem-overview.png"
+      />
+      <ProblemImpacts />
     </div>
   )
 }
 
 function BusinessAnalysisVisual() {
-  const stages = [
-    'Business Problem',
-    'Stakeholders',
-    'Pain Points',
-    'Business Rules',
-    'Process Analysis',
-    'Domain Model',
-    'System Design',
-  ]
-
   return (
-    <div
-      className="careos-slide-analysis-process"
-      aria-label="Business analysis process from stakeholders to implementation"
-      role="img"
-    >
-      {stages.map((stage, index) => (
-        <div key={stage}>
-          <span>0{index + 1}</span>
-          <strong>{stage}</strong>
-          {index < stages.length - 1 ? <i aria-hidden="true">↓</i> : null}
-        </div>
-      ))}
-    </div>
+    <img
+      alt="Business analysis process: from business problem, stakeholders, pain points and business rules to process analysis, domain model and system design"
+      className="careos-slide-problem-image"
+      src="/work/analysis-overview.png"
+    />
   )
 }
 
 function WorkflowVisual() {
-  const workflow = [
-    'Customer Need',
-    'Request',
-    'Planning',
-    'Assignment',
-    'Service Delivery',
-    'Completion',
-    'Billing',
-    'Settlement',
-  ]
-
   return (
-    <div
-      className="careos-slide-workflow careos-slide-workflow--lifecycle"
-      aria-label="CareOS end-to-end business lifecycle"
-      role="img"
-    >
-      {workflow.map((stage, index) => (
-        <div key={stage}>
-          <small>0{index + 1}</small>
-          <strong>{stage}</strong>
-          {index < workflow.length - 1 ? <i aria-hidden="true">→</i> : null}
-        </div>
-      ))}
-      <p>Customer need → operational delivery → financial settlement</p>
-    </div>
+    <img
+      alt="CareOS end-to-end business lifecycle: customer need, request, planning, assignment, service delivery, completion, billing and settlement"
+      className="careos-slide-problem-image"
+      src="/work/workflow-overview.png"
+    />
   )
 }
 
 function ArchitectureVisual() {
-  const capabilities = ['Authentication', 'Clients', 'Scheduling', 'Finance', 'Notifications']
-
   return (
-    <div className="careos-slide-architecture" aria-label="CareOS layered system architecture" role="img">
-      <div className="careos-slide-architecture__apps">
-        <span>
-          Customer Website<small>React + Vite</small>
-        </span>
-        <span>
-          Admin Application<small>React + Vite</small>
-        </span>
-        <span>
-          Employee App<small>Expo + React Native</small>
-        </span>
-      </div>
-      <i aria-hidden="true" />
-      <strong>REST API</strong>
-      <div className="careos-slide-architecture__backend">
-        <small>SHARED BUSINESS CAPABILITIES</small>
-        <div>
-          {capabilities.map((capability) => (
-            <span key={capability}>{capability}</span>
-          ))}
-        </div>
-      </div>
-      <div className="careos-slide-architecture__data">
-        <span>Prisma</span>
-        <b>↓</b>
-        <span>PostgreSQL</span>
-      </div>
-    </div>
+    <img
+      alt="CareOS layered system architecture: Customer Website (React + Vite), Admin Application (React + Vite), and Employee App (Expo + React Native) all calling a REST API, which governs Core Application Services (Identity, Customer, Booking, Scheduling, Workforce, Billing, Reporting, Notifications) backed by Prisma and PostgreSQL"
+      className="careos-slide-architecture-image"
+      src="/work/architecture-overview.png"
+    />
   )
 }
 
 function DatabaseVisual() {
-  const stages = ['Business Concepts', 'Entities', 'Relationships', 'Constraints', 'Relational Database']
-
   return (
-    <div
-      className="careos-slide-database"
-      aria-label="Database design process and future ER diagram placeholder"
-      role="img"
-    >
-      <div className="careos-slide-database__process">
-        {stages.map((stage, index) => (
-          <div key={stage}>
-            <span>0{index + 1}</span>
-            <strong>{stage}</strong>
-            {index < stages.length - 1 ? <i aria-hidden="true">↓</i> : null}
-          </div>
-        ))}
-      </div>
-      <div className="careos-slide-database__placeholder">
-        <span>[ Database ER Diagram ]</span>
-        <small>VERIFIED PROJECT ASSET TO BE ADDED</small>
-      </div>
-    </div>
-  )
-}
-
-function MediaPlaceholder({ label }: { label: string }) {
-  return (
-    <div className="careos-media careos-media--slide" role="img" aria-label={`${label} placeholder`}>
-      <span className="careos-media__marker" aria-hidden="true" />
-      <span>[ {label} ]</span>
-      <small>ASSET PLACEHOLDER</small>
-    </div>
-  )
-}
-
-function ApplicationMockup({
-  label,
-  role,
-  type,
-}: {
-  label: string
-  role: string
-  type: 'desktop' | 'laptop' | 'mobile'
-}) {
-  return (
-    <div className={`careos-device-mockup careos-device-mockup--${type}`}>
-      <div className="careos-device-mockup__chrome" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-      </div>
-      <MediaPlaceholder label={`${label} Screenshot`} />
-      <p>
-        <strong>{label}</strong>
-        <small>→ {role}</small>
-      </p>
-    </div>
+    <img
+      alt="CareOS entity relationship diagram: Company, User, Employee, Household, Client and Service feeding into Booking, Booking Item, Visit and Assignment, through to Time Entry, Visit Closeout and Billable Item, and Invoice, Invoice Line, Payment, Receipt and Cash Handover"
+      className="careos-slide-problem-image"
+      src="/work/database-overview.png"
+    />
   )
 }
 
 function ApplicationsVisual() {
   return (
-    <div className="careos-slide-applications">
-      <ApplicationMockup label="Website" role="Customers" type="laptop" />
-      <ApplicationMockup label="Admin Dashboard" role="Operations" type="desktop" />
-      <ApplicationMockup label="Employee App" role="Field Workforce" type="mobile" />
-    </div>
-  )
-}
-
-function EngineeringVisual() {
-  const principles: readonly [string, string][] = [
-    ['Business-first Thinking', 'Process analysis · Requirements engineering'],
-    ['Domain-driven Design', 'Business rules · Entities · Service boundaries'],
-    ['API-first Architecture', 'REST · Express · Zod'],
-    ['Relational Data Model', 'PostgreSQL · Prisma · Migrations'],
-    ['Production-ready Deployment', 'Vercel · Node.js hosting · Supabase'],
-  ]
-
-  return (
-    <div
-      className="careos-slide-engineering"
-      aria-label="CareOS engineering principles and supporting technologies"
-      role="img"
-    >
-      {principles.map(([principle, technologies], index) => (
-        <div key={principle}>
-          <span>0{index + 1}</span>
-          <strong>{principle}</strong>
-          <small>{technologies}</small>
-        </div>
-      ))}
-    </div>
+    <img
+      alt="One system, multiple applications: Customer Website, Admin Application and Employee App all built on the CareOS unified business operating system, backed by Prisma ORM and PostgreSQL"
+      className="careos-slide-problem-image"
+      src="/work/applications-overview.png"
+    />
   )
 }
 
 function SlideVisual({ type }: { type: SlideVisualType }) {
   const visuals: Record<SlideVisualType, ReactElement> = {
-    lifecycle: <LifecycleVisual />,
     problem: <ProblemVisual />,
     analysis: <BusinessAnalysisVisual />,
     workflow: <WorkflowVisual />,
     architecture: <ArchitectureVisual />,
     database: <DatabaseVisual />,
     applications: <ApplicationsVisual />,
-    engineering: <EngineeringVisual />,
   }
 
   return <div className="careos-intro-slide__visual">{visuals[type]}</div>
@@ -473,25 +361,104 @@ export function CareOSSlideshow() {
         </div>
       </div>
 
-      <article
-        className="careos-intro-slide"
-        id="careos-intro-slide-panel"
-        role="tabpanel"
-        aria-live={isAutoplayPaused ? 'polite' : 'off'}
-        aria-labelledby={`careos-slide-title-${activeSlide.id}`}
-      >
-        <div className="careos-intro-slide__copy">
-          <p className="careos-intro-slide__eyebrow">{activeSlide.eyebrow}</p>
-          <h3 id={`careos-slide-title-${activeSlide.id}`}>{activeSlide.title}</h3>
-          <p className="careos-intro-slide__message">{activeSlide.message}</p>
-          <ul>
-            {activeSlide.points.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
-        </div>
-        <SlideVisual type={activeSlide.visual} />
-      </article>
+      {activeSlide.id === 'vision' ? (
+        <article
+          className="careos-intro-slide careos-intro-slide--vision"
+          id="careos-intro-slide-panel"
+          role="tabpanel"
+          aria-live={isAutoplayPaused ? 'polite' : 'off'}
+          aria-labelledby={`careos-slide-title-${activeSlide.id}`}
+        >
+          <div className="careos-vision-layout">
+            <div className="careos-vision-layout__header">
+              <img
+                alt="CareOS logo"
+                className="careos-vision-layout__logo"
+                src="/work/careos-logo.png"
+              />
+              <div className="careos-vision-layout__intro">
+                <h3 id={`careos-slide-title-${activeSlide.id}`}>
+                  Business Operating System
+                  <br />
+                  for Service Organisations
+                </h3>
+              </div>
+            </div>
+
+            <div className="careos-vision-layout__row">
+              <div className="careos-vision-layout__image-wrap">
+                <img
+                  alt="Illustration of the CareOS platform connecting customers, operations, workforce and finance functions"
+                  className="careos-vision-layout__image"
+                  src="/work/image7.png"
+                />
+              </div>
+              <div className="careos-vision-layout__points-col">
+                <p className="careos-vision-layout__intro-note">
+                  A system designed to connect clients, households, employees, services, bookings,
+                  visits, payments and operational workflows.
+                </p>
+                <ul className="careos-vision-layout__points">
+                  {activeSlide.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+      ) : PICTURE_LAYOUT_SLIDE_IDS.has(activeSlide.id) ? (
+        <article
+          className="careos-intro-slide careos-intro-slide--problem"
+          id="careos-intro-slide-panel"
+          role="tabpanel"
+          aria-live={isAutoplayPaused ? 'polite' : 'off'}
+          aria-labelledby={`careos-slide-title-${activeSlide.id}`}
+        >
+          <div className="careos-slide-problem-layout">
+            <div className="careos-slide-problem-layout__header">
+              <p className="careos-intro-slide__eyebrow" id={`careos-slide-title-${activeSlide.id}`}>
+                {activeSlide.eyebrow}
+              </p>
+              <h3>{activeSlide.title}</h3>
+            </div>
+
+            <div className="careos-slide-problem-layout__row">
+              <div className="careos-intro-slide__copy careos-slide-problem-layout__copy">
+                <p className="careos-intro-slide__message">{activeSlide.message}</p>
+                <ul>
+                  {activeSlide.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              </div>
+              <SlideVisual type={activeSlide.visual!} />
+            </div>
+          </div>
+        </article>
+      ) : (
+        <article
+          className="careos-intro-slide careos-intro-slide--architecture"
+          id="careos-intro-slide-panel"
+          role="tabpanel"
+          aria-live={isAutoplayPaused ? 'polite' : 'off'}
+          aria-labelledby={`careos-slide-title-${activeSlide.id}`}
+        >
+          <div className="careos-intro-slide__copy">
+            <p className="careos-intro-slide__eyebrow" id={`careos-slide-title-${activeSlide.id}`}>
+              {activeSlide.eyebrow}
+            </p>
+            {activeSlide.title && <h3>{activeSlide.title}</h3>}
+            <p className="careos-intro-slide__message">{activeSlide.message}</p>
+            <ul>
+              {activeSlide.points.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+          </div>
+          <SlideVisual type={activeSlide.visual!} />
+        </article>
+      )}
 
       <div className="careos-intro-deck__controls">
         <div className="careos-intro-deck__arrows">
@@ -502,7 +469,11 @@ export function CareOSSlideshow() {
             →
           </button>
         </div>
-        <div className="careos-intro-deck__tabs" role="tablist" aria-label="Choose introduction slide">
+        <div
+          className="careos-intro-deck__tabs careos-intro-deck__tabs--careos"
+          role="tablist"
+          aria-label="Choose introduction slide"
+        >
           {slides.map((slide, index) => (
             <button
               type="button"

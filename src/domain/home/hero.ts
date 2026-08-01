@@ -6,9 +6,9 @@ export type HeroHeadingLine = {
 export const heroEyebrow = 'Business Systems Analyst'
 
 export const heroHeadingLines: readonly HeroHeadingLine[] = [
-  { text: 'Understanding businesses.', tone: 'indigo' },
-  { text: 'Designing systems.', tone: 'gradient' },
-  { text: 'Delivering practical solutions.', tone: 'gradient' },
+  { text: 'Understanding businesses', tone: 'indigo' },
+  { text: 'Designing systems', tone: 'gradient' },
+  { text: 'Delivering practical solutions', tone: 'gradient' },
 ]
 
 export const heroLeadIn =

@@ -23,7 +23,7 @@ export function ExperienceCenter() {
         whileInView="visible"
       >
         <Headline as="h2" eyebrow="Try It Yourself">
-          Experience CareOS firsthand.
+          Experience <span className="gradient-text">CareOS</span> firsthand
         </Headline>
 
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-pretty text-muted sm:text-lg">

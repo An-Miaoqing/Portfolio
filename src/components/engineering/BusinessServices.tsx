@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { revealItem } from '@/components/motion/presets'
 import { Headline } from '@/components/shared/Headline'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
-import { BusinessOperationTimeline } from './BusinessOperationTimeline'
 import { EditorialInsight } from './EditorialInsight'
 import { ServiceExplorer } from './ServiceExplorer'
 
@@ -46,22 +45,6 @@ export function BusinessServices() {
         whileInView="visible"
       >
         <ServiceExplorer />
-      </motion.div>
-
-      <motion.div
-        animate="visible"
-        className="mt-16 sm:mt-20"
-        initial="hidden"
-        variants={revealItem}
-        viewport={{ once: true, amount: 0.3 }}
-        whileInView="visible"
-      >
-        <p className="text-center font-mono text-xs font-medium tracking-[0.14em] text-accent uppercase">
-          How a business operation flows
-        </p>
-        <div className="mt-8">
-          <BusinessOperationTimeline />
-        </div>
       </motion.div>
 
       <motion.div

@@ -3,47 +3,21 @@
 import { AnimatePresence, motion } from 'framer-motion'
 
 type DomainExplanationProps = {
-  dependsOn: readonly string[]
   exampleQuestions: readonly string[]
   name: string
-  owns: readonly string[]
   purpose: string
   responsibilities: readonly string[]
 }
 
-function FieldList({ items, emptyLabel }: { emptyLabel: string; items: readonly string[] }) {
-  if (items.length === 0) {
-    return <p className="mt-2 text-sm text-pretty text-muted italic">{emptyLabel}</p>
-  }
-
-  return (
-    <ul className="mt-2 flex flex-wrap gap-1.5">
-      {items.map((item) => (
-        <li
-          className="rounded-full border border-line bg-surface-subtle px-3 py-1 text-xs font-medium text-ink"
-          key={item}
-        >
-          {item}
-        </li>
-      ))}
-    </ul>
-  )
-}
-
 export function DomainExplanation({
-  dependsOn,
   exampleQuestions,
   name,
-  owns,
   purpose,
   responsibilities,
 }: DomainExplanationProps) {
   return (
     <div className="rounded-panel border border-line bg-surface p-6 shadow-control sm:p-8 lg:sticky lg:top-28">
-      <p className="font-mono text-xs font-medium tracking-[0.14em] text-accent uppercase">
-        Selected domain
-      </p>
-      <div aria-live="polite" className="mt-4 min-h-[30rem]">
+      <div aria-live="polite" className="min-h-[18rem]">
         <AnimatePresence mode="wait">
           <motion.div
             animate={{ opacity: 1, y: 0 }}
@@ -74,20 +48,6 @@ export function DomainExplanation({
                   </li>
                 ))}
               </ul>
-            </div>
-
-            <div className="mt-5 border-t border-line pt-5">
-              <p className="font-mono text-[0.65rem] font-medium tracking-[0.12em] text-muted uppercase">
-                Owns
-              </p>
-              <FieldList emptyLabel="No owned data — reads from every other domain." items={owns} />
-            </div>
-
-            <div className="mt-5 border-t border-line pt-5">
-              <p className="font-mono text-[0.65rem] font-medium tracking-[0.12em] text-muted uppercase">
-                Depends on
-              </p>
-              <FieldList emptyLabel="Nothing — this domain is the origin of the flow." items={dependsOn} />
             </div>
 
             <div className="mt-5 border-t border-line pt-5">

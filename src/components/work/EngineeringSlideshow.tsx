@@ -2,8 +2,17 @@
 
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
+import { curvedPath, ENTITY_EDGES, ENTITY_POSITIONS } from '@/domain/engineering/entity-graph-layout'
+import { type BusinessEntityId, businessEntityModel } from '@/domain/engineering/entity-model'
 
-type SlideVisualType = 'backend' | 'domains' | 'entities' | 'relationships' | 'services' | 'apis' | 'principles'
+type SlideVisualType =
+  | 'backend'
+  | 'domains'
+  | 'relationships'
+  | 'database'
+  | 'services'
+  | 'service-layer'
+  | 'apis'
 
 type Slide = {
   id: string
@@ -18,257 +27,196 @@ type Slide = {
 const slides: readonly Slide[] = [
   {
     id: 'backend',
-    label: 'Backend',
+    label: 'Introduction',
     eyebrow: 'BACKEND ARCHITECTURE',
-    title: 'One backend platform serves every application.',
+    title: 'The Backend Is the Platform',
     message:
-      'Every application relies on the same backend rather than each implementing its own business logic.',
+      'The backend is organised into distinct layers, each with one clear responsibility, from the API boundary down to the database.',
     points: [
-      'Website, Management Workspace, and Employee Workspace all connect to one backend.',
-      'A single shared database keeps every application consistent.',
-      'Adding a new application never means duplicating business rules.',
+      'API Layer (routes/ + controllers/) — the HTTP boundary, wrapped by JWT authentication and Zod validation.',
+      'Application Services (services/) — business rules, orchestration, and transactions.',
+      'Data Access (prisma/) and Database (PostgreSQL) — tenant isolation and the single source of truth.',
     ],
     visual: 'backend',
   },
   {
     id: 'domains',
-    label: 'Domains',
-    eyebrow: 'BUSINESS DOMAINS',
-    title: 'Software organised around the business, not the database.',
-    message: 'CareOS is structured around five business domains, each owning a clear responsibility.',
-    points: [
-      'Customer, Operations, Workforce, Finance, and Reporting.',
-      'Each domain owns its own data, rules, and workflows.',
-      'Business first. Database second.',
-    ],
+    label: 'Model',
+    eyebrow: 'BUSINESS ANALYSIS',
+    title: 'From business concepts to data models',
+    message:
+      'Before designing the database, CareOS groups business concepts into conceptual capability areas to understand the organisation and communicate the architecture. These are analytical groupings used during system design. They are not implemented as separate modules in the backend, where the Prisma schema contains a flat set of 37 models.',
+    points: [],
     visual: 'domains',
-  },
-  {
-    id: 'entities',
-    label: 'Entities',
-    eyebrow: 'BUSINESS ENTITIES',
-    title: '26 real entities give the domains their shape.',
-    message: 'Rather than designing tables first, CareOS identifies the real entities that make up the organisation.',
-    points: [
-      'Clients, Bookings, Visits, Invoices, Payments, and more.',
-      'Every entity traces back to something that exists in the business.',
-      'Still business language — not database language.',
-    ],
-    visual: 'entities',
   },
   {
     id: 'relationships',
     label: 'Relationships',
     eyebrow: 'ENTITY RELATIONSHIPS',
-    title: 'The first ERD — relationships, not SQL.',
-    message: 'A database’s real value comes from how entities connect, not the tables themselves.',
+    title: 'Relationships shape the data model',
+    message: 'A database’s structure comes from how business entities relate—not from isolated tables.',
     points: [
-      'Company → Household → Client → Booking → Visit → Invoice → Payment.',
-      'Selecting one entity highlights everything it touches.',
-      'No foreign keys or SQL yet — just relationships.',
+      'Company → Household → Client → Booking → Visit → Invoice → Payment…',
+      'Relationships are modelled before implementation details.',
     ],
     visual: 'relationships',
   },
   {
+    id: 'database',
+    label: 'Persistence',
+    eyebrow: 'DATABASE ARCHITECTURE',
+    title: 'A data model built for operations',
+    message:
+      'Built on PostgreSQL and accessed through Prisma ORM, the backend stores business data in a relational model while keeping validation, transactions, and business rules inside the application layer.',
+    points: [],
+    visual: 'database',
+  },
+  {
+    id: 'service-layer',
+    label: 'Flow',
+    eyebrow: 'REQUEST PROCESSING',
+    title: 'Every request follows the same pipeline',
+    message:
+      'Every request—whether it comes from the website, the Admin workspace, or the Employee app—follows the same processing pipeline. Requests are authenticated and validated before services execute business logic and transactions; Prisma persists changes to PostgreSQL.',
+    points: [],
+    visual: 'service-layer',
+  },
+  {
     id: 'services',
     label: 'Services',
-    eyebrow: 'BUSINESS SERVICES',
-    title: 'Business logic lives in services, not applications.',
-    message: 'Every important operation is coordinated through a shared business service.',
+    eyebrow: 'APPLICATION SERVICES',
+    title: 'Shared services power every application',
+    message:
+      'The backend centralises business logic into 21 service modules. Controllers delegate requests to these services, where validation, business rules, transactions, and orchestration are implemented before data is persisted through Prisma.',
     points: [
-      'Booking, Scheduling, Workforce, Visit, Billing, and Reporting services.',
-      'Each service reads and updates a defined set of entities.',
-      'Centralised rules keep every application consistent.',
+      "21 service modules implement the platform's business logic.",
+      'Controllers remain thin and delegate work to services.',
+      'All applications share the same service layer and operational rules.',
     ],
     visual: 'services',
   },
   {
     id: 'apis',
-    label: 'APIs',
-    eyebrow: 'PLATFORM APIS',
-    title: 'A single platform. Multiple applications.',
-    message: 'Platform APIs expose business services to every application — the database stays hidden.',
+    label: 'API',
+    eyebrow: 'REST API',
+    title: 'One API. Many applications.',
+    message:
+      'Every application communicates through the same REST API. Controllers delegate requests to shared application services, ensuring every client follows identical business rules without accessing the database directly.',
     points: [
-      'Applications never talk to services or entities directly.',
-      'Website, Management, Employee, and a planned Client Portal share one interface.',
-      'APIs expose capabilities, not databases.',
+      '82 endpoints organised into 16 route groups.',
+      'The database is never accessed directly by applications.',
     ],
     visual: 'apis',
-  },
-  {
-    id: 'principles',
-    label: 'Principles',
-    eyebrow: 'ARCHITECTURE PRINCIPLES',
-    title: 'Six principles guide every layer of the platform.',
-    message: 'Long-term maintainability mattered more than short-term implementation speed.',
-    points: [
-      'Business before technology. Single source of truth. Shared business logic.',
-      'Separation of responsibilities. Design for evolution. Consistency through reuse.',
-      'Architecture is an investment.',
-    ],
-    visual: 'principles',
   },
 ]
 
 function BackendVisual() {
-  const apps = ['Website', 'Management Workspace', 'Employee Workspace']
-  const capabilities = ['Booking', 'Scheduling', 'Workforce', 'Billing']
-
   return (
-    <div className="careos-slide-architecture" aria-label="Four applications served by one backend and one shared database" role="img">
-      <div className="careos-slide-architecture__apps">
-        {apps.map((app) => (
-          <span key={app}>{app}</span>
-        ))}
-      </div>
-      <i aria-hidden="true" />
-      <strong>Enterprise Backend</strong>
-      <div className="careos-slide-architecture__backend">
-        <small>SHARED BUSINESS LOGIC</small>
-        <div>
-          {capabilities.map((capability) => (
-            <span key={capability}>{capability}</span>
-          ))}
-        </div>
-      </div>
-      <div className="careos-slide-architecture__data">
-        <span>Every application</span>
-        <b>↓</b>
-        <span>Shared Database</span>
-      </div>
-    </div>
+    <img
+      alt="Backend layers: API Layer (REST API, routes, controllers), Application Layer (business services, transactions, business rules), Persistence Layer (Prisma ORM, query execution), and PostgreSQL (relational model, indexes) — with a Cross-Cutting Concerns ribbon (Authentication, Authorization, Validation, Tenant Isolation) running alongside the API, Application, and Persistence layers"
+      className="careos-slide-architecture-image"
+      src="/work/image25.png"
+    />
   )
 }
 
 function DomainsVisual() {
-  const domains: readonly [string, string][] = [
-    ['Customer', 'Clients, households, companies'],
-    ['Operations', 'Bookings, visits, schedules'],
-    ['Workforce', 'Employees, availability'],
-    ['Finance', 'Invoices, payments, payroll'],
-    ['Reporting', 'Insight across every domain'],
-  ]
-
   return (
-    <div className="careos-slide-lifecycle" aria-label="Five business domains around a shared business model" role="img">
-      <div className="careos-slide-lifecycle__core">Business Model</div>
-      <ol>
-        {domains.map(([domain, description], index) => (
-          <li key={domain}>
-            <span>0{index + 1}</span>
-            <div>
-              <strong>{domain}</strong>
-              <small>{description}</small>
-            </div>
-            {index < domains.length - 1 ? <i aria-hidden="true">↓</i> : null}
-          </li>
-        ))}
-      </ol>
-    </div>
+    <img
+      alt="Conceptual capability areas, an analytical view of the business: Identity (User, Role, UserRole), Customer (Clients, Households, Companies, PreferredEmployee), Operations (Bookings, Assignments, Visits, BookingItem), Workforce (Employees, Availability, EmployeeSkill, TimeEntry), Finance (Invoices, Payments, PayrollPeriod, Receipts), Reporting (reads from every area — no dedicated table), and Platform Services (Documents, Notifications, Audit Logs, Sequences). Summary: 7 conceptual areas organise the business by capability, 37 Prisma models make up the flat data model in schema.prisma, and 17 enums as native PostgreSQL enum types"
+      className="careos-slide-architecture-image"
+      src="/work/model.png"
+    />
   )
 }
 
-function EntitiesVisual() {
-  const stages = ['Domain', 'Entity', 'Purpose', 'Related Entities', 'Lifecycle']
-
-  return (
-    <div className="careos-slide-analysis-process" aria-label="From a business domain to a fully understood entity" role="img">
-      {stages.map((stage, index) => (
-        <div key={stage}>
-          <span>0{index + 1}</span>
-          <strong>{stage}</strong>
-          {index < stages.length - 1 ? <i aria-hidden="true">↓</i> : null}
-        </div>
-      ))}
-    </div>
-  )
-}
+const LABEL_OFFSETS: Partial<Record<BusinessEntityId, { x: number; y: number }>> = {}
 
 function RelationshipsVisual() {
-  const chain = ['Company', 'Household', 'Client', 'Booking', 'Visit', 'Invoice', 'Payment']
+  const LIT_FILL = '#176b4d'
+  const LIT_BORDER = 'rgba(23, 107, 77, 0.55)'
+  const EDGE_COLOR = '#d7dbd8'
 
   return (
     <div
-      className="careos-slide-workflow careos-slide-workflow--lifecycle"
-      aria-label="Company connects through household, client, booking, and visit to invoice and payment"
+      aria-label="Full entity relationship diagram: all 37 Prisma models and how they connect to one another"
+      className="relative aspect-square w-full"
       role="img"
     >
-      {chain.map((entity, index) => (
-        <div key={entity}>
-          <small>0{index + 1}</small>
-          <strong>{entity}</strong>
-          {index < chain.length - 1 ? <i aria-hidden="true">→</i> : null}
-        </div>
-      ))}
-      <p>Relationships matter more than tables.</p>
+      <svg aria-hidden="true" className="absolute inset-0 h-full w-full" viewBox="0 0 100 100">
+        {ENTITY_EDGES.map((edge) => (
+          <path
+            d={curvedPath(ENTITY_POSITIONS[edge.a], ENTITY_POSITIONS[edge.b])}
+            fill="none"
+            key={`${edge.a}-${edge.b}`}
+            stroke={EDGE_COLOR}
+            strokeLinecap="round"
+            strokeWidth={0.25}
+          />
+        ))}
+      </svg>
+
+      {businessEntityModel.map((entity) => {
+        const base = ENTITY_POSITIONS[entity.id]
+        const offset = LABEL_OFFSETS[entity.id]
+        const position = offset ? { x: base.x + offset.x, y: base.y + offset.y } : base
+        return (
+          <div
+            className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1 p-1"
+            key={entity.id}
+            style={{ left: `${position.x}%`, top: `${position.y}%` }}
+          >
+            <span
+              className="block size-3 rounded-full border"
+              style={{ backgroundColor: LIT_FILL, borderColor: LIT_BORDER }}
+            />
+            <span className="max-w-[5rem] text-center text-[0.72rem] leading-tight font-medium text-balance text-ink">
+              {entity.name}
+            </span>
+          </div>
+        )
+      })}
     </div>
   )
 }
 
 function ServicesVisual() {
-  const services: readonly [string, string][] = [
-    ['Booking Service', 'Creates and manages bookings'],
-    ['Scheduling Service', 'Matches visits to availability'],
-    ['Workforce Service', 'Assigns qualified employees'],
-    ['Visit Service', 'Coordinates delivery of care'],
-    ['Billing Service', 'Turns work into invoices'],
-    ['Reporting Service', 'Aggregates business insight'],
-  ]
-
   return (
-    <div className="careos-slide-engineering" aria-label="Six business services coordinating the platform" role="img">
-      {services.map(([service, detail], index) => (
-        <div key={service}>
-          <span>0{index + 1}</span>
-          <strong>{service}</strong>
-          <small>{detail}</small>
-        </div>
-      ))}
-    </div>
+    <img
+      alt="21 service modules implementing core business logic, across 24 TypeScript files (including 3 utility helper modules), making up about 75% of the codebase, shared by all APIs, with centralised business rules and transactions. Modules grouped by area: Authentication (auth.service.ts, credential.service.ts, me.service.ts, admin-auth.service.ts, admin-bootstrap.service.ts), Customer (client.service.ts, household.service.ts), Booking (booking.service.ts), Employee (employee.service.ts, employee-assignment.service.ts), Visit (visit.service.ts, visit-completion.service.ts, employee-visit.service.ts), Billing (billing.service.ts, employee-cash.service.ts, employee-closeout.service.ts), Payroll (payroll.service.ts), Notification (notification.service.ts), Reports (reports.service.ts), Service Catalog (service.service.ts), and Utilities/Helpers (assignment-lifecycle.ts, operational-time.ts, visit-status.ts)"
+      className="careos-slide-architecture-image"
+      src="/work/services.png"
+    />
+  )
+}
+
+function ServiceLayerVisual() {
+  return (
+    <img
+      alt="Request flow architecture: Cross-Cutting Concerns (JWT Authentication, Authorization, Zod Validation, Tenant Context via AsyncLocalStorage) wrap the REST API Layer (Routes to Controllers), which calls the Application Services Layer (21 service modules handling business rules, orchestration, transactions, and domain logic), which calls the Prisma ORM Layer (type-safe client, tenant-aware queries, serializable transactions, automatic retry), which reaches the Database Layer (PostgreSQL on Supabase, 37 models). Example booking flow: Client submits booking form, POST /bookings hits the API, JWT and role are checked, the Zod-validated payload is passed to the Booking Service which checks availability and calculates pricing, a serializable transaction creates the Household, Client, Booking, Booking Items, and Status History, the transaction commits, and a success response is returned. Outcomes: consistent and reliable, tenant-isolated data, atomic operations (ACID), unified logic across all applications"
+      className="careos-slide-architecture-image"
+      src="/work/flow.png"
+    />
   )
 }
 
 function ApisVisual() {
-  const layers = ['Applications', 'Platform APIs', 'Business Services', 'Business Entities', 'Shared Data']
-
   return (
-    <div
-      className="careos-slide-workflow careos-slide-workflow--lifecycle"
-      aria-label="Applications reach shared data only through platform APIs and business services"
-      role="img"
-    >
-      {layers.map((layer, index) => (
-        <div key={layer}>
-          <small>0{index + 1}</small>
-          <strong>{layer}</strong>
-          {index < layers.length - 1 ? <i aria-hidden="true">→</i> : null}
-        </div>
-      ))}
-      <p>The database stays hidden behind the platform.</p>
-    </div>
+    <img
+      alt="API surface diagram: the Website, Admin management workspace, and Employee application all connect to a single REST API. Route groups include Authentication, Users, Companies, Clients, Households, Employees, Services, Bookings, Visits, Billing, Payroll, Reports, Notifications, Dashboard, and Admin, totaling 82 endpoints across 16 route groups that are consistent, secure, and centralised. One API, one contract, all applications — every client uses the same API to access the platform, and the database stays hidden."
+      className="careos-slide-architecture-image"
+      src="/work/rest-api.png"
+    />
   )
 }
 
-function PrinciplesVisual() {
-  const principles: readonly [string, string][] = [
-    ['Business before technology', 'Software reflects the organisation'],
-    ['Single source of truth', 'One authoritative location'],
-    ['Shared business logic', 'Rules live in the platform'],
-    ['Separation of responsibilities', 'Each part has one clear role'],
-    ['Design for evolution', 'Extend without breaking foundations'],
-    ['Consistency through reuse', 'Shared models, less duplication'],
-  ]
-
+function DatabaseVisual() {
   return (
-    <div className="careos-slide-engineering" aria-label="Six architecture principles guiding the platform" role="img">
-      {principles.map(([principle, detail], index) => (
-        <div key={principle}>
-          <span>0{index + 1}</span>
-          <strong>{principle}</strong>
-          <small>{detail}</small>
-        </div>
-      ))}
-    </div>
+    <img
+      alt="Architecture diagram: Applications (Web, Admin, Mobile, Integrations) call the REST API, which calls Application Services (business logic and rules), which use Prisma ORM for type-safe database access to PostgreSQL, hosted on Supabase. Architecture summary: Database is PostgreSQL hosted on Supabase, ORM is Prisma 7, Data Model has 37 models, 17 enums, and 25 migrations, Indexing has 144 database indexes, 13 compound unique constraints, and 20 field unique constraints, Concurrency uses serializable transactions with automatic retry, Reliable with strong transactional consistency, tenant isolation, and strict typing. Engineering principles: multi-tenant by design, business logic in the service layer, no database triggers, no stored procedures, application-managed business sequences, Prisma-first architecture"
+      className="careos-slide-architecture-image"
+      src="/work/image6.png"
+    />
   )
 }
 
@@ -276,11 +224,11 @@ function SlideVisual({ type }: { type: SlideVisualType }) {
   const visuals: Record<SlideVisualType, ReactElement> = {
     backend: <BackendVisual />,
     domains: <DomainsVisual />,
-    entities: <EntitiesVisual />,
     relationships: <RelationshipsVisual />,
+    database: <DatabaseVisual />,
     services: <ServicesVisual />,
+    'service-layer': <ServiceLayerVisual />,
     apis: <ApisVisual />,
-    principles: <PrinciplesVisual />,
   }
 
   return <div className="careos-intro-slide__visual">{visuals[type]}</div>
@@ -354,7 +302,7 @@ export function EngineeringSlideshow() {
       </div>
 
       <article
-        className="careos-intro-slide"
+        className={`careos-intro-slide ${activeSlide.id === 'backend' ? 'careos-intro-slide--cover' : ''}`}
         id="engineering-intro-slide-panel"
         role="tabpanel"
         aria-live={isAutoplayPaused ? 'polite' : 'off'}
@@ -364,11 +312,13 @@ export function EngineeringSlideshow() {
           <p className="careos-intro-slide__eyebrow">{activeSlide.eyebrow}</p>
           <h3 id={`engineering-slide-title-${activeSlide.id}`}>{activeSlide.title}</h3>
           <p className="careos-intro-slide__message">{activeSlide.message}</p>
-          <ul>
-            {activeSlide.points.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
+          {activeSlide.points.length > 0 ? (
+            <ul>
+              {activeSlide.points.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+          ) : null}
         </div>
         <SlideVisual type={activeSlide.visual} />
       </article>
