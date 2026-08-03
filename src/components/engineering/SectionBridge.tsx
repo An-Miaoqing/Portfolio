@@ -11,7 +11,7 @@ type SectionBridgeProps = {
 
 export function SectionBridge({ fromLabel, sentence, toLabel }: SectionBridgeProps) {
   return (
-    <div className="border-b border-line bg-surface-subtle/60">
+    <div className="bg-canvas">
       <motion.div
         animate="visible"
         className="mx-auto flex max-w-[720px] flex-col items-center px-5 py-10 text-center sm:px-8 sm:py-12 lg:px-12"

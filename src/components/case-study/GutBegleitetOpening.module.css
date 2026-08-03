@@ -1,0 +1,580 @@
+.frame {
+  width: min(100% - 2.5rem, var(--container-page));
+  margin-inline: auto;
+}
+
+.eyebrow {
+  margin: 0 0 1.35rem;
+  color: #176b4d;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.introduction {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(52rem, 95svh, 69rem);
+  padding: clamp(3rem, 5vw, 5rem) 0;
+  overflow: hidden;
+  background: #16382c;
+}
+
+.introduction > .frame {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: clamp(42rem, 76svh, 55rem);
+  flex-direction: column;
+}
+
+.heroBackground {
+  z-index: -2;
+  object-fit: cover;
+  object-position: 54% center;
+}
+
+.heroOverlay {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(13, 43, 32, 0.9) 0%, rgba(13, 43, 32, 0.68) 46%, rgba(13, 43, 32, 0.16) 78%),
+    linear-gradient(0deg, rgba(13, 43, 32, 0.78) 0%, transparent 48%);
+}
+
+.introHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 0.65fr);
+  gap: 2rem clamp(3rem, 8vw, 8rem);
+  align-items: end;
+  margin-bottom: 2rem;
+}
+
+.caseStudySwitcher {
+  grid-column: 1 / -1;
+  margin-bottom: -0.75rem;
+}
+
+.caseStudySwitcher nav {
+  margin-bottom: 0;
+}
+
+.brandLogo {
+  grid-column: 1 / -1;
+  width: clamp(4.5rem, 6vw, 6rem);
+  height: auto;
+  margin-bottom: -0.5rem;
+}
+
+.introHeader h1,
+.sectionHeading h2 {
+  margin: 0;
+  font-weight: 560;
+  letter-spacing: -0.055em;
+}
+
+.introHeader h1 { color: #fff; }
+.sectionHeading h2 { color: #16382c; }
+
+.introHeader h1 {
+  max-width: 13ch;
+  font-size: clamp(3rem, 6vw, 5.6rem);
+  line-height: 0.93;
+}
+
+.introCopy {
+  max-width: 31rem;
+  margin: 0 0 0.4rem;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  line-height: 1.55;
+}
+
+.journeyStepPhoto img { object-fit: cover; }
+
+.heroCaption {
+  align-self: flex-end;
+  margin: auto 0 1.5rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #244238;
+  font-size: 0.75rem;
+  backdrop-filter: blur(12px);
+}
+
+.metadata {
+  display: grid;
+  grid-template-columns: 1.65fr 0.7fr 0.7fr;
+  gap: 0;
+  margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(13, 43, 32, 0.22);
+  backdrop-filter: blur(10px);
+}
+
+.metadata div {
+  padding: 1.5rem 1.5rem 0.2rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.metadata div + div {
+  padding-left: 1.5rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.metadata dt {
+  margin-bottom: 0.55rem;
+  color: rgba(255, 255, 255, 0.62);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.metadata dd {
+  max-width: 39rem;
+  min-height: 3.5rem;
+  margin: 0;
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.journeySection,
+.lifecycleSection {
+  padding: clamp(4rem, 7vw, 6.5rem) 0;
+}
+
+.journeySection {
+  overflow: hidden;
+  background: #fffdf9;
+}
+
+.journeySection .sectionHeading {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.lifecycleSection .sectionHeading {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.sectionHeading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
+  column-gap: clamp(3rem, 8vw, 8rem);
+  align-items: end;
+  margin-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.sectionHeading .eyebrow {
+  grid-column: 1 / -1;
+}
+
+.sectionHeading h2 {
+  max-width: 12ch;
+  font-size: clamp(2rem, 3.7vw, 3.4rem);
+  line-height: 0.98;
+}
+
+.sectionHeading > p:last-child {
+  max-width: 29rem;
+  margin: 0;
+  color: #69746e;
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  line-height: 1.55;
+}
+
+.journey {
+  display: grid;
+  grid-template-columns: 1.28fr 0.78fr 1.05fr 1.28fr 0.78fr;
+  min-height: 34rem;
+  gap: 0.65rem;
+}
+
+.journeyStep {
+  position: relative;
+  min-width: 0;
+  overflow: visible;
+}
+
+.journeyStepPhoto {
+  min-height: 34rem;
+  overflow: visible;
+  border-radius: 1rem;
+}
+
+.journeyStepPhoto > img {
+  border-radius: inherit;
+}
+
+.journeyStepPhoto:nth-child(3) img {
+  object-position: 59% center;
+}
+
+.journeyStepText {
+  display: flex;
+  min-height: 34rem;
+  align-items: center;
+  padding: 1.3rem;
+  border-radius: 1rem;
+  background: #e1eee8;
+}
+
+.journeyStepText:last-child {
+  background: #16382c;
+}
+
+.stepCaption {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  padding: 1rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #16382c;
+  backdrop-filter: blur(14px);
+}
+
+.journeyStepText .stepCaption {
+  position: static;
+  padding: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.journeyStepText:last-child .stepCaption {
+  color: #fff;
+}
+
+.stepCaption span {
+  display: block;
+  margin-bottom: 2rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  opacity: 0.58;
+}
+
+.stepCaption p {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stepCaption strong {
+  display: block;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.1;
+}
+
+.journeyArrow {
+  position: absolute;
+  z-index: 4;
+  top: 2rem;
+  right: -1.15rem;
+  display: grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  place-items: center;
+  border-radius: 50%;
+  background: #f4a13c;
+  color: #16382c;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.lifecycleSection {
+  background: #dcebe3;
+}
+
+.lifecycleSection .sectionHeading {
+  display: block;
+}
+
+.lifecycleSection .sectionHeading h2 {
+  max-width: 15ch;
+}
+
+.lifecycleLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 0.6fr);
+  gap: clamp(1.2rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+.lifecycleDiagram {
+  padding: clamp(1.2rem, 3vw, 2.25rem);
+  border-radius: 1.5rem;
+  background: #15392c;
+  box-shadow: 0 24px 60px rgba(21, 57, 44, 0.18);
+}
+
+.actorKey {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.actorKey span,
+.actor {
+  border-radius: 999px;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.61rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.actorKey span {
+  padding: 0.58rem 0.82rem;
+  font-size: 0.75rem;
+}
+
+.client {
+  background: #ffd990;
+  color: #4a3211;
+}
+
+.office {
+  background: #d9c7ff;
+  color: #382369;
+}
+
+.employee {
+  background: #a9e2cf;
+  color: #123d2f;
+}
+
+.lifecycleDiagram ol {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lifecycleDiagram li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  min-height: 4.25rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+}
+
+.lifecycleNumber {
+  color: #a9e2cf;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.72rem;
+}
+
+.lifecycleDiagram li strong {
+  font-size: clamp(1.15rem, 2vw, 1.65rem);
+  font-weight: 560;
+  letter-spacing: -0.025em;
+}
+
+.actor {
+  min-width: 10rem;
+  padding: 0.58rem 0.82rem;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.downArrow {
+  position: absolute;
+  z-index: 3;
+  bottom: -0.85rem;
+  left: 2rem;
+  color: #f5af52;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.systemQuestion {
+  position: sticky;
+  top: calc(var(--site-nav-height) + 2rem);
+  padding: clamp(1.5rem, 3vw, 2.4rem);
+  border: 1px solid rgba(21, 57, 44, 0.14);
+  border-radius: 1.5rem 1.5rem 1.5rem 0.25rem;
+  background: #fffdf8;
+}
+
+.systemQuestion span {
+  display: block;
+  margin-bottom: 2rem;
+  color: #176b4d;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.systemQuestion p {
+  margin: 0;
+  color: #16382c;
+  font-size: clamp(1.35rem, 2.3vw, 2.15rem);
+  font-weight: 560;
+  letter-spacing: -0.035em;
+  line-height: 1.18;
+}
+
+@media (max-width: 900px) {
+  .introHeader,
+  .sectionHeading,
+  .lifecycleLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .introCopy,
+  .sectionHeading > p:last-child {
+    margin-top: 1.5rem;
+  }
+
+  .journey {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .journeyStep,
+  .journeyStepPhoto,
+  .journeyStepText {
+    min-height: 26rem;
+  }
+
+  .journeyStep:last-child {
+    grid-column: 1 / -1;
+    min-height: 15rem;
+  }
+
+  .journeyArrow {
+    top: auto;
+    right: -1.15rem;
+    bottom: 2rem;
+  }
+
+  .journeyStep:nth-child(even) .journeyArrow {
+    right: auto;
+    bottom: -1.15rem;
+    left: 2rem;
+    transform: rotate(90deg);
+  }
+
+  .systemQuestion {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .frame {
+    width: min(100% - 2rem, var(--container-page));
+  }
+
+  .introduction {
+    min-height: 60rem;
+    padding-top: 3.5rem;
+  }
+
+  .introduction > .frame {
+    min-height: 52rem;
+  }
+
+  .heroBackground {
+    object-position: 48% center;
+  }
+
+  .introHeader h1 {
+    font-size: clamp(2.75rem, 12.5vw, 3.8rem);
+  }
+
+  .heroCaption {
+    align-self: stretch;
+    text-align: center;
+  }
+
+  .metadata {
+    grid-template-columns: 1fr;
+  }
+
+  .metadata div + div {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .metadata dd {
+    min-height: auto;
+    padding-bottom: 1.2rem;
+  }
+
+  .sectionHeading h2 {
+    font-size: clamp(2.05rem, 9vw, 2.8rem);
+  }
+
+  .journey {
+    display: block;
+  }
+
+  .journeyStep,
+  .journeyStepPhoto,
+  .journeyStepText,
+  .journeyStep:last-child {
+    min-height: 24rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .journeyStepText {
+    min-height: 13rem;
+  }
+
+  .journeyArrow,
+  .journeyStep:nth-child(even) .journeyArrow {
+    top: auto;
+    right: auto;
+    bottom: -1.2rem;
+    left: 2rem;
+    transform: rotate(90deg);
+  }
+
+  .lifecycleDiagram {
+    padding: 0.9rem;
+    border-radius: 1rem;
+  }
+
+  .actorKey {
+    display: none;
+  }
+
+  .lifecycleDiagram li {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.65rem;
+    min-height: 5rem;
+  }
+
+  .actor {
+    grid-column: 2;
+    width: fit-content;
+    min-width: 0;
+  }
+
+  .downArrow {
+    left: 1.5rem;
+  }
+}

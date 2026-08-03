@@ -3,16 +3,17 @@
 import { motion } from 'framer-motion'
 import { revealItem } from '@/components/motion/presets'
 import { Headline } from '@/components/shared/Headline'
-import { ScrollIndicator } from '@/components/shared/ScrollIndicator'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { Tooltip } from '@/components/shared/Tooltip'
+import { BusinessAnalysis } from './BusinessAnalysis'
 import { PlatformDiagram } from './PlatformDiagram'
+import { SystemDesign } from './SystemDesign'
 
 export function PlatformVision() {
   return (
     <SectionWrapper
       id="platform-vision"
-      className="chapter-screen border-b border-line bg-surface py-[var(--space-section)]"
+      className="bg-canvas py-14 sm:py-16"
     >
       <motion.div
         variants={revealItem}
@@ -43,15 +44,10 @@ export function PlatformVision() {
 
       <PlatformDiagram />
 
-      <motion.div
-        variants={revealItem}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.8 }}
-        className="mt-10 lg:mt-6"
-      >
-        <ScrollIndicator href="#operational-lifecycle" label="Operational lifecycle" />
-      </motion.div>
+      <div className="mt-14 grid gap-16 lg:mt-16 lg:grid-cols-2 lg:gap-10">
+        <SystemDesign />
+        <BusinessAnalysis />
+      </div>
     </SectionWrapper>
   )
 }

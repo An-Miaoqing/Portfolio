@@ -1,7 +1,6 @@
 export type HomeProjectId = 'careos' | 'engineering' | 'gut-begleitet'
 
 export type HomeProjectEntry = {
-  announcement?: string
   areas: readonly string[]
   category: string
   ctaHref?: string
@@ -48,13 +47,11 @@ export const homeProjects: readonly HomeProjectEntry[] = [
   },
   {
     id: 'gut-begleitet',
-    category: 'DIGITAL SOLUTION · WEB',
+    category: 'CLIENT WORK · GUT BEGLEITET',
     title: 'Gut Begleitet',
     description:
       'A digital service platform for an Austrian community-care association — turning informal service requests into a structured booking workflow, live in production today.',
-    areas: ['Responsive Web Design', 'Booking Flow', 'Digital Service Experience', 'Deployment'],
+    areas: [],
     workHref: '/work#gutbegleitet',
-    announcement:
-      'a membership app for booking events and services, and reserving the Gut Friend home companion — currently in concept and development.',
   },
 ] as const satisfies readonly HomeProjectEntry[]

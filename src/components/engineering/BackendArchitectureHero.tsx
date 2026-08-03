@@ -158,7 +158,7 @@ export function BackendArchitectureHero() {
   return (
     <SectionWrapper
       as="section"
-      className="relative overflow-hidden border-b border-line bg-canvas py-[var(--space-section)]"
+      className="relative overflow-hidden bg-canvas py-14 sm:py-16"
       id="backend-is-the-platform"
     >
       <div

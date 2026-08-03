@@ -12,10 +12,9 @@ function CareOSCore({ className = '' }: { className?: string }) {
   return (
     <motion.div
       variants={revealItem}
-      className={`relative z-10 flex size-36 flex-col items-center justify-center rounded-full border border-accent bg-accent-strong text-center text-white shadow-card ${className}`}
+      className={`relative z-10 flex size-36 items-center justify-center rounded-full border border-accent bg-white p-6 shadow-card ${className}`}
     >
-      <span className="font-mono text-[0.65rem] tracking-[0.14em] text-accent-soft uppercase">Operational core</span>
-      <strong className="mt-2 text-xl font-medium tracking-[-0.035em]">CareOS</strong>
+      <img alt="CareOS" className="size-full object-contain" src="/home/careos-logo.png" />
     </motion.div>
   )
 }
@@ -57,18 +56,17 @@ export function PlatformDiagram() {
           ))}
         </svg>
 
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute top-6 left-1/2 -translate-x-1/2">
           <CareOSCore />
         </div>
 
         {platformDomains.map((domain) => (
-          <motion.div key={domain.id} variants={revealItem}>
-            <PlatformNode
-              activeDomain={activeDomain}
-              domain={domain}
-              onChange={setActiveDomain}
-              positionClassName={domain.desktopPosition}
-            />
+          <motion.div
+            key={domain.id}
+            variants={revealItem}
+            className={`absolute z-10 w-72 ${domain.desktopPosition}`}
+          >
+            <PlatformNode activeDomain={activeDomain} domain={domain} onChange={setActiveDomain} />
           </motion.div>
         ))}
       </div>

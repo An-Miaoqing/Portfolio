@@ -11,27 +11,6 @@ export type EngineeringFlowStep = {
   description?: string
 }
 
-export type TechnologyDecision = {
-  id: string
-  category: string
-  technology: string
-  reason: string
-  benefits: readonly string[]
-}
-
-export type ApiDefinition = {
-  id: string
-  name: string
-  purpose: string
-  sharedRule: string
-}
-
-export type ProjectLayer = {
-  id: string
-  name: string
-  purpose: string
-}
-
 export type ScalabilityCapability = {
   id: string
   name: string

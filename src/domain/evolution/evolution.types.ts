@@ -9,12 +9,6 @@ export type EvolutionPhase = {
   foundation: string
 }
 
-export type MaturityLevel = {
-  id: string
-  name: string
-  explanation: string
-}
-
 export type FeatureConnection = {
   label: string
   values: readonly string[]
@@ -32,10 +26,4 @@ export type ExpansionLayer = {
   id: string
   name: string
   items: readonly string[]
-}
-
-export type FutureIntegration = {
-  id: string
-  name: string
-  purpose: string
 }

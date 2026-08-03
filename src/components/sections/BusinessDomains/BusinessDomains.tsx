@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { LifecycleGroupedCanvas, useWorkflowEngine } from '@/components/lifecycle'
 import { revealItem } from '@/components/motion/presets'
 import { Headline } from '@/components/shared/Headline'
-import { ScrollIndicator } from '@/components/shared/ScrollIndicator'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import { careOSDomains, careOSDomainWorkflowGroups } from '@/domain/business-domains/careos-domains'
 import type { BusinessDomainId } from '@/domain/business-domains/domain.types'
@@ -32,7 +31,7 @@ export function BusinessDomains() {
   }
 
   return (
-      <SectionWrapper id="business-domains" className="chapter-screen border-b border-line bg-surface py-[var(--space-section)]">
+      <SectionWrapper id="business-domains" className="bg-canvas py-14 sm:py-16">
         <motion.div variants={revealItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} className="mb-12 grid gap-8 lg:mb-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-end">
           <div>
             <Headline eyebrow="04 / Business Domains">Five business domains.<br />One shared operational model.</Headline>
@@ -53,10 +52,6 @@ export function BusinessDomains() {
         <div className="mt-8 lg:mt-6">
           <DomainPanel domain={activeDomain} />
         </div>
-
-        <motion.div variants={revealItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.8 }} className="mt-10 lg:mt-4">
-          <ScrollIndicator href="#applications" label="Applications" />
-        </motion.div>
       </SectionWrapper>
   )
 }

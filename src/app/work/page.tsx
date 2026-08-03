@@ -89,9 +89,6 @@ export default function WorkPage() {
             <p className="work-index__breadcrumb work-index__breadcrumb--heading" id="gutbegleitet-work-title">
               Client Solutions
             </p>
-            <p className="work-index__summary">
-              A digital service platform for an Austrian community-care association — from business analysis and service design to a structured booking workflow and a live production website.
-            </p>
             <p className="work-index__areas-text" aria-label="Gut Begleitet project areas">
               {gutBegleitetAreas.join('・')}
             </p>
@@ -99,9 +96,8 @@ export default function WorkPage() {
 
           <div className="container work-index__slideshow">
             <GutBegleitetSlideshow />
-            <a className="work-index__case-study-link" href="/case-study/gutbegleitet">
-              <span>Explore the complete Gut Begleitet case study</span>
-              <span aria-hidden="true">→</span>
+            <a className="button button--primary work-index__case-study-cta" href="/case-study/gutbegleitet">
+              Explore Gut Begleitet <span aria-hidden="true">→</span>
             </a>
           </div>
         </article>

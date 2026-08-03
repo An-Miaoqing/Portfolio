@@ -27,7 +27,7 @@ export function EntityRelationshipDiagram() {
   return (
     <SectionWrapper
       as="section"
-      className="border-b border-line bg-canvas py-[var(--space-section)]"
+      className="bg-canvas py-14 sm:py-16"
       id="entity-relationships"
     >
       <motion.div

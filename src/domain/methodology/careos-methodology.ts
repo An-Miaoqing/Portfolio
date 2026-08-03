@@ -1,8 +1,6 @@
 import type {
   AnalysisPractice,
-  CaseStudyEvidence,
   ContactItem,
-  MethodologyPrinciple,
   MethodologyStep,
   SkillGroup,
   SystemDesignStage,
@@ -78,15 +76,6 @@ export const systemDesignStages: readonly SystemDesignStage[] = [
   { id: 'engineering', name: 'Engineering', explanation: 'Technology is selected to implement the established structure.' },
 ]
 
-export const corePrinciples: readonly MethodologyPrinciple[] = [
-  { id: 'business-first', name: 'Business before technology', connection: 'Engineering Decisions' },
-  { id: 'change', name: 'Design for change', connection: 'Product Evolution' },
-  { id: 'shared-models', name: 'Shared operational models', connection: 'Operational Lifecycle' },
-  { id: 'boundaries', name: 'Clear system boundaries', connection: 'Platform Architecture' },
-  { id: 'services', name: 'Reusable business services', connection: 'Platform Applications' },
-  { id: 'simplicity', name: 'Simplicity over unnecessary complexity', connection: 'Whole-system design' },
-]
-
 export const skillGroups: readonly SkillGroup[] = [
   {
     id: 'business-systems',
@@ -108,15 +97,6 @@ export const skillGroups: readonly SkillGroup[] = [
     name: 'Data',
     capabilities: ['SQL', 'Data Analysis', 'Reporting', 'Dashboard Design'],
   },
-]
-
-export const caseStudyEvidence: readonly CaseStudyEvidence[] = [
-  { id: 'product-thinking', name: 'End-to-end product thinking', chapter: 'Complete narrative' },
-  { id: 'business-analysis', name: 'Business analysis', chapter: 'Lifecycle & domains' },
-  { id: 'system-modelling', name: 'System modelling', chapter: 'Operational model' },
-  { id: 'architecture', name: 'Platform architecture', chapter: 'Shared platform' },
-  { id: 'engineering', name: 'Engineering decisions', chapter: 'Implementation choices' },
-  { id: 'scalable-design', name: 'Scalable design', chapter: 'Product evolution' },
 ]
 
 export const contactItems: readonly ContactItem[] = [

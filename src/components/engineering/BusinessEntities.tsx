@@ -10,7 +10,7 @@ export function BusinessEntities() {
   return (
     <SectionWrapper
       as="section"
-      className="border-b border-line bg-canvas py-[var(--space-section)]"
+      className="bg-canvas py-14 sm:py-16"
       id="business-entities"
     >
       <motion.div

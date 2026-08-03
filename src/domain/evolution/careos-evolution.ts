@@ -1,10 +1,4 @@
-import type {
-  EvolutionFeature,
-  EvolutionPhase,
-  ExpansionLayer,
-  FutureIntegration,
-  MaturityLevel,
-} from './evolution.types'
+import type { EvolutionFeature, EvolutionPhase, ExpansionLayer } from './evolution.types'
 
 export const evolutionPhases: readonly EvolutionPhase[] = [
   {
@@ -49,14 +43,6 @@ export const evolutionPhases: readonly EvolutionPhase[] = [
   },
 ]
 
-export const maturityLevels: readonly MaturityLevel[] = [
-  { id: 'foundation', name: 'Foundation', explanation: 'Shared entities, rules and reliable operational data.' },
-  { id: 'operations', name: 'Operations', explanation: 'Connected workflows coordinate daily service delivery.' },
-  { id: 'automation', name: 'Automation', explanation: 'Repeatable rules reduce manual coordination.' },
-  { id: 'optimisation', name: 'Optimisation', explanation: 'Operational evidence improves planning and performance.' },
-  { id: 'intelligence', name: 'Intelligence', explanation: 'Assistance works from trusted context and governed services.' },
-]
-
 export const evolutionFeatures: readonly EvolutionFeature[] = [
   {
     id: 'ai-scheduling-assistant',
@@ -84,33 +70,9 @@ export const evolutionFeatures: readonly EvolutionFeature[] = [
   },
 ]
 
-export const stableFoundations: readonly string[] = [
-  'Operational lifecycle',
-  'Business domains',
-  'Domain model',
-  'Workflow engine',
-  'Backend authority',
-  'Shared APIs',
-]
-
 export const expansionLayers: readonly ExpansionLayer[] = [
   { id: 'core', name: 'Core Platform', items: ['Shared domain model', 'Workflow engine', 'Platform APIs'] },
   { id: 'existing', name: 'Existing Applications', items: ['Website', 'Management', 'Employee'] },
   { id: 'future', name: 'Future Applications', items: ['Client Portal', 'AI Assistant', 'Partner Portal', 'Analytics Hub', 'Integrations'] },
 ]
 
-export const futureIntegrations: readonly FutureIntegration[] = [
-  { id: 'accounting', name: 'Accounting', purpose: 'Financial exchange' },
-  { id: 'calendar', name: 'Calendar', purpose: 'Schedule coordination' },
-  { id: 'email', name: 'Email', purpose: 'Service communication' },
-  { id: 'sms', name: 'SMS', purpose: 'Time-sensitive updates' },
-  { id: 'payments', name: 'Payment Providers', purpose: 'Payment processing' },
-  { id: 'government', name: 'Government Services', purpose: 'Required data exchange' },
-]
-
-export const designPrinciples: readonly string[] = [
-  'Support an existing business process',
-  'Reuse domain services',
-  'Share operational data',
-  'Strengthen the platform rather than fragment it',
-]

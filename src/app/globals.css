@@ -101,13 +101,6 @@ button {
   }
 }
 
-@media (min-width: 64rem) {
-  .chapter-screen {
-    min-height: 100svh;
-    padding-block: clamp(2rem, 4.5vh, 4rem);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

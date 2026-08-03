@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { useWorkflowEngine } from '@/components/lifecycle'
 import { revealItem } from '@/components/motion/presets'
 import { Headline } from '@/components/shared/Headline'
-import { ScrollIndicator } from '@/components/shared/ScrollIndicator'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import {
   careOSArchitectureLayers,
@@ -40,7 +39,7 @@ export function PlatformArchitecture() {
     <>
       <SectionWrapper
         id="platform-architecture"
-        className="chapter-screen border-b border-line bg-surface py-[var(--space-section)]"
+        className="bg-canvas py-14 sm:py-16"
       >
         <motion.div
           variants={revealItem}
@@ -71,53 +70,28 @@ export function PlatformArchitecture() {
             layers={careOSArchitectureLayers}
           />
         </div>
-
-        <motion.div
-          variants={revealItem}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.8 }}
-          className="mt-10 lg:mt-6"
-        >
-          <ScrollIndicator href="#authoritative-backend" label="Authoritative backend" />
-        </motion.div>
       </SectionWrapper>
 
       <SectionWrapper
         id="authoritative-backend"
-        className="chapter-screen border-b border-line bg-canvas py-[var(--space-section)]"
+        className="bg-canvas py-14 sm:py-16"
       >
         <AuthoritativeBackend />
-        <div className="mt-10 lg:mt-8">
-          <ScrollIndicator href="#shared-domain-model" label="Shared domain model" />
-        </div>
       </SectionWrapper>
 
       <SectionWrapper
         id="shared-domain-model"
-        className="chapter-screen border-b border-line bg-surface py-[var(--space-section)]"
+        className="bg-canvas py-14 sm:py-16"
       >
         <DomainModel onFocusEntity={(entityId) => engine.focusEntity(entityId)} />
         <ArchitecturePrinciples />
-        <div className="mt-10 lg:mt-8">
-          <ScrollIndicator href="#architecture-data-flow" label="Operational data flow" />
-        </div>
       </SectionWrapper>
 
       <SectionWrapper
         id="architecture-data-flow"
-        className="chapter-screen border-b border-line bg-canvas py-[var(--space-section)]"
+        className="bg-canvas py-14 sm:py-16"
       >
         <DataFlow onFocusDataFlow={(stepId) => engine.focusDataFlow(stepId)} />
-        <motion.div
-          variants={revealItem}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.8 }}
-          className="mt-10 lg:mt-8"
-        >
-          <ScrollIndicator href="#engineering-implementation" label="Engineering & implementation" />
-        </motion.div>
       </SectionWrapper>
 
     </>

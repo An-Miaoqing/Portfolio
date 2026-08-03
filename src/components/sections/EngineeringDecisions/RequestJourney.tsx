@@ -41,6 +41,13 @@ export function RequestJourney() {
           </AnimatePresence>
         </div>
       </div>
+
+      <div className="mt-8 flex items-start gap-4 border-t border-line pt-6">
+        <span aria-hidden="true" className="mt-2 size-2 shrink-0 rounded-full bg-accent" />
+        <p className="max-w-2xl text-base leading-relaxed text-muted">
+          Website, management and employee interfaces use the same backend services. Business rules remain authoritative regardless of where an action originates.
+        </p>
+      </div>
     </div>
   )
 }

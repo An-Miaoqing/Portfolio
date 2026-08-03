@@ -52,6 +52,7 @@ export default function AboutPage() {
 
             <div className="about-page__profile">
               <p className="about-page__profile-name">Anyang Guo</p>
+              <p className="about-page__profile-altname">(An Miaoqing)</p>
               <p className="about-page__profile-role">Business Systems Analyst</p>
               <p className="about-page__profile-location">Vienna, Austria</p>
             </div>
@@ -78,23 +79,26 @@ export default function AboutPage() {
               <p>Approach</p>
               <h2 id="how-i-work-title">How I work</h2>
             </div>
-            <ul className="experience-list" aria-label="Background and experience">
-              {experience.map((item, index) => (
-                <li key={item}><span>0{index + 1}</span>{item}</li>
-              ))}
-            </ul>
-            <div className="about-page__principle-grid">
-              {workingPrinciples.map((principle, index) => (
-                <article key={principle.title} className="about-page__principle">
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <h3>{principle.title}</h3>
-                  <p>{principle.description}</p>
-                </article>
-              ))}
+            <div className="about-page__approach-grid">
+              <div className="about-page__approach-column">
+                <ul className="experience-list" aria-label="Background and experience">
+                  {experience.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+                <p className="approach__focus about-page__approach-focus">
+                  My current focus is translating business operations into structured processes, data models, workflows and practical digital solutions.
+                </p>
+              </div>
+              <div className="about-page__principle-grid">
+                {workingPrinciples.map((principle) => (
+                  <article key={principle.title} className="about-page__principle">
+                    <h3>{principle.title}</h3>
+                    <p>{principle.description}</p>
+                  </article>
+                ))}
+              </div>
             </div>
-            <p className="approach__focus about-page__approach-focus">
-              My current focus is translating business operations into structured processes, data models, workflows and practical digital solutions.
-            </p>
           </div>
         </section>
 

@@ -39,15 +39,15 @@ const slides: readonly Slide[] = [
       'One operational model connects customer demand, operations, workforce activity and finance.',
     points: [
       'Customer needs become structured, traceable work.',
-      'Operational teams coordinate one shared service lifecycle.',
-      'Service delivery remains connected to commercial settlement.',
+      'Teams coordinate through one connected service lifecycle.',
+      'Operations, service delivery and financial settlement stay connected.',
     ],
   },
   {
     id: 'business-problem',
     label: 'Problem',
-    eyebrow: 'Care Organization Today',
-    title: 'Too Many Tools. Disconnected. Inefficient.',
+    eyebrow: 'Fragmented Service Operations',
+    title: 'Too many tools. Too little shared context',
     message: 'Information everywhere. Visibility nowhere.',
     points: [
       'Customer information arrives without one shared context.',
@@ -60,9 +60,9 @@ const slides: readonly Slide[] = [
     id: 'business-analysis',
     label: 'Analysis',
     eyebrow: 'BUSINESS ANALYSIS',
-    title: 'How business understanding becomes system design.',
+    title: 'How business understanding becomes system design',
     message:
-      'Architecture begins with the operating problem, its stakeholders and the rules governing real work.',
+      'System design begins with the operating problem, its stakeholders and the rules governing real work.',
     points: [
       'Identify pain points before defining requirements.',
       'Model processes, rules, entities and relationships.',
@@ -74,7 +74,7 @@ const slides: readonly Slide[] = [
     id: 'business-workflow',
     label: 'Workflow',
     eyebrow: 'BUSINESS WORKFLOW',
-    title: 'One connected business lifecycle.',
+    title: 'One connected business lifecycle',
     message:
       'A customer need moves through coordinated operational stages until the work is commercially settled.',
     points: [
@@ -102,7 +102,7 @@ const slides: readonly Slide[] = [
     id: 'database-design',
     label: 'Database',
     eyebrow: 'DATABASE DESIGN',
-    title: 'The data model is derived from the business domain.',
+    title: 'The data model is derived from the business domain',
     message:
       'Business concepts become entities, relationships and constraints—not tables designed around screens.',
     points: [
@@ -116,7 +116,7 @@ const slides: readonly Slide[] = [
     id: 'applications',
     label: 'Applications',
     eyebrow: 'APPLICATIONS',
-    title: 'One operating system, shaped around three business roles.',
+    title: 'One operating system, shaped around three user groups',
     message: 'Each interface exposes the shared system through the responsibilities of the people using it.',
     points: [
       'Website — customers discover services and submit requests.',
@@ -254,20 +254,23 @@ function WorkflowVisual() {
 function ArchitectureVisual() {
   return (
     <img
-      alt="CareOS layered system architecture: Customer Website (React + Vite), Admin Application (React + Vite), and Employee App (Expo + React Native) all calling a REST API, which governs Core Application Services (Identity, Customer, Booking, Scheduling, Workforce, Billing, Reporting, Notifications) backed by Prisma and PostgreSQL"
+      alt="CareOS layered system architecture: Customer Website (React + Vite), Admin Application (React + Vite), and Employee App (Expo + React Native) all calling a REST API, which governs Core Business Capabilities (Identity, Customer, Booking, Scheduling, Workforce, Billing, Reporting, Notifications) backed by Prisma and PostgreSQL"
       className="careos-slide-architecture-image"
-      src="/work/architecture-overview.png"
+      src="/work/architecture.png"
     />
   )
 }
 
 function DatabaseVisual() {
   return (
-    <img
-      alt="CareOS entity relationship diagram: Company, User, Employee, Household, Client and Service feeding into Booking, Booking Item, Visit and Assignment, through to Time Entry, Visit Closeout and Billable Item, and Invoice, Invoice Line, Payment, Receipt and Cash Handover"
-      className="careos-slide-problem-image"
-      src="/work/database-overview.png"
-    />
+    <div className="careos-slide-problem-visual">
+      <img
+        alt="CareOS entity relationship diagram: Company, User, Employee, Household, Client and Service feeding into Booking, Booking Item, Visit and Assignment, through to Time Entry, Visit Closeout and Billable Item, and Invoice, Invoice Line, Payment, Receipt and Cash Handover"
+        className="careos-slide-problem-image"
+        src="/work/database-overview.png"
+      />
+      <p className="careos-slide-diagram-caption">Selected operational relationships</p>
+    </div>
   )
 }
 

@@ -18,22 +18,10 @@ export type SystemDesignStage = {
   explanation: string
 }
 
-export type MethodologyPrinciple = {
-  id: string
-  name: string
-  connection: string
-}
-
 export type SkillGroup = {
   id: string
   name: string
   capabilities: readonly string[]
-}
-
-export type CaseStudyEvidence = {
-  id: string
-  name: string
-  chapter: string
 }
 
 export type ContactItem = {

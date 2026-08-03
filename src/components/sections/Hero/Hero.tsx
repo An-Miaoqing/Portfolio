@@ -5,7 +5,6 @@ import { revealGroup, revealItem } from '@/components/motion/presets'
 import { CTAButton } from '@/components/shared/CTAButton'
 import { CaseStudySwitcher } from '@/components/shared/CaseStudySwitcher'
 import { Headline } from '@/components/shared/Headline'
-import { ScrollIndicator } from '@/components/shared/ScrollIndicator'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 
 export function Hero() {
@@ -34,8 +33,10 @@ export function Hero() {
           <motion.div variants={revealItem} className="max-w-5xl">
             <CaseStudySwitcher current="careos" />
 
-            <Headline as="h1" eyebrow="Enterprise platform" size="display">
-              <span className="block">Enterprise Platform</span>
+            <img alt="" aria-hidden="true" className="mb-6 h-10 w-auto sm:h-12" src="/home/careos-icon.png" />
+
+            <Headline as="h1" size="display">
+              <span className="block">Operating System</span>
               <span className="block text-muted">for Service Organisations</span>
             </Headline>
 
@@ -48,10 +49,6 @@ export function Hero() {
             </div>
           </motion.div>
         </div>
-
-        <motion.div variants={revealItem}>
-          <ScrollIndicator className="mb-8" />
-        </motion.div>
       </motion.div>
     </SectionWrapper>
   )

@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { useWorkflowEngine } from '@/components/lifecycle'
 import { revealItem } from '@/components/motion/presets'
 import { Headline } from '@/components/shared/Headline'
-import { ScrollIndicator } from '@/components/shared/ScrollIndicator'
 import { SectionWrapper } from '@/components/shared/SectionWrapper'
 import {
   careOSApplications,
@@ -41,7 +40,7 @@ export function PlatformApplications() {
   return (
       <SectionWrapper
         id="applications"
-        className="chapter-screen border-b border-line bg-canvas py-[var(--space-section)]"
+        className="bg-canvas py-14 sm:py-16"
       >
         <motion.div
           variants={revealItem}
@@ -77,16 +76,6 @@ export function PlatformApplications() {
           <PlatformModel />
           <SharedRealityCard />
         </div>
-
-        <motion.div
-          variants={revealItem}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.8 }}
-          className="mt-10 lg:mt-6"
-        >
-          <ScrollIndicator href="#platform-architecture" label="Platform architecture" />
-        </motion.div>
       </SectionWrapper>
   )
 }

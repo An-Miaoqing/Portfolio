@@ -5,6 +5,7 @@ import type { ReactElement } from 'react'
 import { revealItem } from '@/components/motion/presets'
 import { CTAButton } from '@/components/shared/CTAButton'
 import { type HomeProjectEntry, type HomeProjectId, homeProjects } from '@/domain/home/projects'
+import { OperatingModelBackground } from './OperatingModelBackground'
 
 function CareOSVisual() {
   return (
@@ -30,77 +31,43 @@ function EnterpriseBackendVisual() {
   )
 }
 
-function ServiceFlowVisual({
-  label,
-  steps,
-}: {
-  label: string
-  steps: readonly { label: string; detail: string }[]
-}) {
-  return (
-    <div aria-hidden="true" className="project-visual project-visual--flow">
-      <p>{label}</p>
-      <ol className="service-flow-diagram">
-        {steps.map((step, index) => (
-          <li key={step.label}>
-            <div className="service-flow-diagram__node">
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <div>
-                <strong>{step.label}</strong>
-                <small>{step.detail}</small>
-              </div>
-            </div>
-            {index < steps.length - 1 ? <i /> : null}
-          </li>
-        ))}
-      </ol>
-    </div>
-  )
-}
-
-const gutBegleitetFlow = [
-  { label: 'Visitor', detail: 'Discovers services online' },
-  { label: 'Booking Form', detail: 'Selects service & appointment' },
-  { label: 'REST API', detail: 'Validates the request' },
-  { label: 'Requested', detail: 'Ready for internal review' },
-]
-
-const projectVisuals: Record<HomeProjectId, () => ReactElement> = {
+const projectVisuals: Partial<Record<HomeProjectId, () => ReactElement>> = {
   careos: CareOSVisual,
-  'gut-begleitet': () => <ServiceFlowVisual label="DIGITAL SERVICE FLOW" steps={gutBegleitetFlow} />,
   engineering: EnterpriseBackendVisual,
 }
 
 function ProjectCardContent({ project }: { project: HomeProjectEntry }) {
   const Visual = projectVisuals[project.id]
+  const isGutBegleitet = project.id === 'gut-begleitet'
 
   return (
     <article>
+      {isGutBegleitet ? <OperatingModelBackground /> : null}
       <div className="project-card__meta">
         <p>{project.category}</p>
+        {isGutBegleitet ? <p className="project-card__meta-description">{project.description}</p> : null}
       </div>
       <div className="project-card__body">
         <div className="project-card__content">
           <h3>{project.title}</h3>
-          <p>{project.description}</p>
-          <ul aria-label={`${project.title} areas`} className="tag-list">
-            {project.areas.map((area) => (
-              <li key={area}>{area}</li>
-            ))}
-          </ul>
-          {project.announcement ? (
-            <p className="project-announcement">
-              <strong>Coming next —</strong> {project.announcement}
-            </p>
+          {!isGutBegleitet ? <p>{project.description}</p> : null}
+          {project.areas.length > 0 ? (
+            <ul aria-label={`${project.title} areas`} className="tag-list">
+              {project.areas.map((area) => (
+                <li key={area}>{area}</li>
+              ))}
+            </ul>
           ) : null}
-          <CTAButton
-            href={project.ctaHref ?? project.workHref}
-            icon="right"
-            label={project.ctaLabel ?? 'View work'}
-            variant="secondary"
-          />
+          {!isGutBegleitet ? (
+            <CTAButton
+              href={project.ctaHref ?? project.workHref}
+              icon="right"
+              label={project.ctaLabel ?? 'View work'}
+              variant="secondary"
+            />
+          ) : null}
         </div>
-        <Visual />
+        {Visual ? <Visual /> : null}
       </div>
     </article>
   )

@@ -20,7 +20,7 @@ export const heroCta = {
 }
 
 export const heroSecondaryCta = {
-  label: 'Explore Case Studies',
+  label: 'Explore case studies',
   href: '/case-study',
 }
 

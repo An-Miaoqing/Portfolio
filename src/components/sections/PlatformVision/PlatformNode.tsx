@@ -9,14 +9,12 @@ type PlatformNodeProps = {
   activeDomain: PlatformDomainId | null
   domain: PlatformDomain
   onChange: (domain: PlatformDomainId | null) => void
-  positionClassName?: string
 }
 
 export function PlatformNode({
   activeDomain,
   domain,
   onChange,
-  positionClassName = '',
 }: PlatformNodeProps) {
   const isActive = activeDomain === domain.id
   const isSubdued = activeDomain !== null && !isActive
@@ -35,16 +33,15 @@ export function PlatformNode({
   }
 
   return (
-    <div className={`w-full md:absolute md:w-72 ${positionClassName}`}>
+    <div className="w-full">
       <motion.article
         layout
-        animate={{ opacity: isSubdued ? 0.38 : 1 }}
         transition={motionTransitions.medium}
         onMouseEnter={() => onChange(domain.id)}
         onMouseLeave={handleMouseLeave}
         onFocus={() => onChange(domain.id)}
         onBlur={handleBlur}
-        className={`overflow-hidden rounded-card border bg-surface shadow-control transition-colors duration-(--duration-fast) ${
+        className={`overflow-hidden rounded-card border bg-white shadow-control transition-colors duration-(--duration-fast) ${
           isActive ? 'border-accent' : 'border-line'
         }`}
       >
@@ -55,13 +52,15 @@ export function PlatformNode({
           onClick={() => onChange(isActive ? null : domain.id)}
           className="focus-ring flex min-h-24 w-full items-center justify-between gap-6 rounded-card px-5 py-4 text-left"
         >
-          <span>
+          <span
+            className={`transition-opacity duration-(--duration-fast) ${isSubdued ? 'opacity-[0.38]' : 'opacity-100'}`}
+          >
             <span className="mb-2 block font-mono text-xs tracking-[0.12em] text-muted">{domain.index}</span>
             <span className="block text-lg font-medium tracking-[-0.025em] text-ink">{domain.name}</span>
           </span>
           <span
             aria-hidden="true"
-            className={`text-lg text-muted transition-transform duration-(--duration-medium) ${isActive ? 'rotate-45' : ''}`}
+            className={`text-lg text-muted transition-[transform,opacity] duration-(--duration-medium) ${isActive ? 'rotate-45' : ''} ${isSubdued ? 'opacity-[0.38]' : 'opacity-100'}`}
           >
             +
           </span>
