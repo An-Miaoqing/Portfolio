@@ -8,6 +8,7 @@ type FormState = {
   message: string
   name: string
   subject: string
+  website: string
 }
 
 const initialState: FormState = {
@@ -16,7 +17,10 @@ const initialState: FormState = {
   company: '',
   subject: '',
   message: '',
+  website: '',
 }
+
+const GENERIC_ERROR = 'Something went wrong. Please try again, or contact me directly by email.'
 
 type Status = 'error' | 'idle' | 'submitting' | 'success'
 
@@ -46,6 +50,7 @@ export function ContactForm() {
           company: values.company || undefined,
           subject: values.subject,
           message: values.message,
+          website: values.website,
         }),
       })
 
@@ -53,7 +58,7 @@ export function ContactForm() {
 
       if (!response.ok) {
         setStatus('error')
-        setErrorMessage(data?.error ?? 'Something went wrong. Please try again shortly.')
+        setErrorMessage(data?.error ?? GENERIC_ERROR)
         return
       }
 
@@ -61,7 +66,7 @@ export function ContactForm() {
       setValues(initialState)
     } catch {
       setStatus('error')
-      setErrorMessage('Something went wrong. Please check your connection and try again.')
+      setErrorMessage(GENERIC_ERROR)
     }
   }
 
@@ -69,6 +74,22 @@ export function ContactForm() {
 
   return (
     <form className="contact-form" onSubmit={handleSubmit} noValidate>
+      <div
+        aria-hidden="true"
+        style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}
+      >
+        <label htmlFor="contact-website">Leave this field empty</label>
+        <input
+          id="contact-website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={values.website}
+          onChange={handleChange('website')}
+        />
+      </div>
+
       <div className="contact-form__row">
         <div className="contact-form__field">
           <label htmlFor="contact-name">Name</label>
@@ -144,7 +165,7 @@ export function ContactForm() {
 
         <div aria-live="polite" className="contact-form__status">
           {status === 'success' ? (
-            <p className="contact-form__success">✓ Message sent successfully.</p>
+            <p className="contact-form__success">✓ Thank you — I&apos;ll get back to you soon.</p>
           ) : null}
           {status === 'error' ? <p className="contact-form__error">{errorMessage}</p> : null}
         </div>

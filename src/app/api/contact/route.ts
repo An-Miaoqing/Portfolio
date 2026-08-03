@@ -1,8 +1,18 @@
 import { NextResponse } from 'next/server'
+import { Resend } from 'resend'
 
 const CONTACT_RECIPIENT = 'an.miaoqing@gmail.com'
+const CONTACT_SENDER = 'Portfolio Contact <contact@amq.systems>'
+const GENERIC_ERROR = 'Something went wrong. Please try again, or contact me directly by email.'
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const MAX_FIELD_LENGTH = 5000
+
+const MAX_LENGTHS = {
+  name: 100,
+  email: 254,
+  company: 150,
+  subject: 200,
+  message: 5000,
+} as const
 
 type ContactPayload = {
   company?: string
@@ -24,13 +34,19 @@ function validatePayload(body: unknown): { errors: string[]; payload?: ContactPa
   const { company, email, message, name, subject } = body as Record<string, unknown>
   const errors: string[] = []
 
-  if (!isNonEmptyString(name) || name.length > MAX_FIELD_LENGTH) errors.push('Name is required.')
-  if (!isNonEmptyString(email) || !EMAIL_PATTERN.test(email) || email.length > MAX_FIELD_LENGTH) {
+  if (!isNonEmptyString(name) || name.trim().length > MAX_LENGTHS.name) {
+    errors.push('A valid name is required.')
+  }
+  if (!isNonEmptyString(email) || !EMAIL_PATTERN.test(email.trim()) || email.trim().length > MAX_LENGTHS.email) {
     errors.push('A valid email is required.')
   }
-  if (!isNonEmptyString(subject) || subject.length > MAX_FIELD_LENGTH) errors.push('Subject is required.')
-  if (!isNonEmptyString(message) || message.length > MAX_FIELD_LENGTH) errors.push('Message is required.')
-  if (company !== undefined && (typeof company !== 'string' || company.length > MAX_FIELD_LENGTH)) {
+  if (!isNonEmptyString(subject) || subject.trim().length > MAX_LENGTHS.subject) {
+    errors.push('A subject is required.')
+  }
+  if (!isNonEmptyString(message) || message.trim().length > MAX_LENGTHS.message) {
+    errors.push('A message is required.')
+  }
+  if (company !== undefined && (typeof company !== 'string' || company.length > MAX_LENGTHS.company)) {
     errors.push('Company is invalid.')
   }
 
@@ -41,7 +57,7 @@ function validatePayload(body: unknown): { errors: string[]; payload?: ContactPa
     payload: {
       name: (name as string).trim(),
       email: (email as string).trim(),
-      company: typeof company === 'string' ? company.trim() : undefined,
+      company: typeof company === 'string' && company.trim().length > 0 ? company.trim() : undefined,
       subject: (subject as string).trim(),
       message: (message as string).trim(),
     },
@@ -66,6 +82,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid JSON body.' }, { status: 400 })
   }
 
+  // Honeypot: a hidden field real visitors never fill in. If populated, this is a bot —
+  // pretend success so it doesn't learn to adapt, but skip sending anything.
+  const honeypot = (body as Record<string, unknown> | null)?.website
+  if (typeof honeypot === 'string' && honeypot.trim().length > 0) {
+    console.warn('Contact form honeypot triggered; skipping send.')
+    return NextResponse.json({ success: true })
+  }
+
   const { errors, payload } = validatePayload(body)
   if (!payload) {
     return NextResponse.json({ error: errors.join(' ') }, { status: 400 })
@@ -74,13 +98,25 @@ export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) {
     console.error('RESEND_API_KEY is not configured.')
-    return NextResponse.json(
-      { error: 'The contact form is not fully configured yet. Please email directly instead.' },
-      { status: 500 },
-    )
+    return NextResponse.json({ error: GENERIC_ERROR }, { status: 500 })
   }
 
+  const text = [
+    'New Portfolio Message',
+    '',
+    `Name: ${payload.name}`,
+    `Email: ${payload.email}`,
+    payload.company ? `Company: ${payload.company}` : null,
+    `Subject: ${payload.subject}`,
+    '',
+    'Message:',
+    payload.message,
+  ]
+    .filter((line) => line !== null)
+    .join('\n')
+
   const html = `
+    <h2>New Portfolio Message</h2>
     <p><strong>Name:</strong> ${escapeHtml(payload.name)}</p>
     <p><strong>Email:</strong> ${escapeHtml(payload.email)}</p>
     ${payload.company ? `<p><strong>Company:</strong> ${escapeHtml(payload.company)}</p>` : ''}
@@ -90,30 +126,24 @@ export async function POST(request: Request) {
   `
 
   try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'Portfolio Contact Form <onboarding@resend.dev>',
-        to: [CONTACT_RECIPIENT],
-        reply_to: payload.email,
-        subject: `[Portfolio] ${payload.subject}`,
-        html,
-      }),
+    const resend = new Resend(apiKey)
+    const { error } = await resend.emails.send({
+      from: CONTACT_SENDER,
+      to: [CONTACT_RECIPIENT],
+      replyTo: payload.email,
+      subject: `[Portfolio] ${payload.subject}`,
+      text,
+      html,
     })
 
-    if (!response.ok) {
-      const errorBody = await response.text()
-      console.error('Resend API error:', response.status, errorBody)
-      return NextResponse.json({ error: 'The message could not be sent. Please try again shortly.' }, { status: 502 })
+    if (error) {
+      console.error('Resend API error:', error)
+      return NextResponse.json({ error: GENERIC_ERROR }, { status: 502 })
     }
 
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Failed to send contact message:', error)
-    return NextResponse.json({ error: 'The message could not be sent. Please try again shortly.' }, { status: 502 })
+    return NextResponse.json({ error: GENERIC_ERROR }, { status: 502 })
   }
 }
