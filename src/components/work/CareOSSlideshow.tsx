@@ -377,7 +377,8 @@ export function CareOSSlideshow() {
               />
               <div className="careos-vision-layout__intro">
                 <h3 id={`careos-slide-title-${activeSlide.id}`}>
-                  Business Operating System
+                  <span className="careos-vision-layout__title-full">Business Operating System</span>
+                  <span className="careos-vision-layout__title-short">BOS</span>
                   <br />
                   for Service Organisations
                 </h3>
