@@ -1516,7 +1516,11 @@
 
   .about-page__reading-column,
   .about-page__wide-column {
-    width: min(100% - 2rem, 46rem);
+    width: min(100% - 2.5rem, 46rem);
+  }
+
+  .about-page__header h1 {
+    white-space: normal;
   }
 
   .about-page__section-heading,
