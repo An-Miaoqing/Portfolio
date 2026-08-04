@@ -57,7 +57,7 @@ const slides: readonly Slide[] = [
     id: 'business-problem',
     label: 'Problem',
     eyebrow: 'FRAGMENTED SERVICE OPERATIONS',
-    title: 'Too many tools. Too little shared context',
+    title: 'Too many tools\nToo little shared context',
     message: 'Information everywhere. Visibility nowhere.',
     points: [
       'Customer information arrives without one shared context.',
@@ -370,7 +370,9 @@ export function CareOSSlideshow() {
             onClick={() => setIsManuallyPaused((current) => !current)}
             aria-label={isManuallyPaused ? 'Resume automatic slide playback' : 'Pause automatic slide playback'}
           >
-            <i aria-hidden="true">{isManuallyPaused ? '▶' : 'Ⅱ'}</i>
+            <i aria-hidden="true" className={isManuallyPaused ? 'careos-icon-play' : undefined}>
+              {isManuallyPaused ? '▶' : 'Ⅱ'}
+            </i>
             {isManuallyPaused ? 'PLAY' : 'PAUSE'}
           </button>
         </div>

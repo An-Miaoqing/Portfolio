@@ -28,7 +28,7 @@ const slides: readonly Slide[] = [
     id: 'intro',
     label: 'Intro',
     eyebrow: 'GUT BEGLEITET · CLIENT WORK',
-    title: 'From everyday service to connected operations.',
+    title: 'From everyday service to connected operations',
     message: 'Business Systems Analysis · Digital Transformation · Implementation',
     points: [],
     visual: 'intro',
@@ -37,7 +37,7 @@ const slides: readonly Slide[] = [
     id: 'work',
     label: 'Work',
     eyebrow: 'THE OPERATION',
-    title: 'Understanding how the organisation actually works.',
+    title: 'Understanding how the organisation actually works',
     message: 'System design began with the real service journey.',
     points: ['Customer / Family', 'Office / Manager', 'Employee'],
     visual: 'work',
@@ -46,7 +46,7 @@ const slides: readonly Slide[] = [
     id: 'daily-customer',
     label: 'Customer',
     eyebrow: '01 / CUSTOMER / FAMILY',
-    title: 'Request help.',
+    title: 'Request help',
     message: 'The Gut Begleitet website is used before the physical service begins.',
     points: ['Gut Begleitet Website', 'Discover services', 'Choose a time', 'Submit a request'],
     visual: 'daily-customer',
@@ -55,7 +55,7 @@ const slides: readonly Slide[] = [
     id: 'daily-office',
     label: 'Office',
     eyebrow: '02 / OFFICE / MANAGER',
-    title: 'Coordinate the service.',
+    title: 'Coordinate the service',
     message: 'The office connects customer demand with field delivery.',
     points: ['CareOS Operations', 'Review bookings', 'Schedule visits · Assign employees', 'Follow service delivery'],
     visual: 'daily-office',
@@ -64,7 +64,7 @@ const slides: readonly Slide[] = [
     id: 'daily-employee',
     label: 'Employee',
     eyebrow: '03 / EMPLOYEE',
-    title: 'Deliver the service.',
+    title: 'Deliver the service',
     message: 'The service happens between people; the application supports it.',
     points: ['CareOS Employee', 'See assigned visits', 'Open visit details', 'Record completed work'],
     visual: 'daily-employee',
@@ -73,7 +73,7 @@ const slides: readonly Slide[] = [
     id: 'connected',
     label: 'Connected',
     eyebrow: 'CONNECTED SYSTEM',
-    title: 'Interfaces on the surface. Connected records underneath.',
+    title: 'Interfaces on the surface\nConnected records underneath',
     message: 'Bookings · Services · Assignments · Visits · Employees',
     points: [],
     visual: 'connected',
@@ -82,7 +82,7 @@ const slides: readonly Slide[] = [
     id: 'impact',
     label: 'Impact',
     eyebrow: 'GUT BEGLEITET × CAREOS',
-    title: 'The service happens between people.',
+    title: 'The service happens between people',
     message: 'CareOS keeps the operation connected around it.',
     points: [],
     visual: 'impact',
@@ -110,9 +110,9 @@ function HumanTeaserSlide({ slide, variant }: { slide: Slide; variant: 'intro' |
         <p>{slide.eyebrow}</p>
         <h3 id={`gutbegleitet-slide-title-${slide.id}`}>
           {isImpact ? (
-            <>The service happens<br />between people.</>
+            <>The service happens<br />between people</>
           ) : (
-            <>From everyday service<br />to connected operations.</>
+            <>From everyday service<br />to connected operations</>
           )}
         </h3>
         <span>{slide.message}</span>
@@ -394,7 +394,9 @@ export function GutBegleitetSlideshow() {
             onClick={() => setIsManuallyPaused((current) => !current)}
             aria-label={isManuallyPaused ? 'Resume automatic slide playback' : 'Pause automatic slide playback'}
           >
-            <i aria-hidden="true">{isManuallyPaused ? '▶' : 'Ⅱ'}</i>
+            <i aria-hidden="true" className={isManuallyPaused ? 'careos-icon-play' : undefined}>
+              {isManuallyPaused ? '▶' : 'Ⅱ'}
+            </i>
             {isManuallyPaused ? 'PLAY' : 'PAUSE'}
           </button>
         </div>

@@ -99,7 +99,7 @@ const slides: readonly Slide[] = [
     id: 'apis',
     label: 'API',
     eyebrow: 'REST API',
-    title: 'One API. Many applications.',
+    title: 'One API\nMany applications',
     message:
       'Every application communicates through the same REST API. Controllers delegate requests to shared application services, ensuring every client follows identical business rules without accessing the database directly.',
     points: [
@@ -297,7 +297,9 @@ export function EngineeringSlideshow() {
             onClick={() => setIsManuallyPaused((current) => !current)}
             aria-label={isManuallyPaused ? 'Resume automatic slide playback' : 'Pause automatic slide playback'}
           >
-            <i aria-hidden="true">{isManuallyPaused ? '▶' : 'Ⅱ'}</i>
+            <i aria-hidden="true" className={isManuallyPaused ? 'careos-icon-play' : undefined}>
+              {isManuallyPaused ? '▶' : 'Ⅱ'}
+            </i>
             {isManuallyPaused ? 'PLAY' : 'PAUSE'}
           </button>
         </div>
