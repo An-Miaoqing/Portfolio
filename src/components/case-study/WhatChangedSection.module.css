@@ -242,7 +242,7 @@
 }
 
 @media (max-width: 620px) {
-  .frame { width: min(100% - 2rem, var(--container-page)); }
+  .frame { width: min(100% - 2.5rem, var(--container-page)); }
   .header h2 { font-size: clamp(2.15rem, 9.5vw, 3rem); }
   .outcomes { grid-template-columns: 1fr; }
   .outcomes li { min-height: 12rem; padding: 1.5rem 1rem; }

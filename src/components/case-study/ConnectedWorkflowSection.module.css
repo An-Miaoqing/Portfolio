@@ -375,7 +375,7 @@
 }
 
 @media (max-width: 640px) {
-  .frame { width: min(100% - 2rem, var(--container-page)); }
+  .frame { width: min(100% - 2.5rem, var(--container-page)); }
   .story::before { left: 0.45rem; }
   .sceneHeading { display: block; padding-left: 2rem; }
   .sceneHeading::before { left: 0.07rem; }

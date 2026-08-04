@@ -936,6 +936,7 @@
 
 .about-page__closing {
   padding-block: clamp(6rem, 12vw, 10rem);
+  text-align: center;
 }
 
 .about-page__closing p {
@@ -1529,6 +1530,14 @@
     grid-template-columns: 1fr;
   }
 
+  .experience-list {
+    width: 100%;
+  }
+
+  .about-page__approach-focus {
+    max-width: none;
+  }
+
   .about-page__section-heading {
     gap: 0.75rem;
   }
@@ -1542,7 +1551,7 @@
   }
 
   .contact-page__container {
-    width: min(100% - 2rem, 46rem);
+    width: min(100% - 2.5rem, 46rem);
   }
 
   .contact-page__form-grid,
@@ -1583,6 +1592,18 @@
   .portfolio-home .system-model {
     --system-node-height: 74px;
     --system-node-width: 74px;
+  }
+
+  .portfolio-home .system-model__connection--business {
+    top: calc(14% + 74px);
+  }
+
+  .portfolio-home .system-model__connection--process {
+    right: calc(8% + 74px);
+  }
+
+  .portfolio-home .system-model__connection--technology {
+    left: calc(8% + 74px);
   }
 }
 
@@ -3231,8 +3252,9 @@ p, h1, h2, h3 { margin-top: 0; }
 @media (max-width: 900px) {
 .careos-intro-slide {
     grid-template-columns: 1fr;
-    grid-template-rows: 580px 590px;
-    height: 1170px;
+    grid-template-rows: min-content min-content;
+    height: auto;
+    min-height: 0;
   }
 .careos-intro-slide__copy {
     border-right: 0;
@@ -3272,20 +3294,23 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-intro-deck__status { gap: 0.55rem; }
 .careos-intro-deck__status button { width: 30px; padding: 0; justify-content: center; font-size: 0; }
 .careos-intro-deck__status button i { font-size: 1rem; }
-.careos-intro-slide { grid-template-rows: min-content min-content; min-height: 1080px; }
+.careos-intro-slide { grid-template-rows: min-content min-content; height: auto; min-height: 0; }
 .careos-intro-slide__copy { padding: 1.8rem 1.25rem 2rem; }
 .careos-intro-slide__copy h3 { font-size: var(--careos-type-title-mobile); }
 .careos-vision-layout__intro h3 { font-size: var(--careos-type-title-mobile); }
 .careos-intro-slide__message { font-size: var(--careos-type-body); }
 .careos-intro-slide__visual { min-height: 0; padding: 1.25rem; }
-.careos-intro-deck__controls { grid-template-columns: 1fr; }
-.careos-intro-deck__arrows { grid-template-columns: repeat(2, 1fr); min-height: 40px; border-right: 0; border-bottom: 1px solid var(--careos-line); }
-.careos-intro-deck__arrows button:first-child { border-right: 1px solid var(--careos-line); }
-.careos-intro-deck__tabs { min-height: 46px; }
-.careos-intro-deck__tabs button { min-width: 98px; padding: 0.45rem 0.55rem; }
-.careos-intro-deck__tabs--careos button,
-  .careos-intro-deck__tabs--gutbegleitet button,
-  .careos-intro-deck__tabs--engineering button { min-width: 0; padding: 0.45rem 0.35rem; }
+.careos-intro-deck__controls { grid-template-columns: auto 1fr; }
+.careos-intro-deck__arrows { grid-template-columns: repeat(2, 44px); min-height: 44px; }
+.careos-intro-deck__tabs {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+  }
+.careos-intro-deck__tabs button:not(.is-active) { display: none; }
+.careos-intro-deck__tabs button.is-active { min-width: 0; padding: 0.45rem 0.75rem; border-right: 0; }
 .careos-slide-problem-impact { grid-template-columns: 1fr; }
 .careos-slide-applications {
     display: flex;
@@ -3339,4 +3364,30 @@ p, h1, h2, h3 { margin-top: 0; }
     text-align: center;
     content: 'HOUSEHOLD → CLIENT → BOOKING → VISIT → ASSIGNMENT → EMPLOYEE';
   }
+}
+
+/* Phone in landscape: viewport height is the scarce resource, not width.
+   Shrink the deck's own chrome and cap the slide to the available height
+   (with internal scroll as a fallback for the handful of slide types with
+   their own fixed-height visual layouts) so the whole deck fits on one
+   screen instead of running off the bottom. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .careos-intro-deck__topbar { min-height: 40px; padding-inline: 1rem; }
+  .careos-intro-deck__controls { grid-template-columns: auto 1fr; min-height: 36px; }
+  .careos-intro-deck__arrows { grid-template-columns: repeat(2, 40px); min-height: 36px; }
+  .careos-intro-deck__tabs {
+    display: flex;
+    min-height: 36px;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+  }
+  .careos-intro-deck__tabs button:not(.is-active) { display: none; }
+  .careos-intro-deck__tabs button.is-active { min-width: 0; padding: 0.35rem 0.65rem; border-right: 0; }
+  .careos-intro-slide {
+    max-height: calc(100svh - var(--site-nav-height) - 90px);
+    overflow-y: auto;
+  }
+  .careos-intro-slide__copy { padding: 1rem 1.25rem; }
+  .careos-intro-slide__visual { min-height: 0; padding: 1rem; }
 }
