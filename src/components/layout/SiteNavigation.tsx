@@ -3,10 +3,10 @@ import Link from 'next/link'
 const navigation = [
   { label: 'Home', href: { pathname: '/' } },
   { label: 'Work', href: { pathname: '/work' } },
+  { label: 'Case Studies', href: { pathname: '/case-study/gutbegleitet' } },
   { label: 'Products', href: { pathname: '/products' } },
   { label: 'Engineering', href: { pathname: '/engineering' } },
   { label: 'About', href: { pathname: '/about' } },
-  { label: 'Contact', href: { pathname: '/contact' } },
 ] as const
 
 type AMQLogoMarkProps = {

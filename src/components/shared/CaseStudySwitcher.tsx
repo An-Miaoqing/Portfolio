@@ -7,12 +7,12 @@ type CaseStudySwitcherProps = {
 }
 
 const caseStudies = [
-  { id: 'careos', label: 'CareOS', href: '/case-study' },
   {
     id: 'gutbegleitet',
     label: 'Gut Begleitet',
     href: '/case-study/gutbegleitet',
   },
+  { id: 'careos', label: 'CareOS', href: '/case-study' },
 ] as const
 
 export function CaseStudySwitcher({ current }: CaseStudySwitcherProps) {
