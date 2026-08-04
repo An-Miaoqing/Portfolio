@@ -18,6 +18,11 @@ export default function ProductsPage() {
   return (
     <div className="case-study-site">
       <SiteNavigation />
+      <div className="border-b border-line bg-accent-soft px-4 py-3 text-center">
+        <p className="font-mono text-xs font-medium tracking-[0.1em] text-accent uppercase">
+          Under construction — this page is still being built
+        </p>
+      </div>
       <SiteShell>
         <ExperienceCenter />
         <PlatformOverview />

@@ -17,30 +17,17 @@ export const homeProjects: readonly HomeProjectEntry[] = [
     category: 'BUSINESS SYSTEMS · SYSTEM DESIGN',
     title: 'CareOS',
     description:
-      'A production business operating system for a real service organisation — unifying bookings, scheduling, employee operations, billing and payroll across a public website, admin dashboard and employee app.',
-    areas: [
-      'Business Analysis',
-      'Process Design',
-      'Data Modelling',
-      'Workflow Design',
-      'System Architecture',
-      'Implementation',
-    ],
+      'A business operating system designed from real service operations — connecting bookings, scheduling, employees, service delivery and operational records across one platform.',
+    areas: ['Business Analysis', 'Process Design', 'Data Modelling', 'System Design'],
     workHref: '/work#careos',
   },
   {
     id: 'engineering',
     category: 'BUSINESS SYSTEMS · PLATFORM ENGINEERING',
-    title: 'Enterprise Backend',
+    title: 'Platform Architecture',
     description:
-      'How CareOS’s backend is organised — one platform shared by every application, structured around business domains, entities and services rather than technical layers.',
-    areas: [
-      'Domain Modelling',
-      'Data Relationships',
-      'Business Services',
-      'Platform APIs',
-      'Architecture Principles',
-    ],
+      'A technical view of how CareOS supports multiple applications through shared APIs, business services, data access and a relational operational database.',
+    areas: ['REST API', 'Business Services', 'Data Modelling', 'PostgreSQL'],
     workHref: '/engineering',
     ctaLabel: 'View Engineering',
     ctaHref: '/engineering',
@@ -50,8 +37,10 @@ export const homeProjects: readonly HomeProjectEntry[] = [
     category: 'CLIENT WORK · GUT BEGLEITET',
     title: 'Gut Begleitet',
     description:
-      'A digital service platform for an Austrian community-care association — turning informal service requests into a structured booking workflow, live in production today.',
+      'How the everyday operations of an Austrian care organisation transformed into a connected digital service system',
     areas: [],
     workHref: '/work#gutbegleitet',
+    ctaLabel: 'View case study',
+    ctaHref: '/case-study/gutbegleitet',
   },
 ] as const satisfies readonly HomeProjectEntry[]

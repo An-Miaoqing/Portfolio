@@ -58,14 +58,12 @@ function ProjectCardContent({ project }: { project: HomeProjectEntry }) {
               ))}
             </ul>
           ) : null}
-          {!isGutBegleitet ? (
-            <CTAButton
-              href={project.ctaHref ?? project.workHref}
-              icon="right"
-              label={project.ctaLabel ?? 'View work'}
-              variant="secondary"
-            />
-          ) : null}
+          <CTAButton
+            href={project.ctaHref ?? project.workHref}
+            icon="right"
+            label={project.ctaLabel ?? 'View work'}
+            variant="secondary"
+          />
         </div>
         {Visual ? <Visual /> : null}
       </div>
