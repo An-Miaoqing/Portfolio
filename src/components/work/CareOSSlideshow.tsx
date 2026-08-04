@@ -462,7 +462,15 @@ export function CareOSSlideshow() {
               role="tab"
               aria-selected={index === activeIndex}
               aria-controls="careos-intro-slide-panel"
-              className={index === activeIndex ? 'is-active' : ''}
+              className={
+                index === activeIndex
+                  ? 'is-active'
+                  : index === activeIndex - 1
+                    ? 'is-prev'
+                    : index === activeIndex + 1
+                      ? 'is-next'
+                      : ''
+              }
               key={slide.id}
               onClick={() => setActiveIndex(index)}
             >

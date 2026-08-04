@@ -2334,9 +2334,9 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-intro-slide__message {
   max-width: 540px;
   margin-bottom: 1.7rem;
-  color: var(--careos-muted);
-  font-size: var(--careos-type-body);
-  line-height: 1.65;
+  color: #50566f;
+  font-size: var(--careos-type-base);
+  line-height: 1.5;
 }
 
 .careos-intro-slide__copy ul { border-top: 1px solid var(--careos-line); }
@@ -2438,7 +2438,7 @@ p, h1, h2, h3 { margin-top: 0; }
 }
 
 .careos-slide-problem-layout--mirror .careos-intro-slide__message {
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
 .careos-slide-problem-layout--mirror .careos-slide-problem-layout__row {
@@ -2542,9 +2542,9 @@ p, h1, h2, h3 { margin-top: 0; }
 
 .careos-vision-layout__intro-note {
   margin: 0;
-  color: var(--careos-muted);
-  font-size: var(--careos-type-body);
-  line-height: 1.55;
+  color: #50566f;
+  font-size: var(--careos-type-base);
+  line-height: 1.5;
   text-wrap: pretty;
 }
 
@@ -3428,6 +3428,8 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-intro-slide--vision,
   .careos-intro-slide--problem { height: auto; min-height: 0; }
 .careos-vision-layout__row { flex-direction: column; align-items: stretch; gap: 1rem; }
+.careos-intro-slide--vision { padding-bottom: 1rem; }
+.careos-intro-slide--problem { padding-bottom: 1rem; }
 .careos-vision-layout__image-wrap { height: auto; aspect-ratio: 1536 / 1024; flex: 0 0 auto; }
 .careos-vision-layout__points-col { flex: 0 0 auto; }
 .careos-slide-problem-layout__row { grid-template-columns: 1fr; }
@@ -3589,15 +3591,15 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-intro-slide { grid-template-rows: min-content min-content; height: auto; min-height: 0; row-gap: 1rem; }
 .careos-vision-layout__title-full { display: none; }
 .careos-vision-layout__title-short { display: inline; }
-.careos-intro-slide__copy { padding: 1.8rem 1.25rem 0; }
+.careos-intro-slide__copy { padding: clamp(1.2rem, 2.33vw, 2.27rem) 1.25rem 0; }
 .careos-intro-slide__copy h3,
 .careos-vision-layout__intro h3,
 .careos-slide-problem-layout__header h3,
 .careos-slide-problem-layout--mirror .careos-slide-problem-layout__header h3,
 .careos-intro-slide--cover .careos-intro-slide__copy h3 { font-size: clamp(1.4rem, 6vw, 1.8rem); }
 .careos-intro-slide__eyebrow { margin-bottom: 0.4rem; }
-.careos-intro-slide__copy h3 { margin-bottom: 0.4rem; }
-.careos-intro-slide__message { font-size: var(--careos-type-body); margin-bottom: 0; }
+.careos-intro-slide__copy h3 { margin-bottom: 0.5rem; }
+.careos-intro-slide__message { font-size: var(--careos-type-base); margin-bottom: 0; }
 .careos-intro-slide__copy ul { margin-top: 0; }
 .careos-slide-problem-impact { display: none; }
 .careos-intro-slide__visual { min-height: 0; padding: 0.5rem; }
@@ -3608,10 +3610,21 @@ p, h1, h2, h3 { margin-top: 0; }
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
     overflow: visible;
   }
-.careos-intro-deck__tabs button:not(.is-active) { display: none; }
+.careos-intro-deck__tabs button:not(.is-active):not(.is-prev):not(.is-next) { display: none; }
 .careos-intro-deck__tabs button.is-active { min-width: 0; height: 29px; padding: 0 0.75rem; border-right: 0; font-size: 0.75rem; font-weight: 700; }
+.careos-intro-deck__tabs button.is-prev,
+.careos-intro-deck__tabs button.is-next {
+    min-width: 0;
+    height: 29px;
+    padding: 0 0.5rem;
+    border-right: 0;
+    font-size: 0.65rem;
+    color: #a3a7bd;
+    background: transparent;
+  }
 .careos-slide-problem-impact { grid-template-columns: 1fr; }
 .careos-slide-applications {
     display: flex;
@@ -3682,10 +3695,20 @@ p, h1, h2, h3 { margin-top: 0; }
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.4rem;
     overflow: visible;
   }
-  .careos-intro-deck__tabs button:not(.is-active) { display: none; }
+  .careos-intro-deck__tabs button:not(.is-active):not(.is-prev):not(.is-next) { display: none; }
   .careos-intro-deck__tabs button.is-active { min-width: 0; padding: 0.35rem 0.65rem; border-right: 0; font-size: 0.75rem; font-weight: 700; }
+  .careos-intro-deck__tabs button.is-prev,
+  .careos-intro-deck__tabs button.is-next {
+    min-width: 0;
+    padding: 0.35rem 0.5rem;
+    border-right: 0;
+    font-size: 0.6rem;
+    color: #a3a7bd;
+    background: transparent;
+  }
   .careos-intro-slide__copy { padding: 1rem 1.25rem; }
   .careos-intro-slide__visual { min-height: 0; padding: 1rem; }
 }
