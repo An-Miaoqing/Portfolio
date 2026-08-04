@@ -2367,7 +2367,8 @@ p, h1, h2, h3 { margin-top: 0; }
   min-height: 750px;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(1.8rem, 3.5vw, 3.4rem);
+  padding-block: clamp(1.2rem, 2.33vw, 2.27rem);
+  padding-inline: clamp(1.8rem, 3.5vw, 3.4rem);
 }
 
 .careos-slide-problem-layout {
@@ -2406,12 +2407,10 @@ p, h1, h2, h3 { margin-top: 0; }
 /* Problem slide mirrors the Vision slide's layout: same padding, and the
    picture/text split flipped to picture-right (3/5) and text-left (2/5).
    The eyebrow+title sit in the same left column as the body text, while
-   the picture spans the full column height on the right. */
-.careos-intro-slide--problem:has(.careos-slide-problem-layout--mirror) {
-  padding-block: clamp(1.2rem, 2.33vw, 2.27rem);
-  padding-inline: clamp(1.8rem, 3.5vw, 3.4rem);
-}
-
+   the picture spans the full column height on the right. Every slide using
+   .careos-intro-slide--problem is always mirrored now (the two ID sets are
+   identical), so the padding split lives directly on the base rule above
+   instead of behind a :has() check. */
 .careos-slide-problem-layout--mirror {
   display: grid;
   grid-template-columns: 2fr 3fr;
@@ -2729,10 +2728,6 @@ p, h1, h2, h3 { margin-top: 0; }
   max-height: 600px;
   border-radius: 16px;
   object-fit: contain;
-}
-
-.careos-intro-slide--architecture .careos-slide-architecture-image {
-  max-height: 668px;
 }
 
 .careos-slide-problem-impact {
@@ -3455,23 +3450,45 @@ p, h1, h2, h3 { margin-top: 0; }
   align-self: stretch;
   flex-shrink: 0;
 }
-.careos-slide-problem-layout--mirror .careos-intro-slide__visual { height: 260px; align-self: stretch; flex-shrink: 0; }
-.careos-slide-problem-layout--tall .careos-intro-slide__visual { height: 320px; }
-/* A bare image (Analysis/Workflow/Applications/Architecture) has no sibling
-   content to share the box with, so let it size to its own aspect ratio
-   instead of being forced into a fixed box — a box taller than the image's
-   natural height was letterboxing it (empty space above/below the picture). */
-.careos-slide-problem-layout--mirror .careos-intro-slide__visual:has(> .careos-slide-problem-image) {
+/* Avoid :has() here — not reliably supported on every mobile browser this
+   site is tested on. Instead of forcing a fixed box height (which
+   letterboxed images whose aspect ratio didn't match it), let every mirror
+   visual size itself to its actual content: a bare image sizes to its own
+   aspect ratio, and a wrapped image (Problem/Database, sharing the box with
+   a caption or icon list) sizes to its natural flex-column content height. */
+.careos-slide-problem-layout--mirror .careos-intro-slide__visual {
   height: auto;
+  align-self: stretch;
+  flex-shrink: 0;
 }
+.careos-slide-problem-layout--tall .careos-intro-slide__visual { height: auto; }
+.careos-slide-problem-layout--mirror .careos-slide-problem-visual { height: auto; gap: 0.3rem; }
 .careos-slide-problem-layout--mirror .careos-intro-slide__visual > .careos-slide-problem-image {
   height: auto;
+  width: 100%;
+}
+.careos-slide-problem-layout--mirror .careos-slide-problem-visual .careos-slide-problem-image {
+  flex: none;
+  height: auto;
+  width: 100%;
+}
+/* Architecture's diagram is an unusually tall portrait image (975x1450).
+   Sized at full width via height:auto it grows so tall that the frame's
+   own bottom padding gets pushed past the scrollable area's visible edge,
+   reading as "no gap" under the picture. Cap its height instead so width
+   (not height) is what yields, leaving the frame's padding-bottom visible.
+   Must come after the general mirror image rule above (equal specificity,
+   later wins) or that rule's width:100% silently overrides this. */
+.careos-slide-problem-layout--tall .careos-intro-slide__visual > .careos-slide-problem-image {
+  width: auto;
+  max-height: 420px;
+  margin-inline: auto;
 }
 .careos-intro-slide__visual::after { display: none; }
 .careos-slide-problem-layout__copy { padding: 0 0 1.5rem; }
 .careos-slide-problem-layout--mirror .careos-slide-problem-layout__copy { padding: 0 0 0.5rem; }
 .careos-slide-problem-layout__header h3 { white-space: normal; }
-.careos-vision-layout__header { flex-direction: column; gap: clamp(0.75rem, 1.5vw, 1.5rem); }
+.careos-vision-layout__header { flex-direction: column; gap: 0.35rem; }
 .careos-vision-layout__intro { align-items: flex-start; margin-top: 0; text-align: left; }
 .careos-vision-layout__logo { height: 25px; }
 .careos-intro-deck__tabs {
@@ -3567,7 +3584,7 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-intro-deck__status button i.careos-icon-play { margin-left: 2px; }
 .careos-intro-slide__eyebrow { display: none; }
 .careos-intro-slide { grid-template-rows: min-content min-content; height: auto; min-height: 0; }
-.careos-intro-slide__copy { padding: 1.8rem 1.25rem 0.75rem; }
+.careos-intro-slide__copy { padding: 1.8rem 1.25rem 0.5rem; }
 .careos-intro-slide__copy h3,
 .careos-vision-layout__intro h3,
 .careos-slide-problem-layout__header h3,

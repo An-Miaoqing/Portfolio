@@ -21,24 +21,6 @@ type Slide = {
   visual?: SlideVisualType
 }
 
-const PICTURE_LAYOUT_SLIDE_IDS = new Set([
-  'applications',
-  'business-analysis',
-  'business-problem',
-  'business-workflow',
-  'database-design',
-  'system-architecture',
-])
-
-const MIRROR_LAYOUT_SLIDE_IDS = new Set([
-  'applications',
-  'business-analysis',
-  'business-problem',
-  'business-workflow',
-  'database-design',
-  'system-architecture',
-])
-
 const slides: readonly Slide[] = [
   {
     id: 'vision',
@@ -424,7 +406,7 @@ export function CareOSSlideshow() {
             </div>
           </div>
         </article>
-      ) : PICTURE_LAYOUT_SLIDE_IDS.has(activeSlide.id) ? (
+      ) : (
         <article
           className="careos-intro-slide careos-intro-slide--problem"
           id="careos-intro-slide-panel"
@@ -433,9 +415,9 @@ export function CareOSSlideshow() {
           aria-labelledby={`careos-slide-title-${activeSlide.id}`}
         >
           <div
-            className={`careos-slide-problem-layout${
-              MIRROR_LAYOUT_SLIDE_IDS.has(activeSlide.id) ? ' careos-slide-problem-layout--mirror' : ''
-            }${activeSlide.id === 'system-architecture' ? ' careos-slide-problem-layout--tall' : ''}`}
+            className={`careos-slide-problem-layout careos-slide-problem-layout--mirror${
+              activeSlide.id === 'system-architecture' ? ' careos-slide-problem-layout--tall' : ''
+            }`}
           >
             <div className="careos-slide-problem-layout__header">
               <p className="careos-intro-slide__eyebrow" id={`careos-slide-title-${activeSlide.id}`}>
@@ -456,28 +438,6 @@ export function CareOSSlideshow() {
               <SlideVisual type={activeSlide.visual!} />
             </div>
           </div>
-        </article>
-      ) : (
-        <article
-          className="careos-intro-slide careos-intro-slide--architecture"
-          id="careos-intro-slide-panel"
-          role="tabpanel"
-          aria-live={isAutoplayPaused ? 'polite' : 'off'}
-          aria-labelledby={`careos-slide-title-${activeSlide.id}`}
-        >
-          <div className="careos-intro-slide__copy">
-            <p className="careos-intro-slide__eyebrow" id={`careos-slide-title-${activeSlide.id}`}>
-              {activeSlide.eyebrow}
-            </p>
-            {activeSlide.title && <h3>{activeSlide.title}</h3>}
-            <p className="careos-intro-slide__message">{activeSlide.message}</p>
-            <ul>
-              {activeSlide.points.map((point) => (
-                <li key={point}>{point}</li>
-              ))}
-            </ul>
-          </div>
-          <SlideVisual type={activeSlide.visual!} />
         </article>
       )}
 
