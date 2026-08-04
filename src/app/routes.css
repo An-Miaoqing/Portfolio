@@ -1443,10 +1443,14 @@
 }
 
 @media (max-width: 640px) {
+  /* The nav is position: static on mobile (it scrolls away with the page),
+     so it doesn't permanently occupy viewport space the way it does on
+     wider layouts — don't subtract --site-nav-height here, or the deck
+     ends up shorter than the screen actually allows once scrolled to it. */
   .work-index .careos-intro-deck--uniform .careos-intro-slide,
   .work-index .careos-intro-deck--uniform .careos-intro-slide--vision,
   .work-index .careos-intro-deck--uniform .careos-intro-slide--problem {
-    height: calc(100svh - var(--site-nav-height) - 100px);
+    height: calc(100svh - 90px);
     min-height: 0;
     max-height: 760px;
     overflow-y: auto;
