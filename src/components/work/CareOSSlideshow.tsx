@@ -27,6 +27,16 @@ const PICTURE_LAYOUT_SLIDE_IDS = new Set([
   'business-problem',
   'business-workflow',
   'database-design',
+  'system-architecture',
+])
+
+const MIRROR_LAYOUT_SLIDE_IDS = new Set([
+  'applications',
+  'business-analysis',
+  'business-problem',
+  'business-workflow',
+  'database-design',
+  'system-architecture',
 ])
 
 const slides: readonly Slide[] = [
@@ -46,7 +56,7 @@ const slides: readonly Slide[] = [
   {
     id: 'business-problem',
     label: 'Problem',
-    eyebrow: 'Fragmented Service Operations',
+    eyebrow: 'FRAGMENTED SERVICE OPERATIONS',
     title: 'Too many tools. Too little shared context',
     message: 'Information everywhere. Visibility nowhere.',
     points: [
@@ -255,7 +265,7 @@ function ArchitectureVisual() {
   return (
     <img
       alt="CareOS layered system architecture: Customer Website (React + Vite), Admin Application (React + Vite), and Employee App (Expo + React Native) all calling a REST API, which governs Core Business Capabilities (Identity, Customer, Booking, Scheduling, Workforce, Billing, Reporting, Notifications) backed by Prisma and PostgreSQL"
-      className="careos-slide-architecture-image"
+      className="careos-slide-problem-image"
       src="/work/architecture.png"
     />
   )
@@ -338,7 +348,7 @@ export function CareOSSlideshow() {
 
   return (
     <div
-      className="careos-intro-deck"
+      className="careos-intro-deck careos-intro-deck--uniform"
       onBlur={handleBlur}
       onFocus={() => setIsInteracting(true)}
       onKeyDown={handleKeyDown}
@@ -348,7 +358,9 @@ export function CareOSSlideshow() {
       aria-label="CareOS introduction slideshow. Slides advance every five seconds. Use left and right arrow keys to change slides."
     >
       <div className="careos-intro-deck__topbar">
-        <span>CAREOS / SYSTEM INTRODUCTION</span>
+        <span>
+          CAREOS<span className="careos-intro-deck__topbar-subtitle"> / SYSTEM INTRODUCTION</span>
+        </span>
         <div className="careos-intro-deck__status">
           <span>
             {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
@@ -418,7 +430,11 @@ export function CareOSSlideshow() {
           aria-live={isAutoplayPaused ? 'polite' : 'off'}
           aria-labelledby={`careos-slide-title-${activeSlide.id}`}
         >
-          <div className="careos-slide-problem-layout">
+          <div
+            className={`careos-slide-problem-layout${
+              MIRROR_LAYOUT_SLIDE_IDS.has(activeSlide.id) ? ' careos-slide-problem-layout--mirror' : ''
+            }${activeSlide.id === 'system-architecture' ? ' careos-slide-problem-layout--tall' : ''}`}
+          >
             <div className="careos-slide-problem-layout__header">
               <p className="careos-intro-slide__eyebrow" id={`careos-slide-title-${activeSlide.id}`}>
                 {activeSlide.eyebrow}

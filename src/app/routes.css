@@ -1390,7 +1390,7 @@
 .work-index__areas-text {
   margin: 0.5rem 0 0;
   color: var(--careos-muted);
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.6;
   text-wrap: pretty;
 }
@@ -1401,6 +1401,53 @@
 
 .work-index__slideshow {
   padding-bottom: clamp(3.5rem, 7vw, 6rem);
+}
+
+/* All three /work decks use the Gut Begleitet deck as their frame-size
+   reference. Keeping the stage fixed prevents the page and controls from
+   shifting when a slide changes, while the content continues to use each
+   deck's existing internal composition. */
+.work-index .careos-intro-deck--uniform .careos-intro-slide,
+.work-index .careos-intro-deck--uniform .careos-intro-slide--vision,
+.work-index .careos-intro-deck--uniform .careos-intro-slide--problem {
+  width: 100%;
+  height: 690px;
+  min-height: 690px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.work-index .careos-intro-deck--uniform .careos-intro-slide__copy,
+.work-index .careos-intro-deck--uniform .careos-intro-slide__visual,
+.work-index .careos-intro-deck--uniform .careos-slide-problem-layout,
+.work-index .careos-intro-deck--uniform .careos-slide-problem-layout__row,
+.work-index .careos-intro-deck--uniform .careos-vision-layout,
+.work-index .careos-intro-deck--uniform .careos-vision-layout__row {
+  min-height: 0;
+}
+
+.work-index .careos-intro-deck--uniform .gut-teaser-human {
+  height: 100%;
+  min-height: 0;
+}
+
+@media (max-width: 900px) {
+  .work-index .careos-intro-deck--uniform .careos-intro-slide,
+  .work-index .careos-intro-deck--uniform .careos-intro-slide--vision,
+  .work-index .careos-intro-deck--uniform .careos-intro-slide--problem {
+    height: 900px;
+    min-height: 900px;
+  }
+}
+
+@media (max-width: 640px) {
+  .work-index .careos-intro-deck--uniform .careos-intro-slide,
+  .work-index .careos-intro-deck--uniform .careos-intro-slide--vision,
+  .work-index .careos-intro-deck--uniform .careos-intro-slide--problem {
+    height: 760px;
+    min-height: 760px;
+    overflow-y: auto;
+  }
 }
 
 .work-index__case-study-link {
@@ -2288,7 +2335,8 @@ p, h1, h2, h3 { margin-top: 0; }
   min-height: 750px;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(1.8rem, 3.5vw, 3.4rem);
+  padding-block: clamp(1.2rem, 2.33vw, 2.27rem);
+  padding-inline: clamp(1.8rem, 3.5vw, 3.4rem);
 }
 
 .careos-intro-slide--problem {
@@ -2332,6 +2380,97 @@ p, h1, h2, h3 { margin-top: 0; }
   justify-content: flex-start;
 }
 
+/* Problem slide mirrors the Vision slide's layout: same padding, and the
+   picture/text split flipped to picture-right (3/5) and text-left (2/5).
+   The eyebrow+title sit in the same left column as the body text, while
+   the picture spans the full column height on the right. */
+.careos-intro-slide--problem:has(.careos-slide-problem-layout--mirror) {
+  padding-block: clamp(1.2rem, 2.33vw, 2.27rem);
+  padding-inline: clamp(1.8rem, 3.5vw, 3.4rem);
+}
+
+.careos-slide-problem-layout--mirror {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-template-rows: auto auto;
+  align-content: center;
+  column-gap: clamp(1.8rem, 3.5vw, 3.4rem);
+  row-gap: 0.75rem;
+}
+
+.careos-slide-problem-layout--mirror .careos-slide-problem-layout__header {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+  min-width: 0;
+  text-align: left;
+}
+
+.careos-slide-problem-layout--mirror .careos-slide-problem-layout__header h3 {
+  max-width: none;
+  font-size: var(--careos-type-title);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.3;
+  white-space: normal;
+}
+
+.careos-slide-problem-layout--mirror .careos-intro-slide__message {
+  line-height: 1.55;
+}
+
+.careos-slide-problem-layout--mirror .careos-slide-problem-layout__row {
+  display: contents;
+}
+
+.careos-slide-problem-layout--mirror .careos-slide-problem-layout__copy {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+  min-width: 0;
+  padding: 0;
+}
+
+.careos-slide-problem-layout--mirror .careos-intro-slide__visual {
+  display: block;
+  height: 460px;
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: center;
+  min-width: 0;
+  padding: 0;
+  border-radius: 16px;
+}
+
+/* Matches the Engineering deck's API slide, which gives its diagram up to
+   600px of height instead of the standard 460px box. */
+.careos-slide-problem-layout--tall .careos-intro-slide__visual {
+  height: 600px;
+}
+
+.careos-slide-problem-layout--mirror .careos-slide-problem-visual {
+  height: 100%;
+  min-height: 0;
+}
+
+/* These diagrams have text on them, so object-fit must stay "contain" —
+   never crop. A bare image is a direct child of the visual box, so it can
+   size against it directly. An image with sibling content (e.g. Problem's
+   impacts list) needs to share the box's height instead of hogging all of it. */
+.careos-slide-problem-layout--mirror .careos-intro-slide__visual > .careos-slide-problem-image {
+  height: 100%;
+  max-height: none;
+  object-fit: contain;
+}
+
+.careos-slide-problem-layout--mirror .careos-slide-problem-visual .careos-slide-problem-image {
+  flex: 1 1 0%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  object-fit: contain;
+}
+
 .careos-vision-layout {
   display: flex;
   flex-direction: column;
@@ -2370,32 +2509,39 @@ p, h1, h2, h3 { margin-top: 0; }
 
 .careos-vision-layout__points-col {
   display: flex;
+  flex: 2 1 0%;
+  min-width: 200px;
   flex-direction: column;
+  justify-content: center;
   gap: 0.85rem;
 }
 
 .careos-vision-layout__intro-note {
   margin: 0;
   color: var(--careos-muted);
-  font-size: var(--careos-type-base);
+  font-size: var(--careos-type-body);
   line-height: 1.55;
+  text-wrap: pretty;
 }
 
 .careos-vision-layout__row {
-  display: grid;
-  grid-template-columns: minmax(0, 1.8fr) minmax(180px, 0.5fr);
-  align-items: start;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  display: flex;
+  align-items: center;
+  gap: clamp(1.8rem, 3.5vw, 3.4rem);
 }
 
 .careos-vision-layout__image-wrap {
+  height: 460px;
+  flex: 3 1 0%;
   min-width: 0;
+  overflow: hidden;
+  border-radius: 16px;
 }
 
 .careos-vision-layout__image {
   display: block;
   width: 100%;
-  max-height: 380px;
+  height: 100%;
   border-radius: 16px;
   object-fit: contain;
 }
@@ -2407,11 +2553,12 @@ p, h1, h2, h3 { margin-top: 0; }
 }
 
 .careos-vision-layout__points li {
-  padding: 0.7rem 0;
+  padding: 0.6rem 0;
   border-bottom: 1px solid var(--careos-line);
   color: #50566f;
   font-size: var(--careos-type-base);
   line-height: 1.5;
+  text-wrap: pretty;
 }
 
 .careos-vision-layout__points li:last-child { border-bottom: 0; }
@@ -2706,12 +2853,11 @@ p, h1, h2, h3 { margin-top: 0; }
 }
 
 .gut-teaser-human__copy > p {
-  margin: 0 0 1.1rem;
+  margin: 0 0 1.15rem;
   color: #d5f1e5;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  font-weight: 650;
-  letter-spacing: 0.12em;
+  font-size: var(--careos-type-base);
+  letter-spacing: 0.09em;
 }
 
 .gut-teaser-human__copy h3 {
@@ -2727,10 +2873,8 @@ p, h1, h2, h3 { margin-top: 0; }
 .gut-teaser-human__copy > span {
   margin-top: 1.35rem;
   color: rgba(255, 255, 255, 0.88);
-  font-family: var(--font-mono);
-  font-size: clamp(0.7rem, 1.1vw, 0.88rem);
-  letter-spacing: 0.045em;
-  line-height: 1.55;
+  font-size: var(--careos-type-body);
+  line-height: 1.65;
 }
 
 .gut-teaser-human__cta {
@@ -3263,9 +3407,20 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-intro-slide__visual { min-height: 0; }
 .careos-intro-slide--vision,
   .careos-intro-slide--problem { height: auto; min-height: 0; }
-.careos-vision-layout__row { grid-template-columns: 1fr; }
+.careos-vision-layout__row { flex-direction: column; align-items: stretch; }
+.careos-vision-layout__image-wrap { height: 320px; flex: 0 0 auto; }
+.careos-vision-layout__points-col { flex: 0 0 auto; }
 .careos-slide-problem-layout__row { grid-template-columns: 1fr; }
+.careos-slide-problem-layout--mirror { grid-template-columns: 1fr; grid-template-rows: none; }
+.careos-slide-problem-layout--mirror .careos-slide-problem-layout__header,
+  .careos-slide-problem-layout--mirror .careos-slide-problem-layout__copy,
+  .careos-slide-problem-layout--mirror .careos-intro-slide__visual { grid-column: 1; }
+.careos-slide-problem-layout--mirror .careos-slide-problem-layout__header { grid-row: 1; text-align: center; }
+.careos-slide-problem-layout--mirror .careos-slide-problem-layout__copy { grid-row: 2; align-self: stretch; }
+.careos-slide-problem-layout--mirror .careos-intro-slide__visual { grid-row: 3; height: 320px; }
+.careos-slide-problem-layout--tall .careos-intro-slide__visual { height: 400px; }
 .careos-slide-problem-layout__copy { padding: 0 0 1.5rem; }
+.careos-slide-problem-layout--mirror .careos-slide-problem-layout__copy { padding: 0 0 1.5rem; }
 .careos-slide-problem-layout__header h3 { white-space: normal; }
 .careos-vision-layout__header { flex-direction: column; }
 .careos-vision-layout__intro { align-items: flex-start; margin-top: 0; text-align: left; }
@@ -3291,6 +3446,7 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-intro-deck { border-radius: 20px; }
 .careos-intro-deck__topbar { min-height: 48px; gap: 1rem; }
 .careos-intro-deck__topbar span:first-child { max-width: 170px; }
+.careos-intro-deck__topbar-subtitle { display: none; }
 .careos-intro-deck__status { gap: 0.55rem; }
 .careos-intro-deck__status button { width: 30px; padding: 0; justify-content: center; font-size: 0; }
 .careos-intro-deck__status button i { font-size: 1rem; }
@@ -3373,6 +3529,7 @@ p, h1, h2, h3 { margin-top: 0; }
    screen instead of running off the bottom. */
 @media (max-height: 500px) and (orientation: landscape) {
   .careos-intro-deck__topbar { min-height: 40px; padding-inline: 1rem; }
+  .careos-intro-deck__topbar-subtitle { display: none; }
   .careos-intro-deck__controls { grid-template-columns: auto 1fr; min-height: 36px; }
   .careos-intro-deck__arrows { grid-template-columns: repeat(2, 40px); min-height: 36px; }
   .careos-intro-deck__tabs {

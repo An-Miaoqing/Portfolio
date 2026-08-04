@@ -275,7 +275,7 @@ export function EngineeringSlideshow() {
 
   return (
     <div
-      className="careos-intro-deck"
+      className="careos-intro-deck careos-intro-deck--uniform"
       onBlur={handleBlur}
       onFocus={() => setIsInteracting(true)}
       onKeyDown={handleKeyDown}
@@ -285,7 +285,9 @@ export function EngineeringSlideshow() {
       aria-label="Engineering page highlights slideshow. Slides advance every five seconds. Use left and right arrow keys to change slides."
     >
       <div className="careos-intro-deck__topbar">
-        <span>ENGINEERING / PLATFORM HIGHLIGHTS</span>
+        <span>
+          ENGINEERING<span className="careos-intro-deck__topbar-subtitle"> / PLATFORM HIGHLIGHTS</span>
+        </span>
         <div className="careos-intro-deck__status">
           <span>
             {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}

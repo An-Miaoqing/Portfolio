@@ -372,7 +372,7 @@ export function GutBegleitetSlideshow() {
 
   return (
     <div
-      className="careos-intro-deck"
+      className="careos-intro-deck careos-intro-deck--uniform"
       onBlur={handleBlur}
       onFocus={() => setIsInteracting(true)}
       onKeyDown={handleKeyDown}
@@ -382,7 +382,9 @@ export function GutBegleitetSlideshow() {
       aria-label="Gut Begleitet client project teaser slideshow. Slides advance every five seconds. Use left and right arrow keys to change slides."
     >
       <div className="careos-intro-deck__topbar">
-        <span>GUT BEGLEITET / CASE STUDY HIGHLIGHTS</span>
+        <span>
+          GUT BEGLEITET<span className="careos-intro-deck__topbar-subtitle"> / CASE STUDY HIGHLIGHTS</span>
+        </span>
         <div className="careos-intro-deck__status">
           <span>
             {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
