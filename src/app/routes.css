@@ -3425,7 +3425,7 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-intro-slide__visual { min-height: 0; }
 .careos-intro-slide--vision,
   .careos-intro-slide--problem { height: auto; min-height: 0; }
-.careos-vision-layout__row { flex-direction: column; align-items: stretch; }
+.careos-vision-layout__row { flex-direction: column; align-items: stretch; gap: 1rem; }
 .careos-vision-layout__image-wrap { height: 320px; flex: 0 0 auto; }
 .careos-vision-layout__points-col { flex: 0 0 auto; }
 .careos-slide-problem-layout__row { grid-template-columns: 1fr; }
@@ -3452,7 +3452,7 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-slide-problem-layout--mirror .careos-intro-slide__visual { height: 320px; align-self: stretch; }
 .careos-slide-problem-layout--tall .careos-intro-slide__visual { height: 400px; }
 .careos-slide-problem-layout__copy { padding: 0 0 1.5rem; }
-.careos-slide-problem-layout--mirror .careos-slide-problem-layout__copy { padding: 0 0 1.5rem; }
+.careos-slide-problem-layout--mirror .careos-slide-problem-layout__copy { padding: 0 0 0.5rem; }
 .careos-slide-problem-layout__header h3 { white-space: normal; }
 .careos-vision-layout__header { flex-direction: column; }
 .careos-vision-layout__intro { align-items: flex-start; margin-top: 0; text-align: left; }
@@ -3470,6 +3470,61 @@ p, h1, h2, h3 { margin-top: 0; }
   .gut-teaser-work,
   .gut-teaser-connected { height: 520px; }
   .gut-teaser-connected { grid-template-columns: minmax(0, 1.1fr) minmax(12.5rem, 0.9fr); }
+
+  .work-index .careos-intro-deck__topbar,
+  .work-index .careos-intro-deck__controls,
+  .work-index .careos-intro-deck__tabs,
+  .work-index .careos-intro-deck__arrows,
+  .work-index .careos-intro-slide__copy,
+  .work-index .careos-intro-slide__copy p,
+  .work-index .careos-intro-slide__copy li,
+  .work-index .careos-intro-slide__copy h1,
+  .work-index .careos-intro-slide__copy h2,
+  .work-index .careos-intro-slide__copy h3,
+  .work-index .careos-intro-slide__copy h4,
+  .work-index .careos-intro-slide__copy h5,
+  .work-index .careos-intro-slide__copy h6,
+  .work-index .careos-vision-layout__points-col,
+  .work-index .careos-vision-layout__intro-note,
+  .work-index .careos-vision-layout__points li {
+    line-height: 1.3 !important;
+  }
+
+  .work-index .careos-intro-slide__copy > * + * {
+    margin-top: 0.25rem;
+  }
+
+  .work-index .careos-intro-slide__copy li,
+  .work-index .careos-vision-layout__points li {
+    padding: 0.2rem 0;
+  }
+
+  .work-index .careos-intro-slide__copy ul > li + li,
+  .work-index .careos-vision-layout__points > li + li {
+    margin-top: 0;
+  }
+
+  .work-index .careos-vision-layout__points-col {
+    gap: 0.25rem;
+  }
+
+  .work-index .careos-intro-slide__copy,
+  .work-index .careos-intro-slide__copy *,
+  .work-index .careos-vision-layout__points-col,
+  .work-index .careos-vision-layout__points-col * {
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+
+  .work-index hr,
+  .work-index .divider,
+  .work-index .separator,
+  .work-index .careos-intro-slide__copy .divider,
+  .work-index .careos-intro-slide__copy .separator {
+    display: none !important;
+  }
 }
 
 @media (max-width: 640px) {
@@ -3483,22 +3538,25 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-intro-deck__status button { width: 30px; padding: 0; justify-content: center; font-size: 0; }
 .careos-intro-deck__status button i { font-size: 1rem; }
 .careos-intro-slide { grid-template-rows: min-content min-content; height: auto; min-height: 0; }
-.careos-intro-slide__copy { padding: 1.8rem 1.25rem 2rem; }
-.careos-intro-slide__copy h3 { font-size: var(--careos-type-title-mobile); }
-.careos-vision-layout__intro h3 { font-size: var(--careos-type-title-mobile); }
+.careos-intro-slide__copy { padding: 1.8rem 1.25rem 0.75rem; }
+.careos-intro-slide__copy h3,
+.careos-vision-layout__intro h3,
+.careos-slide-problem-layout__header h3,
+.careos-slide-problem-layout--mirror .careos-slide-problem-layout__header h3,
+.careos-intro-slide--cover .careos-intro-slide__copy h3 { font-size: clamp(1.4rem, 6vw, 1.8rem); }
+.careos-intro-slide__eyebrow { margin-bottom: 0.4rem; }
 .careos-intro-slide__message { font-size: var(--careos-type-body); }
-.careos-intro-slide__visual { min-height: 0; padding: 1.25rem; }
-.careos-intro-deck__controls { grid-template-columns: auto 1fr; }
-.careos-intro-deck__arrows { grid-template-columns: repeat(2, 30px); min-height: 30px; }
+.careos-intro-slide__visual { min-height: 0; padding: 0.5rem; }
+.careos-intro-deck__controls { grid-template-columns: auto 1fr; min-height: 32px; align-items: center; }
+.careos-intro-deck__arrows { grid-template-columns: repeat(2, 30px); min-height: 32px; align-items: center; }
 .careos-intro-deck__tabs {
     display: flex;
-    min-height: 30px;
     align-items: center;
     justify-content: center;
     overflow: visible;
   }
 .careos-intro-deck__tabs button:not(.is-active) { display: none; }
-.careos-intro-deck__tabs button.is-active { min-width: 0; padding: 0.45rem 0.75rem; border-right: 0; }
+.careos-intro-deck__tabs button.is-active { min-width: 0; padding: 0.45rem 0.75rem; border-right: 0; font-size: 0.75rem; font-weight: 700; }
 .careos-slide-problem-impact { grid-template-columns: 1fr; }
 .careos-slide-applications {
     display: flex;
@@ -3562,17 +3620,16 @@ p, h1, h2, h3 { margin-top: 0; }
 @media (max-height: 500px) and (orientation: landscape) {
   .careos-intro-deck__topbar { min-height: 27px; padding-inline: 1rem; }
   .careos-intro-deck__topbar-subtitle { display: none; }
-  .careos-intro-deck__controls { grid-template-columns: auto 1fr; min-height: 24px; }
-  .careos-intro-deck__arrows { grid-template-columns: repeat(2, 32px); min-height: 24px; }
+  .careos-intro-deck__controls { grid-template-columns: auto 1fr; min-height: 27px; align-items: center; }
+  .careos-intro-deck__arrows { grid-template-columns: repeat(2, 32px); min-height: 27px; align-items: center; }
   .careos-intro-deck__tabs {
     display: flex;
-    min-height: 24px;
     align-items: center;
     justify-content: center;
     overflow: visible;
   }
   .careos-intro-deck__tabs button:not(.is-active) { display: none; }
-  .careos-intro-deck__tabs button.is-active { min-width: 0; padding: 0.35rem 0.65rem; border-right: 0; }
+  .careos-intro-deck__tabs button.is-active { min-width: 0; padding: 0.35rem 0.65rem; border-right: 0; font-size: 0.75rem; font-weight: 700; }
   .careos-intro-slide__copy { padding: 1rem 1.25rem; }
   .careos-intro-slide__visual { min-height: 0; padding: 1rem; }
 }
