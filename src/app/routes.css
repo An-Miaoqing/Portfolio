@@ -3457,12 +3457,23 @@ p, h1, h2, h3 { margin-top: 0; }
 }
 .careos-slide-problem-layout--mirror .careos-intro-slide__visual { height: 260px; align-self: stretch; flex-shrink: 0; }
 .careos-slide-problem-layout--tall .careos-intro-slide__visual { height: 320px; }
+/* A bare image (Analysis/Workflow/Applications/Architecture) has no sibling
+   content to share the box with, so let it size to its own aspect ratio
+   instead of being forced into a fixed box — a box taller than the image's
+   natural height was letterboxing it (empty space above/below the picture). */
+.careos-slide-problem-layout--mirror .careos-intro-slide__visual:has(> .careos-slide-problem-image) {
+  height: auto;
+}
+.careos-slide-problem-layout--mirror .careos-intro-slide__visual > .careos-slide-problem-image {
+  height: auto;
+}
+.careos-intro-slide__visual::after { display: none; }
 .careos-slide-problem-layout__copy { padding: 0 0 1.5rem; }
 .careos-slide-problem-layout--mirror .careos-slide-problem-layout__copy { padding: 0 0 0.5rem; }
 .careos-slide-problem-layout__header h3 { white-space: normal; }
-.careos-vision-layout__header { flex-direction: column; }
+.careos-vision-layout__header { flex-direction: column; gap: clamp(0.75rem, 1.5vw, 1.5rem); }
 .careos-vision-layout__intro { align-items: flex-start; margin-top: 0; text-align: left; }
-.careos-vision-layout__logo { height: 38px; }
+.careos-vision-layout__logo { height: 25px; }
 .careos-intro-deck__tabs {
     grid-template-columns: repeat(8, minmax(120px, 1fr));
   }
