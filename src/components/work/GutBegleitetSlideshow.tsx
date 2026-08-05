@@ -75,7 +75,7 @@ const slides: readonly Slide[] = [
     eyebrow: 'CONNECTED SYSTEM',
     title: 'Interfaces on the surface\nConnected records underneath',
     message: 'Bookings · Services · Assignments · Visits · Employees',
-    points: [],
+    points: ['Connected records: Client → Booking → Visit → Assignment → Employee → Follow-up'],
     visual: 'connected',
   },
   {
@@ -116,11 +116,6 @@ function HumanTeaserSlide({ slide, variant }: { slide: Slide; variant: 'intro' |
           )}
         </h3>
         <span>{slide.message}</span>
-        {isImpact ? (
-          <a className="button button--primary gut-teaser-human__cta" href="/case-study/gutbegleitet">
-            Explore case study <i aria-hidden="true">→</i>
-          </a>
-        ) : null}
       </div>
     </div>
   )
@@ -133,26 +128,26 @@ function WorkVisual() {
     <div className="gut-teaser-work" aria-label="Gut Begleitet service work from request to record">
       <figure className="gut-teaser-work__photo gut-teaser-work__photo--main">
         <Image
-          alt="A Gut Begleitet employee receiving a delivery with an older customer"
+          alt="A Gut Begleitet employee in branded uniform cleaning a window at a customer's home"
           fill
           sizes="(max-width: 900px) 70vw, 34vw"
-          src="/case-studies/gutbegleitet/service-delivery.jpeg"
+          src="/case-studies/gutbegleitet/service-delivery-worker.png"
         />
       </figure>
       <figure className="gut-teaser-work__photo gut-teaser-work__photo--visit">
         <Image
-          alt="A Gut Begleitet employee accompanying an older customer to an appointment"
+          alt="An older customer at home on the phone, requesting a service"
           fill
           sizes="(max-width: 900px) 40vw, 20vw"
-          src="/case-studies/gutbegleitet/service-visit.jpeg"
+          src="/case-studies/gutbegleitet/service-request-call.png"
         />
       </figure>
       <figure className="gut-teaser-work__photo gut-teaser-work__photo--team">
         <Image
-          alt="The Gut Begleitet team"
+          alt="A Gut Begleitet office coordinator on the phone, assigning an employee to a booking"
           fill
           sizes="(max-width: 900px) 40vw, 20vw"
-          src="/case-studies/gutbegleitet/team.jpg"
+          src="/case-studies/gutbegleitet/office-coordination.png"
         />
       </figure>
       <ol className="gut-teaser-work__sequence">
@@ -168,44 +163,38 @@ function WorkVisual() {
 }
 
 function ConnectedVisual() {
-  const records = ['Household', 'Client', 'Booking', 'Visit', 'Assignment', 'Employee']
-
   return (
-    <div className="gut-teaser-connected" aria-label="CareOS interface connected to a simplified operational data model">
-      <div className="gut-teaser-connected__app">
-        <header><i /><i /><i /><strong>CareOS Operations</strong></header>
-        <div className="gut-teaser-connected__app-body">
-          <nav><strong>CAREOS</strong><span className="is-active">Bookings</span><span>Visits</span><span>Employees</span></nav>
-          <section>
-            <p className="gut-teaser-connected__kicker">SERVICE COORDINATION</p>
-            <h4>Today&apos;s operation</h4>
-            <div className="gut-teaser-connected__stats">
-              <span><small>Requests</small><strong>03</strong></span>
-              <span><small>Visits</small><strong>08</strong></span>
-            </div>
-            <div className="gut-teaser-connected__booking">
-              <span><small>CLIENT</small><strong>G. Berger</strong></span>
-              <span><small>VISIT</small><strong>5 Aug · 10:30</strong></span>
-              <em>Assigned</em>
-            </div>
-          </section>
+    <div className="gut-daily-visual gut-teaser-connected__visual" aria-label="CareOS interface connected to a simplified operational data model">
+      <figure className="gut-daily-photo gut-daily-photo--connected">
+        <Image
+          alt="The Gut Begleitet public website homepage"
+          height={900}
+          src="/case-studies/gutbegleitet/website-homepage-ui.png"
+          width={1400}
+        />
+      </figure>
+      <figure className="gut-daily-photo gut-daily-photo--connected-card">
+        <Image
+          alt="The CareOS admin dashboard showing booking and employee statistics"
+          height={900}
+          src="/case-studies/gutbegleitet/admin-dashboard-ui.png"
+          width={1200}
+        />
+      </figure>
+      <div className="gut-daily-phone" aria-label="Simplified CareOS Employee visit interface">
+        <header><strong>CareOS</strong><span>10:30</span></header>
+        <p className="gut-daily-phone__label">YOUR ASSIGNED VISIT</p>
+        <div className="gut-daily-phone__visit">
+          <p><strong>10:30</strong><em>Assigned</em></p>
+          <h4>Shopping &amp; errands</h4>
+          <span>G. Berger · Vienna</span>
+          <dl>
+            <div><dt>Duration</dt><dd>2 hours</dd></div>
+            <div><dt>Visit</dt><dd>5 Aug</dd></div>
+          </dl>
+          <button type="button" tabIndex={-1}>Open visit details</button>
+          <button className="gut-daily-phone__checkin" type="button" tabIndex={-1}>Check in</button>
         </div>
-      </div>
-
-      <div className="gut-teaser-connected__model">
-        <p>CONNECTED RECORDS</p>
-        <ol>
-          {records.map((record, index) => (
-            <li key={record}>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <strong>{record}</strong>
-              {index < records.length - 1 ? <i aria-hidden="true">↓</i> : null}
-              {record === 'Booking' ? (
-                <small><b>Service</b><b>Booking Item</b></small>
-              ) : null}
-            </li>
-          ))}
-        </ol>
       </div>
     </div>
   )
@@ -229,12 +218,11 @@ function DailyCustomerVisual() {
       </div>
       <figure className="gut-daily-photo gut-daily-photo--customer">
         <Image
-          alt="A Gut Begleitet employee walking with an older customer"
+          alt="The Gut Begleitet booking calendar showing an available date and time being selected"
           height={900}
-          src="/case-studies/gutbegleitet/service-walk.jpeg"
+          src="/case-studies/gutbegleitet/booking-calendar-ui.png"
           width={1200}
         />
-        <figcaption>Help begins with a person asking.</figcaption>
       </figure>
       <div className="gut-daily-step" aria-hidden="true">
         <span>DISCOVER</span><i>→</i><span>CHOOSE</span><i>→</i><strong>REQUEST</strong>
@@ -247,7 +235,7 @@ function DailyOfficeVisual() {
   return (
     <div className="gut-daily-visual gut-daily-visual--office">
       <figure className="gut-daily-photo gut-daily-photo--office">
-        <Image alt="The Gut Begleitet team" height={900} src="/case-studies/gutbegleitet/team.jpg" width={1200} />
+        <Image alt="A Gut Begleitet office coordinator working at a desktop computer" height={900} src="/case-studies/gutbegleitet/office-team-desk.png" width={1200} />
         <figcaption>Coordination connects demand with delivery.</figcaption>
       </figure>
       <div className="gut-daily-operations" aria-label="Simplified CareOS Operations interface">
@@ -258,11 +246,17 @@ function DailyOfficeVisual() {
         </header>
         <div className="gut-daily-operations__body">
           <nav aria-label="Operations modules">
-            <strong>CAREOS</strong>
+            <span className="gut-daily-operations__logo">
+              <Image alt="" aria-hidden="true" height={40} src="/home/careos-icon.png" width={40} />
+              CareOS
+            </span>
             <span className="is-active">Bookings <i>3</i></span>
             <span>Visits</span>
             <span>Calendar</span>
+            <span>Clients</span>
+            <span>Households</span>
             <span>Employees</span>
+            <span>Services</span>
           </nav>
           <section>
             <div className="gut-daily-operations__heading">
@@ -291,9 +285,9 @@ function DailyEmployeeVisual() {
     <div className="gut-daily-visual gut-daily-visual--employee">
       <figure className="gut-daily-photo gut-daily-photo--employee">
         <Image
-          alt="A Gut Begleitet employee spending time with older customers"
+          alt="A Gut Begleitet employee shopping for groceries, checking items off a shopping list on her phone"
           height={900}
-          src="/case-studies/gutbegleitet/service-companionship.jpeg"
+          src="/case-studies/gutbegleitet/service-shopping-list.png"
           width={1400}
         />
         <figcaption>The work happens between people.</figcaption>

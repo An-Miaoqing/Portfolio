@@ -94,13 +94,13 @@ const slides: readonly Slide[] = [
     id: 'database-design',
     label: 'Database',
     eyebrow: 'DATABASE DESIGN',
-    title: 'The data model is derived from the business domain',
+    title: 'The data model reflects how the business works',
     message:
-      'Business concepts become entities, relationships and constraints.',
+      'Business concepts become structured data and relationships.',
     points: [
-      'Normalization separates distinct business responsibilities.',
-      'Referential integrity protects lifecycle relationships.',
-      'Auditability preserves how operational records evolve.',
+      'Clear structure keeps different types of business information separate.',
+      'Connected records preserve relationships across bookings, visits, employees and services.',
+      'Change history makes it possible to understand how operational records evolve over time.',
     ],
     visual: 'database',
   },

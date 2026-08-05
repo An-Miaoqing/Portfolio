@@ -2591,7 +2591,8 @@ p, h1, h2, h3 { margin-top: 0; }
   position: relative;
   display: grid;
   min-width: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: clamp(1.25rem, 3.2vw, 2.75rem);
   place-items: center;
   background:
@@ -2897,15 +2898,6 @@ p, h1, h2, h3 { margin-top: 0; }
   line-height: 1.65;
 }
 
-.gut-teaser-human__cta {
-  margin-top: 1.8rem;
-  background: #fff;
-  color: #173f31;
-  box-shadow: 0 16px 36px rgba(6, 23, 17, 0.24);
-}
-
-.gut-teaser-human__cta i { margin-left: 0.55rem; font-style: normal; }
-
 .gut-teaser-work {
   position: relative;
   width: min(100%, 760px);
@@ -2953,7 +2945,7 @@ p, h1, h2, h3 { margin-top: 0; }
   place-items: center;
   color: #173f31;
   font-family: var(--font-mono);
-  font-size: 0.57rem;
+  font-size: 0.8rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -2961,69 +2953,26 @@ p, h1, h2, h3 { margin-top: 0; }
 .gut-teaser-work__sequence li + li { border-left: 1px solid rgba(23, 63, 49, 0.14); }
 .gut-teaser-work__sequence i { position: absolute; z-index: 2; right: -0.5rem; color: #d18434; font-style: normal; }
 
-.gut-teaser-connected {
-  display: grid;
-  width: min(100%, 790px);
-  height: min(580px, 100%);
-  grid-template-columns: minmax(0, 1.15fr) minmax(13rem, 0.85fr);
-  align-items: stretch;
-  gap: 1rem;
+.gut-daily-photo--connected {
+  inset: 0 10% 0 0;
+  border: 0;
+  border-radius: 12px;
+  box-shadow: none;
 }
 
-.gut-teaser-connected__app,
-.gut-teaser-connected__model {
-  overflow: hidden;
-  border: 1px solid rgba(86, 90, 165, 0.22);
-  background: #fff;
-  box-shadow: 0 20px 44px rgba(29, 32, 62, 0.13);
+.gut-daily-photo--connected img { object-position: center 30%; }
+
+.gut-daily-photo--connected-card {
+  top: 4%;
+  left: 0;
+  z-index: 2;
+  width: 56%;
+  height: 46%;
+  border-radius: 4px;
+  transform: rotate(-1.5deg);
 }
 
-.gut-teaser-connected__app { align-self: center; height: 80%; border-radius: 12px; }
-
-.gut-teaser-connected__app > header {
-  display: flex;
-  min-height: 34px;
-  padding: 0 0.7rem;
-  align-items: center;
-  gap: 0.25rem;
-  background: #202440;
-  color: #fff;
-}
-
-.gut-teaser-connected__app > header i { width: 5px; height: 5px; background: #f3c54e; border-radius: 50%; }
-.gut-teaser-connected__app > header strong { margin-left: auto; margin-right: auto; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 500; }
-
-.gut-teaser-connected__app-body { display: grid; height: calc(100% - 34px); grid-template-columns: 28% 1fr; }
-.gut-teaser-connected__app-body nav { display: flex; padding: 1rem 0.6rem; flex-direction: column; gap: 0.35rem; background: #272b4a; color: #d9dbea; font-size: 0.62rem; }
-.gut-teaser-connected__app-body nav strong { margin-bottom: 0.6rem; color: #fff; letter-spacing: 0.1em; }
-.gut-teaser-connected__app-body nav span { padding: 0.5rem; border-radius: 5px; }
-.gut-teaser-connected__app-body nav .is-active { background: #f3c54e; color: #202440; }
-.gut-teaser-connected__app-body section { padding: 1.1rem; background: #f7f7fb; }
-.gut-teaser-connected__kicker { margin: 0; color: #777b91; font-family: var(--font-mono); font-size: 0.54rem; letter-spacing: 0.08em; }
-.gut-teaser-connected__app-body h4 { margin: 0.35rem 0 1rem; color: #202440; font-size: 1.05rem; }
-.gut-teaser-connected__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
-.gut-teaser-connected__stats > span { padding: 0.75rem; border: 1px solid #e2e3ed; background: #fff; border-radius: 7px; }
-.gut-teaser-connected__stats small,
-.gut-teaser-connected__stats strong,
-.gut-teaser-connected__booking small,
-.gut-teaser-connected__booking strong { display: block; }
-.gut-teaser-connected__stats small,
-.gut-teaser-connected__booking small { color: #777b91; font-size: 0.55rem; }
-.gut-teaser-connected__stats strong { margin-top: 0.25rem; color: #202440; font-size: 1.2rem; }
-.gut-teaser-connected__booking { display: grid; margin-top: 0.7rem; padding: 0.75rem; grid-template-columns: 1fr 1.1fr auto; align-items: center; gap: 0.45rem; border: 1px solid #e2e3ed; background: #fff; border-radius: 7px; }
-.gut-teaser-connected__booking strong { margin-top: 0.2rem; color: #202440; font-size: 0.63rem; }
-.gut-teaser-connected__booking em { padding: 0.3rem 0.42rem; background: #dff4e7; color: #28744a; font-size: 0.54rem; font-style: normal; border-radius: 999px; }
-
-.gut-teaser-connected__model { padding: 1.2rem; border-radius: 12px; background: #fffdf9; }
-.gut-teaser-connected__model > p { margin: 0 0 0.7rem; color: #176b4d; font-family: var(--font-mono); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; }
-.gut-teaser-connected__model ol { display: grid; margin: 0; padding: 0; list-style: none; }
-.gut-teaser-connected__model li { position: relative; display: grid; min-height: 4.6rem; padding: 0.55rem 0.7rem; grid-template-columns: 1.7rem 1fr; align-items: center; border: 1px solid rgba(23, 63, 49, 0.14); background: #edf6f0; color: #173f31; border-radius: 7px; }
-.gut-teaser-connected__model li + li { margin-top: 0.38rem; }
-.gut-teaser-connected__model li > span { color: #d18434; font-family: var(--font-mono); font-size: 0.52rem; }
-.gut-teaser-connected__model li > strong { font-size: 0.82rem; }
-.gut-teaser-connected__model li > i { position: absolute; z-index: 2; bottom: -0.66rem; left: 1.15rem; display: grid; width: 1rem; height: 1rem; place-items: center; background: #fffdf9; color: #2f8062; font-size: 0.7rem; font-style: normal; }
-.gut-teaser-connected__model li > small { grid-column: 2; display: flex; margin-top: 0.35rem; gap: 0.3rem; }
-.gut-teaser-connected__model li > small b { padding: 0.2rem 0.3rem; background: #fff; color: #66736c; font-size: 0.48rem; font-weight: 600; border-radius: 4px; }
+.gut-daily-photo--connected-card img { object-position: top; }
 
 .gut-daily-visual {
   position: relative;
@@ -3044,8 +2993,8 @@ p, h1, h2, h3 { margin-top: 0; }
   position: absolute;
   top: 3%;
   right: 0;
-  width: 88%;
-  height: 74%;
+  width: 92%;
+  height: 78%;
   border-radius: 15px;
 }
 
@@ -3132,8 +3081,8 @@ p, h1, h2, h3 { margin-top: 0; }
 .gut-daily-photo--customer {
   bottom: 7%;
   left: 0;
-  width: 38%;
-  height: 46%;
+  width: 42%;
+  height: 50%;
   border-radius: 4px;
   transform: rotate(-1.5deg);
 }
@@ -3153,7 +3102,7 @@ p, h1, h2, h3 { margin-top: 0; }
   background: rgba(255, 255, 255, 0.94);
   color: #626681;
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.8rem;
   letter-spacing: 0.05em;
 }
 
@@ -3173,10 +3122,10 @@ p, h1, h2, h3 { margin-top: 0; }
 
 .gut-daily-operations {
   position: absolute;
-  right: 5%;
-  bottom: 1%;
-  width: 92%;
-  height: 78%;
+  right: 2%;
+  bottom: 0.5%;
+  width: 96%;
+  height: 86%;
   border-radius: 12px;
 }
 
@@ -3200,6 +3149,21 @@ p, h1, h2, h3 { margin-top: 0; }
   margin-bottom: 0.7rem;
   color: #fff;
   letter-spacing: 0.12em;
+}
+
+.gut-daily-operations__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.7rem;
+  color: #fff;
+  letter-spacing: 0.12em;
+}
+
+.gut-daily-operations__logo img {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
 }
 
 .gut-daily-operations__body > nav > span {
@@ -3518,8 +3482,7 @@ p, h1, h2, h3 { margin-top: 0; }
   .careos-intro-slide--gut-impact { height: 900px; min-height: 900px; grid-template-rows: 1fr; }
   .gut-teaser-human { min-height: 900px; }
   .gut-teaser-work,
-  .gut-teaser-connected { height: 520px; }
-  .gut-teaser-connected { grid-template-columns: minmax(0, 1.1fr) minmax(12.5rem, 0.9fr); }
+  .gut-teaser-connected__visual { height: 520px; }
 
   .work-index .careos-intro-deck__topbar,
   .work-index .careos-intro-deck__controls,
@@ -3659,8 +3622,8 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-device-mockup--desktop .careos-media,
   .careos-device-mockup--mobile .careos-media { min-height: 310px; }
 .gut-daily-visual { height: 520px; }
-.gut-daily-photo--customer { width: 42%; }
-.gut-daily-step { width: 54%; font-size: 0.55rem; }
+.gut-daily-photo--customer { width: 46%; }
+.gut-daily-step { width: 54%; font-size: 0.65rem; }
 .gut-daily-operations { right: 0; width: 100%; }
 .gut-daily-photo--office { width: 38%; }
 .gut-daily-phone { width: 46%; }
@@ -3680,21 +3643,7 @@ p, h1, h2, h3 { margin-top: 0; }
   .gut-teaser-work__photo--visit { width: 40%; }
   .gut-teaser-work__photo--team { width: 38%; }
   .gut-teaser-work__sequence { left: 0; }
-  .gut-teaser-work__sequence li { min-height: 3.6rem; font-size: 0.47rem; }
-  .gut-teaser-connected { height: auto; grid-template-columns: 1fr; align-content: center; }
-  .gut-teaser-connected__app { height: 260px; }
-  .gut-teaser-connected__model { display: none; }
-  .careos-intro-slide--gut-connected .careos-intro-slide__visual { display: flex; flex-direction: column; justify-content: center; }
-  .careos-intro-slide--gut-connected .careos-intro-slide__visual::before {
-    display: block;
-    margin-bottom: 0.85rem;
-    color: #176b4d;
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
-    text-align: center;
-    content: 'HOUSEHOLD → CLIENT → BOOKING → VISIT → ASSIGNMENT → EMPLOYEE';
-  }
+  .gut-teaser-work__sequence li { min-height: 3.6rem; font-size: 0.65rem; }
 }
 
 /* Phone in landscape: viewport height is the scarce resource, not width.
