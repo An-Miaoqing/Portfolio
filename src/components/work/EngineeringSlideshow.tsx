@@ -113,7 +113,7 @@ const slides: readonly Slide[] = [
 function BackendVisual() {
   return (
     <img
-      alt="Backend layers: API Layer (REST API, routes, controllers), Application Layer (business services, transactions, business rules), Persistence Layer (Prisma ORM, query execution), and PostgreSQL (relational model, indexes) — with a Cross-Cutting Concerns ribbon (Authentication, Authorization, Validation, Tenant Isolation) running alongside the API, Application, and Persistence layers"
+      alt="Backend layers: API Layer (REST API, routes, controllers), Application Layer (business services, transactions, business rules), Persistence Layer (Prisma ORM, query execution), and PostgreSQL (relational model, indexes) — with a Cross-Cutting Concerns panel (Authentication, Authorization, Validation, Tenant Isolation) alongside the pipeline"
       className="careos-slide-architecture-image"
       src="/work/image25.png"
     />
@@ -123,7 +123,7 @@ function BackendVisual() {
 function DomainsVisual() {
   return (
     <img
-      alt="Conceptual capability areas, an analytical view of the business: Identity (User, Role, UserRole), Customer (Clients, Households, Companies, PreferredEmployee), Operations (Bookings, Assignments, Visits, BookingItem), Workforce (Employees, Availability, EmployeeSkill, TimeEntry), Finance (Invoices, Payments, PayrollPeriod, Receipts), Reporting (reads from every area — no dedicated table), and Platform Services (Documents, Notifications, Audit Logs, Sequences). Summary: 7 conceptual areas organise the business by capability, 37 Prisma models make up the flat data model in schema.prisma, and 17 enums as native PostgreSQL enum types"
+      alt="Conceptual capability areas, an analytical view of the business: Identity (User, Role), Customer (Clients, Households), Operations (Bookings, Assignments), Workforce (Employees, Availability), Finance (Invoices, Payments), Reporting (reads from every area), and Platform Services (Documents, Notifications). Summary: 7 conceptual areas organise the business by capability, 37 Prisma models make up the flat data model in schema.prisma, 17 enums as native PostgreSQL enum types, and 25 migrations"
       className="careos-slide-architecture-image"
       src="/work/model.png"
     />
@@ -183,7 +183,7 @@ function RelationshipsVisual() {
 function ServicesVisual() {
   return (
     <img
-      alt="21 service modules implementing core business logic, across 24 TypeScript files (including 3 utility helper modules), making up about 75% of the codebase, shared by all APIs, with centralised business rules and transactions. Modules grouped by area: Authentication (auth.service.ts, credential.service.ts, me.service.ts, admin-auth.service.ts, admin-bootstrap.service.ts), Customer (client.service.ts, household.service.ts), Booking (booking.service.ts), Employee (employee.service.ts, employee-assignment.service.ts), Visit (visit.service.ts, visit-completion.service.ts, employee-visit.service.ts), Billing (billing.service.ts, employee-cash.service.ts, employee-closeout.service.ts), Payroll (payroll.service.ts), Notification (notification.service.ts), Reports (reports.service.ts), Service Catalog (service.service.ts), and Utilities/Helpers (assignment-lifecycle.ts, operational-time.ts, visit-status.ts)"
+      alt="21 service modules across 24 TypeScript files, about 75% of the codebase, shared by all APIs with consistent rules. Modules grouped by area: Authentication (auth.service.ts, credential.service.ts), Customer (client.service.ts, household.service.ts), Booking (booking.service.ts), Employee (employee.service.ts, employee-assignment.service.ts), Visit (visit.service.ts, visit-completion.service.ts), Billing (billing.service.ts, employee-cash.service.ts), Payroll (payroll.service.ts), Notification (notification.service.ts), Reports (reports.service.ts), Service Catalog (service.service.ts), and Utilities/Helpers (assignment-lifecycle.ts, operational-time.ts)"
       className="careos-slide-architecture-image"
       src="/work/services.png"
     />
@@ -193,7 +193,7 @@ function ServicesVisual() {
 function ServiceLayerVisual() {
   return (
     <img
-      alt="Request flow architecture: Cross-Cutting Concerns (JWT Authentication, Authorization, Zod Validation, Tenant Context via AsyncLocalStorage) wrap the REST API Layer (Routes to Controllers), which calls the Application Services Layer (21 service modules handling business rules, orchestration, transactions, and domain logic), which calls the Prisma ORM Layer (type-safe client, tenant-aware queries, serializable transactions, automatic retry), which reaches the Database Layer (PostgreSQL on Supabase, 37 models). Example booking flow: Client submits booking form, POST /bookings hits the API, JWT and role are checked, the Zod-validated payload is passed to the Booking Service which checks availability and calculates pricing, a serializable transaction creates the Household, Client, Booking, Booking Items, and Status History, the transaction commits, and a success response is returned. Outcomes: consistent and reliable, tenant-isolated data, atomic operations (ACID), unified logic across all applications"
+      alt="Example: booking flow. 1) Client (website/app) — user submits booking form. 2) POST /bookings — request sent to the API endpoint. 3) Authentication & Authorization — JWT token validated, role and permission checked. 4) Validation (Zod) — request payload validated, invalid data rejected. 5) Booking Service — business rules executed, availability checked, pricing calculated. 6) Database transaction (start) — a serializable transaction creates the Household, Client, Booking, Booking Item(s), and Status History. 7) Transaction commit — all operations committed. 8) Response — success response returned to the client"
       className="careos-slide-architecture-image"
       src="/work/flow.png"
     />

@@ -2268,6 +2268,7 @@ p, h1, h2, h3 { margin-top: 0; }
   z-index: 0;
   display: grid;
   grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
+  grid-template-rows: minmax(0, 1fr);
   min-height: 690px;
 }
 
@@ -2296,19 +2297,15 @@ p, h1, h2, h3 { margin-top: 0; }
   max-height: 480px;
 }
 
-/* The backend slide's copy (title + message + 3 long points) can be taller
-   than the deck's fixed 690px stage. Without this, the grid row grows to
-   fit that text, pulling the vertically-centered picture down into it so
-   the two visually overlap. Cap the row to the stage height and let the
-   copy column scroll internally instead. */
-@media (min-width: 901px) {
-  .careos-intro-slide--cover {
-    grid-template-rows: minmax(0, 1fr);
-  }
-  .careos-intro-slide--cover .careos-intro-slide__copy {
-    justify-content: flex-start;
-    overflow-y: auto;
-  }
+/* The backend slide's copy (title + message + 3 long points) is the
+   longest in the deck and most likely to overflow the stage height at
+   short viewports. .careos-intro-slide__copy already scrolls internally
+   (grid-template-rows/overflow-y on the base rules) rather than growing
+   the row and pulling the picture into the text — but centered content
+   that overflows a scroll container clips its own start, so pin this
+   slide's copy to the top instead. */
+.careos-intro-slide--cover .careos-intro-slide__copy {
+  justify-content: flex-start;
 }
 
 .careos-intro-slide__visual--vision {
@@ -2318,9 +2315,11 @@ p, h1, h2, h3 { margin-top: 0; }
 
 .careos-intro-slide__copy {
   display: flex;
+  min-height: 0;
   padding: clamp(1.8rem, 3.5vw, 3.4rem);
   flex-direction: column;
   justify-content: center;
+  overflow-y: auto;
   border-right: 1px solid var(--careos-line);
 }
 

@@ -214,7 +214,7 @@ function ProblemVisual() {
   return (
     <div className="careos-slide-problem-visual">
       <img
-        alt="Care organisation today: too many disconnected tools across phone calls, WhatsApp, email, spreadsheets, paper forms and more, causing information silos and low visibility"
+        alt="Overwhelmed office staff surrounded by disconnected tools — phone calls, WhatsApp, email, spreadsheets, calendars, paper stacks and warning signs — with tangled arrows showing information flowing between them without a shared system"
         className="careos-slide-problem-image"
         src="/work/problem-overview.png"
       />
@@ -269,7 +269,7 @@ function DatabaseVisual() {
 function ApplicationsVisual() {
   return (
     <img
-      alt="One system, multiple applications: Customer Website, Admin Application and Employee App all built on the CareOS unified business operating system, backed by Prisma ORM and PostgreSQL"
+      alt="One system, multiple applications: Customer Website, Admin Application, Employee App and a future Client App all built on the CareOS unified business operating system, backed by Prisma ORM and PostgreSQL"
       className="careos-slide-problem-image"
       src="/work/applications-overview.png"
     />
