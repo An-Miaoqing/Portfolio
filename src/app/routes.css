@@ -3416,7 +3416,7 @@ p, h1, h2, h3 { margin-top: 0; }
 @media (max-width: 900px) {
 .careos-intro-slide {
     grid-template-columns: 1fr;
-    grid-template-rows: min-content min-content;
+    grid-template-rows: min-content 1fr;
     height: auto;
     min-height: 0;
   }
@@ -3425,11 +3425,21 @@ p, h1, h2, h3 { margin-top: 0; }
     border-bottom: 1px solid var(--careos-line);
   }
 .careos-intro-slide__visual { min-height: 0; }
+/* The relationship diagram's nodes are all position:absolute, so it has no
+   intrinsic content height of its own — its h-full only resolves against a
+   definite parent height. At this breakpoint the slide's rows become
+   min-content-sized (not stretched to fill), so h-full collapses to ~0 and
+   every node lands on the same line. Give it an explicit height here. */
+.careos-relationship-diagram { height: 420px; }
+.careos-relationship-diagram__label { font-size: 0.55rem !important; }
 .careos-intro-slide--vision,
   .careos-intro-slide--problem { height: auto; min-height: 0; }
 .careos-vision-layout__row { flex-direction: column; align-items: stretch; gap: 1rem; }
-.careos-intro-slide--vision { padding-bottom: 1rem; }
-.careos-intro-slide--problem { padding-bottom: 1rem; }
+/* padding-bottom on the scrollable slide itself gets clipped by the
+   browser at the end of scrollable content — use margin-bottom on the
+   inner content wrapper instead, which isn't subject to that quirk. */
+.careos-vision-layout { margin-bottom: 1rem; }
+.careos-slide-problem-layout { margin-bottom: 1rem; }
 .careos-vision-layout__image-wrap { height: auto; aspect-ratio: 1536 / 1024; flex: 0 0 auto; }
 .careos-vision-layout__points-col { flex: 0 0 auto; }
 .careos-slide-problem-layout__row { grid-template-columns: 1fr; }
@@ -3568,6 +3578,7 @@ p, h1, h2, h3 { margin-top: 0; }
 }
 
 @media (max-width: 640px) {
+.careos-relationship-diagram { height: 340px; }
 .careos-gallery__grid .careos-media:nth-child(4) { grid-column: auto; }
 .careos-media, .careos-media--hero, .careos-media--portrait { min-height: 310px; }
 .careos-intro-deck { border-radius: 20px; }
@@ -3588,7 +3599,7 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-intro-deck__status button i { font-size: 1rem; line-height: 1; }
 .careos-intro-deck__status button i.careos-icon-play { margin-left: 2px; }
 .careos-intro-slide__eyebrow { display: none; }
-.careos-intro-slide { grid-template-rows: min-content min-content; height: auto; min-height: 0; row-gap: 1rem; }
+.careos-intro-slide { grid-template-rows: min-content 1fr; height: auto; min-height: 0; row-gap: 1rem; }
 .careos-vision-layout__title-full { display: none; }
 .careos-vision-layout__title-short { display: inline; }
 .careos-intro-slide__copy { padding: clamp(1.2rem, 2.33vw, 2.27rem) 1.25rem 0; }
@@ -3607,19 +3618,25 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-intro-deck__arrows { grid-template-columns: repeat(2, 30px); min-height: 32px; align-items: stretch; }
 .careos-intro-deck__arrows button { display: flex; align-items: center; justify-content: center; }
 .careos-intro-deck__tabs {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
     overflow: visible;
   }
 .careos-intro-deck__tabs button:not(.is-active):not(.is-prev):not(.is-next) { display: none; }
-.careos-intro-deck__tabs button.is-active { min-width: 0; height: 29px; padding: 0 0.75rem; border-right: 0; font-size: 0.75rem; font-weight: 700; }
+.careos-intro-deck__tabs button.is-active,
+.careos-intro-deck__tabs button.is-prev,
+.careos-intro-deck__tabs button.is-next {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+.careos-intro-deck__tabs button.is-active { min-width: 0; height: 29px; padding: 0 0.5rem; border-right: 0; font-size: 0.75rem; font-weight: 700; }
 .careos-intro-deck__tabs button.is-prev,
 .careos-intro-deck__tabs button.is-next {
     min-width: 0;
     height: 29px;
-    padding: 0 0.5rem;
+    padding: 0 0.35rem;
     border-right: 0;
     font-size: 0.65rem;
     color: #a3a7bd;
@@ -3692,18 +3709,24 @@ p, h1, h2, h3 { margin-top: 0; }
   .careos-intro-deck__arrows { grid-template-columns: repeat(2, 32px); min-height: 27px; align-items: stretch; }
   .careos-intro-deck__arrows button { display: flex; align-items: center; justify-content: center; }
   .careos-intro-deck__tabs {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
     overflow: visible;
   }
   .careos-intro-deck__tabs button:not(.is-active):not(.is-prev):not(.is-next) { display: none; }
-  .careos-intro-deck__tabs button.is-active { min-width: 0; padding: 0.35rem 0.65rem; border-right: 0; font-size: 0.75rem; font-weight: 700; }
+  .careos-intro-deck__tabs button.is-active,
+  .careos-intro-deck__tabs button.is-prev,
+  .careos-intro-deck__tabs button.is-next {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .careos-intro-deck__tabs button.is-active { min-width: 0; padding: 0.35rem 0.5rem; border-right: 0; font-size: 0.75rem; font-weight: 700; }
   .careos-intro-deck__tabs button.is-prev,
   .careos-intro-deck__tabs button.is-next {
     min-width: 0;
-    padding: 0.35rem 0.5rem;
+    padding: 0.35rem 0.35rem;
     border-right: 0;
     font-size: 0.6rem;
     color: #a3a7bd;

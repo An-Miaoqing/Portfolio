@@ -140,7 +140,7 @@ function RelationshipsVisual() {
   return (
     <div
       aria-label="Full entity relationship diagram: all 37 Prisma models and how they connect to one another"
-      className="relative aspect-square w-full"
+      className="careos-relationship-diagram relative h-full w-full"
       role="img"
     >
       <svg aria-hidden="true" className="absolute inset-0 h-full w-full" viewBox="0 0 100 100">
@@ -170,7 +170,7 @@ function RelationshipsVisual() {
               className="block size-3 rounded-full border"
               style={{ backgroundColor: LIT_FILL, borderColor: LIT_BORDER }}
             />
-            <span className="max-w-[5rem] text-center text-[0.72rem] leading-tight font-medium text-balance text-ink">
+            <span className="careos-relationship-diagram__label max-w-[5rem] text-center text-[0.72rem] leading-tight font-medium text-balance text-ink">
               {entity.name}
             </span>
           </div>

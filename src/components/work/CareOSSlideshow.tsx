@@ -96,7 +96,7 @@ const slides: readonly Slide[] = [
     eyebrow: 'DATABASE DESIGN',
     title: 'The data model is derived from the business domain',
     message:
-      'Business concepts become entities, relationships and constraints—not tables designed around screens.',
+      'Business concepts become entities, relationships and constraints.',
     points: [
       'Normalization separates distinct business responsibilities.',
       'Referential integrity protects lifecycle relationships.',
