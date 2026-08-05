@@ -135,26 +135,22 @@ export function ConnectedWorkflowSection() {
               </div>
 
               <div className={styles.employeePhone} aria-label="Simplified representation of the implemented Employee App visit interface">
-                <div className={styles.phoneTopbar}><span>CareOS</span><i>●</i></div>
-                <p>Today</p>
-                <h4>Your assigned visit</h4>
-                <div className={styles.visitCard}>
-                  <div><strong>10:30</strong><span>Accepted</span></div>
-                  <h5>Shopping &amp; errands</h5>
-                  <p>G. Berger · 2 hours</p>
-                  <dl>
-                    <div><dt>Address</dt><dd>Vienna</dd></div>
-                    <div><dt>Visit</dt><dd>5 Aug</dd></div>
-                  </dl>
-                  <div className={styles.visitActions}>
-                    <button type="button" tabIndex={-1}>View details</button>
-                    <button type="button" tabIndex={-1}>Check in</button>
-                  </div>
+                <div className={styles.phoneTopbar}><strong>Visits</strong><i aria-hidden="true">🔔</i></div>
+                <p className={styles.phoneBack}><i aria-hidden="true">←</i> Visit</p>
+                <div className={styles.assignedCard}>
+                  <span className={styles.assignedDate}>5 Aug 2026</span>
+                  <p>10:30</p>
+                  <span className={styles.assignedService}>Shopping &amp; errands</span>
+                  <strong>G. Berger · Vienna</strong>
+                  <em>Assigned</em>
                 </div>
-                <div className={styles.phoneStatus}>
-                  <span>Visit preparation</span>
-                  <strong>Ready to begin</strong>
-                  <p>Service details and client context are available for the visit.</p>
+                <div className={styles.responseCard}>
+                  <h4>Assignment response</h4>
+                  <p className={styles.responseStatus}>Accepted</p>
+                  <p className={styles.responseNote}>
+                    You can check in on the scheduled date when you begin this visit.
+                  </p>
+                  <button type="button" tabIndex={-1}>Check in</button>
                 </div>
               </div>
             </div>

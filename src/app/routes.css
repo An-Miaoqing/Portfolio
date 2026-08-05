@@ -2101,7 +2101,7 @@ p, h1, h2, h3 { margin-top: 0; }
 .system-model__icon { width: 20px; height: 20px; }
 .project-card__meta { flex-direction: column; }
 .project-card__body { gap: 2.5rem; }
-.project-card { padding-bottom: 2.5rem; }
+.project-card { padding-bottom: 1.1rem; }
 .project-visual { min-height: 300px; }
 
 /* Engineering: desktop shows the diagram on the left, text on the right.
@@ -2294,6 +2294,21 @@ p, h1, h2, h3 { margin-top: 0; }
 
 .careos-intro-slide--cover .careos-slide-architecture-image {
   max-height: 480px;
+}
+
+/* The backend slide's copy (title + message + 3 long points) can be taller
+   than the deck's fixed 690px stage. Without this, the grid row grows to
+   fit that text, pulling the vertically-centered picture down into it so
+   the two visually overlap. Cap the row to the stage height and let the
+   copy column scroll internally instead. */
+@media (min-width: 901px) {
+  .careos-intro-slide--cover {
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .careos-intro-slide--cover .careos-intro-slide__copy {
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
 }
 
 .careos-intro-slide__visual--vision {
@@ -3081,7 +3096,7 @@ p, h1, h2, h3 { margin-top: 0; }
 .gut-daily-photo--customer {
   bottom: 7%;
   left: 0;
-  width: 42%;
+  width: 47%;
   height: 50%;
   border-radius: 4px;
   transform: rotate(-1.5deg);
@@ -3091,7 +3106,7 @@ p, h1, h2, h3 { margin-top: 0; }
 
 .gut-daily-step {
   position: absolute;
-  right: 0;
+  right: 3%;
   bottom: 4%;
   display: flex;
   width: 57%;
@@ -3140,6 +3155,7 @@ p, h1, h2, h3 { margin-top: 0; }
   padding: 1rem 0.7rem;
   flex-direction: column;
   gap: 0.35rem;
+  overflow-wrap: anywhere;
   background: #262a48;
   color: #d9dbea;
   font-size: 0.68rem;
@@ -3153,8 +3169,9 @@ p, h1, h2, h3 { margin-top: 0; }
 
 .gut-daily-operations__logo {
   display: flex;
-  align-items: center;
-  gap: 0.35rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
   margin-bottom: 0.7rem;
   color: #fff;
   letter-spacing: 0.12em;
@@ -3246,9 +3263,8 @@ p, h1, h2, h3 { margin-top: 0; }
   position: absolute;
   right: 0;
   bottom: -6%;
-  width: 42%;
-  min-width: 235px;
   height: 88%;
+  aspect-ratio: 9 / 19;
   padding: 1.15rem 1rem 1.6rem;
   border: 7px solid #202440;
   border-bottom: 0;
@@ -3288,6 +3304,40 @@ p, h1, h2, h3 { margin-top: 0; }
 .gut-daily-phone__visit dd { margin: 0.15rem 0 0; font-size: 0.65rem; font-weight: 600; }
 .gut-daily-phone__visit button { width: 100%; padding: 0.55rem; border: 1px solid #202440; background: #fff; color: #202440; font: inherit; font-size: 0.62rem; border-radius: 6px; }
 .gut-daily-phone__visit button.gut-daily-phone__checkin { margin-top: 0.4rem; background: #f3c54e; border-color: #f3c54e; font-weight: 700; }
+
+.gut-daily-phone--connected > header i { font-style: normal; font-size: 0.85rem; }
+
+.gut-daily-phone__kicker { margin: 1.3rem 0 0.3rem; color: #1f6b45; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.gut-daily-phone__heading { margin: 0 0 0.9rem; font-size: 1.2rem; letter-spacing: -0.02em; }
+.gut-daily-phone__subheading { margin: 0 0 0.6rem; font-size: 0.72rem; font-weight: 700; }
+
+.gut-daily-phone__assigned {
+  display: grid;
+  padding-top: 0.6rem;
+  border-top: 1px solid #e4e6ea;
+  gap: 0.15rem;
+}
+
+.gut-daily-phone__assigned-top { display: flex; align-items: center; justify-content: space-between; }
+.gut-daily-phone__assigned-date { color: #777b91; font-size: 0.62rem; }
+.gut-daily-phone__assigned-top em {
+  padding: 0.25rem 0.55rem;
+  background: #e2f2e8;
+  color: #1f6b45;
+  font-size: 0.58rem;
+  font-style: normal;
+  font-weight: 700;
+  border-radius: 999px;
+}
+.gut-daily-phone__assigned > p { margin: 0.2rem 0 0; font-size: 1.15rem; font-weight: 700; }
+.gut-daily-phone__assigned-service { display: block; margin-top: 0.15rem; color: #1f6b45; font-size: 0.7rem; font-weight: 600; }
+.gut-daily-phone__assigned > strong { display: block; margin-top: 0.25rem; font-size: 0.85rem; }
+.gut-daily-phone__assigned-address { display: block; color: #777b91; font-size: 0.62rem; }
+
+.gut-daily-phone__archive { margin-top: 1.1rem; }
+.gut-daily-phone__archive h5 { margin: 0 0 0.2rem; font-size: 0.78rem; }
+.gut-daily-phone__archive p { margin: 0; color: #777b91; font-size: 0.6rem; }
+.gut-daily-phone__archive i { display: block; margin-top: 0.3rem; color: #1f6b45; font-style: normal; font-size: 0.85rem; }
 
 .careos-slide-engineering {
   display: grid;
@@ -3622,11 +3672,13 @@ p, h1, h2, h3 { margin-top: 0; }
 .careos-device-mockup--desktop .careos-media,
   .careos-device-mockup--mobile .careos-media { min-height: 310px; }
 .gut-daily-visual { height: 520px; }
-.gut-daily-photo--customer { width: 46%; }
+.gut-daily-photo--customer { width: 50%; }
 .gut-daily-step { width: 54%; font-size: 0.65rem; }
 .gut-daily-operations { right: 0; width: 100%; }
+.gut-daily-operations__body { grid-template-columns: 30% 1fr; }
+.gut-daily-operations__body > nav { padding: 0.75rem 0.5rem; gap: 0.25rem; font-size: 0.58rem; }
+.gut-daily-operations__body > nav > strong { letter-spacing: 0.06em; }
 .gut-daily-photo--office { width: 38%; }
-.gut-daily-phone { width: 46%; }
 .careos-slide-engineering > div { grid-template-columns: 2rem 1fr; min-height: 76px; gap: 0.25rem; }
 .careos-slide-engineering small { grid-column: 2; }
 

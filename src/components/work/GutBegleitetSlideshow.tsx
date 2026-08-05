@@ -181,19 +181,25 @@ function ConnectedVisual() {
           width={1200}
         />
       </figure>
-      <div className="gut-daily-phone" aria-label="Simplified CareOS Employee visit interface">
-        <header><strong>CareOS</strong><span>10:30</span></header>
-        <p className="gut-daily-phone__label">YOUR ASSIGNED VISIT</p>
-        <div className="gut-daily-phone__visit">
-          <p><strong>10:30</strong><em>Assigned</em></p>
-          <h4>Shopping &amp; errands</h4>
-          <span>G. Berger · Vienna</span>
-          <dl>
-            <div><dt>Duration</dt><dd>2 hours</dd></div>
-            <div><dt>Visit</dt><dd>5 Aug</dd></div>
-          </dl>
-          <button type="button" tabIndex={-1}>Open visit details</button>
-          <button className="gut-daily-phone__checkin" type="button" tabIndex={-1}>Check in</button>
+      <div className="gut-daily-phone gut-daily-phone--connected" aria-label="Simplified CareOS Employee visits interface">
+        <header><strong>Visits</strong><i aria-hidden="true">🔔</i></header>
+        <p className="gut-daily-phone__kicker">Current work</p>
+        <h4 className="gut-daily-phone__heading">Your visits</h4>
+        <p className="gut-daily-phone__subheading">Past visits needing attention</p>
+        <div className="gut-daily-phone__assigned">
+          <div className="gut-daily-phone__assigned-top">
+            <span className="gut-daily-phone__assigned-date">August 04, 2026</span>
+            <em>Assigned</em>
+          </div>
+          <p>11:00–13:00</p>
+          <span className="gut-daily-phone__assigned-service">Shopping &amp; errands</span>
+          <strong>G. Berger</strong>
+          <span className="gut-daily-phone__assigned-address">Vienna</span>
+        </div>
+        <div className="gut-daily-phone__archive">
+          <h5>Open visit archive</h5>
+          <p>Review completed and not completed past work.</p>
+          <i aria-hidden="true">›</i>
         </div>
       </div>
     </div>
