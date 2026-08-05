@@ -20,8 +20,8 @@ export function OperationalLifecycle() {
           className="mb-12 grid gap-8 lg:mb-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-end"
         >
           <div>
-            <Headline eyebrow="03 / Operational lifecycle">
-              One operational workflow.<br />Many connected responsibilities.
+            <Headline eyebrow="02 / Operational lifecycle">
+              One operational workflow<br />Many connected responsibilities
             </Headline>
           </div>
           <p className="max-w-[var(--container-copy)] text-body-lg text-pretty text-muted lg:pb-1">

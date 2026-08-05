@@ -22,8 +22,8 @@ export function AboutMethodology() {
           viewport={{ once: true, amount: 0.35 }}
           className="grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-end"
         >
-          <Headline eyebrow="09 / About & Methodology">
-            Designing systems from business understanding.
+          <Headline eyebrow="08 / About & Methodology">
+            Designing systems from business understanding
           </Headline>
           <p className="max-w-[var(--container-copy)] text-body-lg text-pretty text-muted lg:pb-1">
             CareOS demonstrates my approach to Business Systems Analysis: understanding organisations, modelling operational processes, designing domain-driven architectures, and implementing practical digital solutions that can evolve over time.

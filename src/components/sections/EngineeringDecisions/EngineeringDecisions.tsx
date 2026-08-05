@@ -24,8 +24,8 @@ export function EngineeringDecisions() {
           className="mb-12 grid gap-8 lg:mb-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-end"
         >
           <div>
-            <Headline eyebrow="07 / Engineering Decisions">
-              Engineering follows business architecture.
+            <Headline eyebrow="06 / Engineering Decisions">
+              Engineering follows business architecture
             </Headline>
           </div>
           <p className="max-w-[var(--container-copy)] text-body-lg text-pretty text-muted lg:pb-1">

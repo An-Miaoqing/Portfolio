@@ -23,7 +23,7 @@ export function PlatformVision() {
         className="mb-12 grid items-end gap-8 lg:mb-8 lg:grid-cols-[1.35fr_0.65fr]"
       >
         <div>
-          <Headline eyebrow="02 / Platform vision">One platform. Five connected business domains.</Headline>
+          <Headline eyebrow="01 / Platform vision">One platform Five connected business domains</Headline>
         </div>
 
         <div className="lg:pb-1">

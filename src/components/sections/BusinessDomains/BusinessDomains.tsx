@@ -34,7 +34,7 @@ export function BusinessDomains() {
       <SectionWrapper id="business-domains" className="bg-canvas py-14 sm:py-16">
         <motion.div variants={revealItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.35 }} className="mb-12 grid gap-8 lg:mb-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-end">
           <div>
-            <Headline eyebrow="04 / Business Domains">Five business domains.<br />One shared operational model.</Headline>
+            <Headline eyebrow="03 / Business Domains">Five business domains<br />One shared operational model</Headline>
           </div>
           <p className="max-w-[var(--container-copy)] text-body-lg text-pretty text-muted lg:pb-1">
             Every responsibility inside CareOS is organised into a business domain. Each domain owns specific parts of the operational lifecycle while sharing one connected platform.

@@ -22,8 +22,8 @@ export function ProductEvolution() {
           viewport={{ once: true, amount: 0.35 }}
           className="grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-end"
         >
-          <Headline eyebrow="08 / Product Evolution">
-            Designed to grow without starting over.
+          <Headline eyebrow="07 / Product Evolution">
+            Designed to grow without starting over
           </Headline>
           <p className="max-w-[var(--container-copy)] text-body-lg text-pretty text-muted lg:pb-1">
             CareOS is structured around stable business concepts rather than temporary features. As organisations evolve, new capabilities can be introduced while preserving the existing operational model.

@@ -50,8 +50,8 @@ export function PlatformApplications() {
           className="mb-12 grid gap-8 lg:mb-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-end"
         >
           <div>
-            <Headline eyebrow="05 / Platform Applications">
-              One platform.<br />Different interfaces for different responsibilities.
+            <Headline eyebrow="04 / Platform Applications">
+              One platform<br />Different interfaces for different responsibilities
             </Headline>
           </div>
           <p className="max-w-[var(--container-copy)] text-body-lg text-pretty text-muted lg:pb-1">

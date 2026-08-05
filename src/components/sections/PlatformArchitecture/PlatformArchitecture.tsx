@@ -49,8 +49,8 @@ export function PlatformArchitecture() {
           className="mb-12 grid gap-8 lg:mb-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-end"
         >
           <div>
-            <Headline eyebrow="06 / Platform Architecture">
-              Many interfaces.<br />One authoritative platform.
+            <Headline eyebrow="05 / Platform Architecture">
+              Many interfaces<br />One authoritative platform
             </Headline>
           </div>
           <p className="max-w-[var(--container-copy)] text-body-lg text-pretty text-muted lg:pb-1">
